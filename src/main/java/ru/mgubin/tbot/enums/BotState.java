@@ -1,0 +1,19 @@
+package ru.mgubin.tbot.enums;
+
+/**
+ * Возможные состояния бота
+ */
+public enum BotState
+{
+    ASK_INFO,
+    ASK_NAME,
+    ASK_GENDER,
+    ASK_BIRTHDAY,
+    SEARCH,
+    SHOW_HELP_MENU,
+    UPDATE_PROFILE,
+    CORRECT_PROFILE,
+    DELETE_PROFILE,
+    SAVE_PROFILE,
+    START;
+}
