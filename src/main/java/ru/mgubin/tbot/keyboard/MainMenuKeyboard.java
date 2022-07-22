@@ -1,23 +1,38 @@
-package ru.mgubin.tbot.service;
+package ru.mgubin.tbot.keyboard;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
+import ru.mgubin.tbot.enums.MenuButtons;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainMenuService
+public class MainMenuKeyboard
 {
+    /**
+     * Получает созданное сообщение
+     * @param chatId идентификатор чата
+     * @param textMessage сообщение
+     * @return сообщение
+     */
     public SendMessage getMainMenuMessage(final long chatId, final String textMessage)
     {
-        final ReplyKeyboardMarkup replyKeyboardMarkup = getMainMenuKeyboard();
+
+        final ReplyKeyboardMarkup replyKeyboardMarkup = getMainMenuKeyboard(MenuButtons.values());
         final SendMessage mainMenuMessage =
                 createMessageWithKeyboard(chatId, textMessage, replyKeyboardMarkup);
         return mainMenuMessage;
     }
 
+    /**
+     * Метод создания сообщения для постоянной клавиатуры
+     * @param chatId идентификатор чата
+     * @param textMessage сообщение
+     * @param replyKeyboardMarkup клавиатура
+     * @return сообщение
+     */
     private SendMessage createMessageWithKeyboard(long chatId, String textMessage, final ReplyKeyboardMarkup replyKeyboardMarkup)
     {
         final SendMessage sendMessage = new SendMessage();
@@ -31,27 +46,31 @@ public class MainMenuService
         return sendMessage;
     }
 
-    private ReplyKeyboardMarkup getMainMenuKeyboard()
+    /**
+     * Метод формирования ReplyKeyboardMarkup кнопок (то есть постоянных, находящихся под полем ввода сообщения)
+     * @param menuButtons массив enum названий кнопок для меню
+     * @return клавиатура
+     */
+    private ReplyKeyboardMarkup getMainMenuKeyboard(Enum[] menuButtons)
     {
         final ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setSelective(true);
         replyKeyboardMarkup.setResizeKeyboard(true);
         replyKeyboardMarkup.setOneTimeKeyboard(false);
 
-        KeyboardRow row1 = new KeyboardRow();
-        row1.add(new KeyboardButton("АНКЕТА"));
-        row1.add(new KeyboardButton("ЛЮБИМЦЫ"));
 
-        KeyboardRow row2 = new KeyboardRow();
-        row2.add(new KeyboardButton("ПОИСК"));
-        row2.add(new KeyboardButton("ПОМОЩЬ"));
+        KeyboardRow row1 = new KeyboardRow();
+
+        for (Enum menuClick : menuButtons)
+        {
+            row1.add(KeyboardButton.builder()
+                    .text(menuClick.name())
+                    .build());
+        }
 
         List<KeyboardRow> keyboard = new ArrayList<>();
         keyboard.add(row1);
-        keyboard.add(row2);
-
         replyKeyboardMarkup.setKeyboard(keyboard);
-
         return replyKeyboardMarkup;
     }
 }

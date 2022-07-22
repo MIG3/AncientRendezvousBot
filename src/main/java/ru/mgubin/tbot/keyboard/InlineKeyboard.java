@@ -10,54 +10,29 @@ import java.util.List;
 
 public class InlineKeyboard
 {
-    public SendMessage keyboard(Long chatId, String ask, Enum[] inlineKeyboardClass)
+    /**
+     * Метод формирования inline кнопок (то есть привязанных к сообщению в чате)
+     * @param chatId идентификатор чата
+     * @param ask вопрос пользователю от бота
+     * @param inlineKeyboard массив enum названий кнопок в зависимости от вопроса
+     * @return сообщение с кнопками
+     */
+    public SendMessage keyboard(Long chatId, String ask, Enum[] inlineKeyboard)
     {
         List<InlineKeyboardButton> buttons = new ArrayList<>();
         List<List<InlineKeyboardButton>> listButtons = new ArrayList<>();
-       // List<?> list = Arrays.asList(inlineKeyboardClass.getEnumConstants());
-        /*for (int i = 0; i < list.size(); i++)
-        {*/
-        for (Enum dd : inlineKeyboardClass)
+        for (Enum dd : inlineKeyboard)
         {
             buttons.add(InlineKeyboardButton.builder()
                     .text(dd.name())
-                    .callbackData("" + dd)
+                    .callbackData("" + dd.name())
                     .build());
         }
-        //if (count == 2)
-            listButtons.add(buttons);
-       /* else
-        {
-            buttons.add(InlineKeyboardButton.builder()
-                    .text("ВСЕ")
-                    .callbackData("ВСЕ")
-                    .build());
-            listButtons.add(buttons);
-        }*/
+        listButtons.add(buttons);
         return SendMessage.builder()
                             .text(ask)
                             .chatId(chatId)
                             .replyMarkup(InlineKeyboardMarkup.builder().keyboard(listButtons).build())
                             .build();
-    }
-
-    public SendMessage questKeyboard(Long chatId, String ask)
-    {
-        List<InlineKeyboardButton> buttons = new ArrayList<>();
-        List<List<InlineKeyboardButton>> listButtons = new ArrayList<>();
-        for (ProfileButtons profileButtons : ProfileButtons.values())
-        {
-            buttons.add(InlineKeyboardButton.builder()
-                    .text(profileButtons.name())
-                    .callbackData("" + profileButtons)
-                    .build());
-        }
-        listButtons.add(buttons);
-
-        return SendMessage.builder()
-                .text(ask)
-                .chatId(chatId)
-                .replyMarkup(InlineKeyboardMarkup.builder().keyboard(listButtons).build())
-                .build();
     }
 }

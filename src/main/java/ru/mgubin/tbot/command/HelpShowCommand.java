@@ -1,25 +1,25 @@
 package ru.mgubin.tbot.command;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import ru.mgubin.tbot.keyboard.ReplyKeyboardMaker;
+import org.telegram.telegrambots.meta.api.objects.Message;
 
-public class Help implements Command
+public class HelpShowCommand implements Command
 {
 
     @Override
-    public OutputParameters invoke(Long chatId)
+    public OutputParameters invoke(Message message)
     {
-        SendMessage message = new SendMessage();
+        SendMessage message2 = new SendMessage();
         OutputParameters outputParameters = new OutputParameters();
-        message = SendMessage.builder()
+        message2 = SendMessage.builder()
                 .text("Это бот знакомств в древнерусском стиле. В нём возможно:\n" +
-                        "Заполнить анкету о себе, просматривать её, изменять или удалять.\n" +
+                        "Заполнить анкету о себе, просматривать её или изменять.\n" +
                         "Просматривать понравившиеся анкеты других пользователей.\n" +
                         "Выполнять поиск других пользователей, ставить любимку тем, кто понравился."
                 )
-                .chatId(chatId)
+                .chatId(message.getChatId())
                 .build();
-        outputParameters.setSm(message);
+        outputParameters.setSm(message2);
         return outputParameters;
     }
 }
