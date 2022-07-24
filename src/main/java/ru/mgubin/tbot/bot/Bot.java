@@ -75,7 +75,9 @@ public class Bot extends TelegramLongPollingBot
                 botState = handleMessages.handleInputMessage(update.getMessage());
                 Command command = state.handleStateSelector(botState);
                 OutputParameters outputParameters = command.invoke(message);
-                execute(outputParameters.getSm());
+                if (outputParameters.getSm()!=null)
+                    execute(outputParameters.getSm());
+                else execute(outputParameters.getSp());
 
             } catch (TelegramApiException e)
             {

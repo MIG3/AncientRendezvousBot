@@ -9,6 +9,8 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.enums.BotState;
+import ru.mgubin.tbot.enums.PrevNextButtons;
+import ru.mgubin.tbot.keyboard.InlineKeyboard;
 import ru.mgubin.tbot.keyboard.MainMenuKeyboard;
 
 @Service
@@ -58,16 +60,22 @@ public class CallBackAction
                     .text("Как Вас величать?")
                     .chatId(chatId)
                     .build();
-        }
-        else if (buttonQuery.getData().equals("ПОСМОТРЕТЬ"))
+        } else if (buttonQuery.getData().equals("ПОСМОТРЕТЬ"))
+        {
+            InlineKeyboard searchKeyboard = new InlineKeyboard();
+            callBackAnswer = searchKeyboard.keyboard(chatId, "Вперёд или назад", PrevNextButtons.values());
+
+        } else if (buttonQuery.getData().equals("ВПЕРЁД"))
         {
             callBackAnswer = sendAnswerCallbackQuery("Ожидается в будущих обновлениях", true, buttonQuery);
-
+        } else if (buttonQuery.getData().equals("НАЗАД"))
+        {
+            callBackAnswer = sendAnswerCallbackQuery("Ожидается в будущих обновлениях", true, buttonQuery);
         } else if (buttonQuery.getData().equals("ЗАПОЛНИТЬ") || buttonQuery.getData().equals("ИЗМЕНИТЬ"))
         {
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_GENDER);
             callBackAnswer = SendMessage.builder()
-                    .text("Заполните анкету. Для продолжения апишите любое слово")
+                    .text("Заполните анкету. Для продолжения напишите любое слово")
                     .chatId(chatId)
                     .build();
 
