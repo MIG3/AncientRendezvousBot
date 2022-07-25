@@ -1,5 +1,6 @@
 package ru.mgubin.tbot.cash;
 
+import ru.mgubin.tbot.entity.SearchProfile;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.enums.BotState;
 
@@ -29,7 +30,22 @@ public interface DataCache
     /**
      * Сохраниение в мап по ключу пользователя данных из объекта User
      * @param userId идентификатор пользователя
-     * @param userProfileData словарь с парами: id пользователя, его данные
+     * @param userProfileData данные пользователя
      */
     void saveUserProfileData(int userId, User userProfileData);
+
+    /**
+     * Сохраниение в мап по ключу сущности списка анкет с позицией следующей анкеты
+     * @param userId идентификатор пользователя
+     * @param listProfileData сущность: id пользователя и список найденных анкет для него
+     */
+    void saveUserListData(int userId, SearchProfile listProfileData);
+
+    /**
+     * Метод получения списка анкет для пользователя по его идентификатору
+     * @param userId идентификатор пользователя
+     * @return анкета пользователя
+     */
+    SearchProfile getUserListData(int userId);
+
 }

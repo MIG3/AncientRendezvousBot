@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.mgubin.tbot.cash.UserDataCache;
+import ru.mgubin.tbot.entity.SearchProfile;
 import ru.mgubin.tbot.enums.BotState;
 
 public class HandleMessages
@@ -32,6 +33,12 @@ public class HandleMessages
                 break;
             case "ПОИСК":
                 botState = BotState.SEARCH;
+                break;
+            case "/like":
+                botState = BotState.NEXT_PROFILE;
+                break;
+            case "/dislike":
+                botState = BotState.PREV_PROFILE;
                 break;
             case "АНКЕТА":
                 botState = BotState.CORRECT_PROFILE;

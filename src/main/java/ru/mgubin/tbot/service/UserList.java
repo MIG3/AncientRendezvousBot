@@ -11,10 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 public class UserList
 {
-    private List<User> users;
-
-    public UserList() {
-        users = new ArrayList<>();
-    }
+    private List<User> users = new ArrayList<>();;
 
 }

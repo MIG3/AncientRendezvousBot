@@ -20,29 +20,27 @@ import ru.mgubin.tbot.handler.HandleStateSelector;
 @Component
 public class Bot extends TelegramLongPollingBot
 {
-    final private String BOT_TOKEN_TELEGA;
-    final private String BOT_NAME_TELEGA;
+    final private String BOT_TOKEN_TELEGRAM;
+    final private String BOT_NAME_TELEGRAM;
     private final UserDataCache userDataCache = new UserDataCache();
     @Autowired
     public Bot(String botToken, String botName)
     {
         super();
-        this.BOT_TOKEN_TELEGA = botToken;
-        this.BOT_NAME_TELEGA = botName;
+        this.BOT_TOKEN_TELEGRAM = botToken;
+        this.BOT_NAME_TELEGRAM = botName;
     }
 
     @Override
     public String getBotUsername()
     {
-        log.debug("Название бота: " + BOT_NAME_TELEGA);
-        return BOT_NAME_TELEGA;
+        return BOT_NAME_TELEGRAM;
     }
 
     @Override
     public String getBotToken()
     {
-        log.debug("Токен бота: " + BOT_TOKEN_TELEGA);
-        return BOT_TOKEN_TELEGA;
+        return BOT_TOKEN_TELEGRAM;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ru.mgubin.tbot.cash;
 
 import org.springframework.stereotype.Component;
+import ru.mgubin.tbot.entity.SearchProfile;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.enums.BotState;
 
@@ -12,6 +13,7 @@ public class UserDataCache implements DataCache
 {
     private Map<Integer, BotState> usersBotStates = new HashMap<>();
     private Map<Integer, User> usersProfileData = new HashMap<>();
+    private Map<Integer, SearchProfile> usersListData = new HashMap<>();
 
     @Override
     public void setUsersCurrentBotState(int userId, BotState botState)
@@ -47,4 +49,18 @@ public class UserDataCache implements DataCache
     {
         usersProfileData.put(userId, userProfileData);
     }
+
+    @Override
+    public void saveUserListData(int userId, SearchProfile listProfileData)
+    {
+        usersListData.put(userId, listProfileData);
+    }
+
+    @Override
+    public SearchProfile getUserListData(int userId)
+    {
+        SearchProfile listUsers = usersListData.get(userId);
+        return listUsers;
+    }
+
 }

@@ -35,7 +35,13 @@ public class HandleStateSelector
             case ASK_BIRTHDAY:
                 return new AskBirthdayCommand(userDataCache);
             case SEARCH:
-                return new SearchUserCommand();
+                return new SearchUserCommand(userDataCache);
+            case CHOICE_PREVorNEXT_BUTTON:
+                return new ChoiceProfileFromSearchCommand(userDataCache);
+            case NEXT_PROFILE:
+                return new NextCommand(userDataCache);
+            case PREV_PROFILE:
+                return new BackCommand(userDataCache);
             case CORRECT_PROFILE:
                 return new CorrectProfileCommand(userDataCache);
             case BROWSE_LOVERS:

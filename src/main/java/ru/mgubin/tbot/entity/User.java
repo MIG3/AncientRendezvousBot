@@ -29,6 +29,10 @@ public class User
     String gender;
     String description;
 
+    /**
+     * Метод преобразования сущности User в json формат
+     * @return json пользователя
+     */
     public String toJson()
     {
         try
@@ -40,5 +44,11 @@ public class User
         {
             throw new RuntimeException(e);
         }
+    }
+
+    public User jsonToUser(String user)
+    {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.convertValue(user, this.getClass());
     }
 }

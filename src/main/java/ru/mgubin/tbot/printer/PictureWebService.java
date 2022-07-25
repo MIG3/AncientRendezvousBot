@@ -16,6 +16,11 @@ import static ru.mgubin.tbot.service.Constants.PICTURE_URL;
 public class PictureWebService
 {
 
+    /**
+     * Формирование изображения для вывода его в боте.
+     * @param text - описание пользователя самого себя
+     * @return изображение в InputStream
+     */
     public InputStream makePicture(String text)
     {
         try
