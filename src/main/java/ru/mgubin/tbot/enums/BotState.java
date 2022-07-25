@@ -9,6 +9,7 @@ public enum BotState
     ASK_NAME,
     ASK_GENDER,
     ASK_BIRTHDAY,
+    ASK_CRUSH,
     SEARCH,
     SHOW_HELP_MENU,
     UPDATE_PROFILE,

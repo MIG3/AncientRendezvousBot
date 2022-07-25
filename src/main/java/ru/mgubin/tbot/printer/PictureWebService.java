@@ -11,9 +11,10 @@ import org.telegram.telegrambots.meta.api.objects.InputFile;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+import static ru.mgubin.tbot.service.Constants.PICTURE_URL;
+
 public class PictureWebService
 {
-    String createPersonUrl = "https://pict-serv-2-0-fixey-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/pict";
 
     public InputStream makePicture(String text)
     {
@@ -26,7 +27,7 @@ public class PictureWebService
             pictureJsonObject.put("text", text);
             HttpEntity<String> request = new HttpEntity<>(pictureJsonObject.toString(), headers);
             byte[] picture =
-                    restTemplate.postForObject(createPersonUrl, request, byte[].class);
+                    restTemplate.postForObject(PICTURE_URL, request, byte[].class);
             if (picture == null)
             {
                 throw new RuntimeException();

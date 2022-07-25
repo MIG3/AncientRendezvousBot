@@ -41,7 +41,7 @@ public class CallBackAction
         if (buttonQuery.getData().equals("СУДАРЬ"))
         {
             User user = userDataCache.getUserProfileData(userId);
-            user.setGender("M");
+            user.setGender("MEN");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NAME);
             userDataCache.saveUserProfileData(buttonQuery.getMessage().getChatId().intValue(), user);
 
@@ -52,7 +52,7 @@ public class CallBackAction
         } else if (buttonQuery.getData().equals("СУДАРЫНЯ"))
         {
             User user = userDataCache.getUserProfileData(userId);
-            user.setGender("Ж");
+            user.setGender("WOMEN");
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NAME);
             userDataCache.saveUserProfileData(buttonQuery.getMessage().getChatId().intValue(), user);
 
@@ -60,7 +60,7 @@ public class CallBackAction
                     .text("Как Вас величать?")
                     .chatId(chatId)
                     .build();
-        } else if (buttonQuery.getData().equals("ПОСМОТРЕТЬ"))
+        } else if (buttonQuery.getData().equals("ЛЮБИМЦЫ"))
         {
             InlineKeyboard searchKeyboard = new InlineKeyboard();
             callBackAnswer = searchKeyboard.keyboard(chatId, "Вперёд или назад", PrevNextButtons.values());
@@ -80,15 +80,43 @@ public class CallBackAction
                     .build();
 
 
-        } else if (buttonQuery.getData().equals("СУДАРЯ"))
+        } else if (buttonQuery.getData().equals("ПОСМОТРЕТЬ"))
         {
             callBackAnswer = sendAnswerCallbackQuery("Ожидается в будущих обновлениях", true, buttonQuery);
+        }
+        else if (buttonQuery.getData().equals("СУДАРЯ"))
+        {
+            User user = userDataCache.getUserProfileData(userId);
+            user.setCrush("MEN");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_BIRTHDAY);
+            userDataCache.saveUserProfileData(buttonQuery.getMessage().getChatId().intValue(), user);
+
+            callBackAnswer = SendMessage.builder()
+                    .text("Когда Вы родились?")
+                    .chatId(chatId)
+                    .build();
         } else if (buttonQuery.getData().equals("СУДАРЫНЮ"))
         {
-            callBackAnswer = sendAnswerCallbackQuery("Ожидается в будущих обновлениях", true, buttonQuery);
+            User user = userDataCache.getUserProfileData(userId);
+            user.setCrush("WOMEN");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_BIRTHDAY);
+            userDataCache.saveUserProfileData(buttonQuery.getMessage().getChatId().intValue(), user);
+
+            callBackAnswer = SendMessage.builder()
+                    .text("Когда Вы родились?")
+                    .chatId(chatId)
+                    .build();
         } else if (buttonQuery.getData().equals("ВСЕХ"))
         {
-            callBackAnswer = sendAnswerCallbackQuery("Ожидается в будущих обновлениях", true, buttonQuery);
+            User user = userDataCache.getUserProfileData(userId);
+            user.setCrush("ALL");
+            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_BIRTHDAY);
+            userDataCache.saveUserProfileData(buttonQuery.getMessage().getChatId().intValue(), user);
+
+            callBackAnswer = SendMessage.builder()
+                    .text("Когда Вы родились?")
+                    .chatId(chatId)
+                    .build();
         } else
         {
             userDataCache.setUsersCurrentBotState(userId, BotState.SHOW_MAIN_MENU);

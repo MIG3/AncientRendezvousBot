@@ -7,7 +7,6 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.enums.BotState;
-import ru.mgubin.tbot.keyboard.InlineKeyboard;
 
 @Service
 public class AskNameCommand implements Command
@@ -27,7 +26,7 @@ public class AskNameCommand implements Command
         OutputParameters outputParameters = new OutputParameters();
         User profileData = userDataCache.getUserProfileData(message.getFrom().getId().intValue());
 
-        profileData.setName(message.getText());
+        profileData.setFullName(message.getText());
 
         outputParameters.setSm(SendMessage.builder()
                 .text("Напишите о себе")

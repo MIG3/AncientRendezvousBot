@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.mgubin.tbot.cash.UserDataCache;
+import ru.mgubin.tbot.db.UserDB;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.enums.BotState;
 import ru.mgubin.tbot.printer.PrintProfile;
@@ -27,6 +28,7 @@ public class AskBirthdayCommand implements Command
         int userId = message.getFrom().getId().intValue();
         OutputParameters outputParameters = new OutputParameters();
         PrintProfile profile = new PrintProfile();
+        UserDB userDB = new UserDB();
 
         User profileData = userDataCache.getUserProfileData(userId);
 
@@ -36,12 +38,10 @@ public class AskBirthdayCommand implements Command
         userDataCache.setUsersCurrentBotState(userId, BotState.SAVE_PROFILE);
         userDataCache.saveUserProfileData(userId, profileData);
 
-        // должен быть вызов метода записи в БД
-
-        outputParameters.setSp(profile.sendPhoto(message.getChatId()));
-
+        userDB.createUser(profileData);
+        outputParameters.setSp(profile.sendPhoto(message.getChatId(), profileData));
         /*outputParameters.setSm(SendMessage.builder()
-                .text("Анкета заполнена\n"*//* + profileData.getName() + "\n" + profileData.getGender() + "\n" + profileData.getBirthday() + "\n" + profileData.getInfo()*//*)
+                .text("Анкета заполнена\n" + profileData.getFullName()+ "\n" + profileData.getGender() + "\n" + profileData.getBirthday() + "\n" + profileData.getDescription() + "\n" +  profileData.getCrush())
                 .chatId(message.getChatId())
                 .build());*/
 

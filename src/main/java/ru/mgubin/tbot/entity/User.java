@@ -1,9 +1,15 @@
 package ru.mgubin.tbot.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.io.InputStream;
 import java.time.LocalDate;
 
 @Data
@@ -14,11 +20,25 @@ import java.time.LocalDate;
 public class User
 {
     int id;
-    String name;
-    String gender;
-    String info;
-    String crash;
+    String fullName;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     LocalDate birthday;
-    InputStream image;
+    String crush;
+    String gender;
+    String description;
 
+    public String toJson()
+    {
+        try
+        {
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.writeValueAsString(this);
+
+        } catch (JsonProcessingException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
 }

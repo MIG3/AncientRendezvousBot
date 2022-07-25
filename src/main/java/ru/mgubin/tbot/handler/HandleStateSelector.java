@@ -11,6 +11,7 @@ import ru.mgubin.tbot.enums.BotState;
 public class HandleStateSelector
 {
     private final UserDataCache userDataCache;
+
     @Autowired
     public HandleStateSelector(UserDataCache userDataCache)
     {
@@ -29,6 +30,8 @@ public class HandleStateSelector
                 return new AskNameCommand(userDataCache);
             case ASK_INFO:
                 return new AskInfoCommand(userDataCache);
+            case ASK_CRUSH:
+                return new AskCrushCommand(userDataCache);
             case ASK_BIRTHDAY:
                 return new AskBirthdayCommand(userDataCache);
             case SEARCH:

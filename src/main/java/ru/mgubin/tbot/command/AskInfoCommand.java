@@ -6,6 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.enums.BotState;
+import ru.mgubin.tbot.enums.SearchButtons;
 import ru.mgubin.tbot.keyboard.InlineKeyboard;
 
 public class AskInfoCommand implements Command
@@ -21,17 +22,14 @@ public class AskInfoCommand implements Command
     @Override
     public OutputParameters invoke(Message message)
     {
+        InlineKeyboard gender = new InlineKeyboard();
         OutputParameters outputParameters = new OutputParameters();
         User profileData = userDataCache.getUserProfileData(message.getFrom().getId().intValue());
 
-        profileData.setInfo(message.getText());
+        profileData.setDescription(message.getText());
 
-        outputParameters.setSm(SendMessage.builder()
-                .text("Когда Вы родились?")
-                .chatId(message.getFrom().getId())
-                .build());
-
-        userDataCache.setUsersCurrentBotState(message.getFrom().getId().intValue(), BotState.ASK_BIRTHDAY);
+        outputParameters.setSm(gender.keyboard(message.getChatId(), "Кого Вы хотите искать в будущем?", SearchButtons.values()));
+        userDataCache.setUsersCurrentBotState(message.getFrom().getId().intValue(), BotState.ASK_CRUSH);
         userDataCache.saveUserProfileData(message.getFrom().getId().intValue(), profileData);
 
         return outputParameters;
