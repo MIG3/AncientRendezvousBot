@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static ru.mgubin.tbot.service.Constants.DB_URL;
+import static ru.mgubin.tbot.Constant.Constants.DB_URL;
 
 @Service
 @ToString
@@ -57,7 +57,7 @@ public class UserDB
      * @return List<User> список клиентов
      * @throws ParseToJsonException если не смог распарсить сущность
      */
-    public List<User> getUsersByGender(int userId)
+    public List<User> getUsersByGender(long userId)
     {
         try
         {
@@ -86,7 +86,7 @@ public class UserDB
      * @return true - если клиент нравится, false - если не нравится
      * @throws ParseToJsonException если не смог распарсить сущность
      */
-    public Boolean isCrushLikeUser(int userId, int crushId)
+    public Boolean isCrushLikeUser(long userId, long crushId)
     {
         try
         {
@@ -148,7 +148,7 @@ public class UserDB
      * @param userId id пользователя
      * @throws ParseToJsonException если не смог распарсить сущность
      */
-    public User getUser(int userId)
+    public User getUser(long userId)
     {
         try
         {

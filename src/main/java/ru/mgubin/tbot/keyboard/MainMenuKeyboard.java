@@ -13,7 +13,8 @@ public class MainMenuKeyboard
 {
     /**
      * Получает созданное сообщение
-     * @param chatId идентификатор чата
+     *
+     * @param chatId      идентификатор чата
      * @param textMessage сообщение
      * @return сообщение
      */
@@ -28,8 +29,9 @@ public class MainMenuKeyboard
 
     /**
      * Метод создания сообщения для постоянной клавиатуры
-     * @param chatId идентификатор чата
-     * @param textMessage сообщение
+     *
+     * @param chatId              идентификатор чата
+     * @param textMessage         сообщение
      * @param replyKeyboardMarkup клавиатура
      * @return сообщение
      */
@@ -39,7 +41,7 @@ public class MainMenuKeyboard
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
         sendMessage.setText(textMessage);
-        if (replyKeyboardMarkup!=null)
+        if (replyKeyboardMarkup != null)
         {
             sendMessage.setReplyMarkup(replyKeyboardMarkup);
         }
@@ -48,6 +50,7 @@ public class MainMenuKeyboard
 
     /**
      * Метод формирования ReplyKeyboardMarkup кнопок (то есть постоянных, находящихся под полем ввода сообщения)
+     *
      * @param menuButtons массив enum названий кнопок для меню
      * @return клавиатура
      */

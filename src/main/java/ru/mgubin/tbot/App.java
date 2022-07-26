@@ -1,12 +1,13 @@
 package ru.mgubin.tbot;
 
 import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import ru.mgubin.tbot.bot.Bot;
 
-@Log4j
+@Slf4j
 public class App
 {
     public static void main( String[] args ) throws Exception
@@ -21,7 +22,7 @@ public class App
         }
         catch (TelegramApiException e)
         {
-            log.debug(e);
+            log.debug(String.valueOf(e));
         }
     }
 

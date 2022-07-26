@@ -1,36 +1,32 @@
 package ru.mgubin.tbot.command;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.db.UserDB;
 import ru.mgubin.tbot.entity.SearchProfile;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.enums.BotState;
-import ru.mgubin.tbot.enums.PrevNextButtons;
-import ru.mgubin.tbot.enums.SearchButtons;
 import ru.mgubin.tbot.keyboard.InlineKeyboard;
-import ru.mgubin.tbot.printer.PrintProfile;
-
-import java.util.List;
+import ru.mgubin.tbot.service.PrintProfile;
 
 public class SearchUserCommand implements Command
 {
     private final UserDataCache userDataCache;
+
     @Autowired
     public SearchUserCommand(UserDataCache userDataCache)
     {
         this.userDataCache = userDataCache;
     }
+
     @Override
     public OutputParameters invoke(Message message)
     {
-        int userId = message.getFrom().getId().intValue();
+        long userId = message.getFrom().getId().intValue();
         OutputParameters outputParameters = new OutputParameters();
         UserDB userDB = new UserDB();
         PrintProfile profile = new PrintProfile();
-        InlineKeyboard prevOrNext = new InlineKeyboard();
         SearchProfile searchProfile = new SearchProfile();
         User user = new User();
 
@@ -38,7 +34,6 @@ public class SearchUserCommand implements Command
         searchProfile.setNumberProfile(0); // позиция 0 при первом запуске, когда нажал кнопку "ПОИСК" - проверить, что работает без этой строчки
 
         userDataCache.saveUserListData(userId, searchProfile); // и записывает в мапу по id пользователя
-        System.out.println(searchProfile.getUserList().get(searchProfile.getNumberProfile()));
         user = searchProfile.getUserList().get(searchProfile.getNumberProfile());
 
         outputParameters.setSp(profile.sendPhoto(       // печатаем изображение, передавая параметрами

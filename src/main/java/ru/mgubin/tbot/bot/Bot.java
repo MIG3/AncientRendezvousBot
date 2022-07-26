@@ -1,6 +1,7 @@
 package ru.mgubin.tbot.bot;
 
 import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -16,12 +17,12 @@ import ru.mgubin.tbot.handler.CallBackAction;
 import ru.mgubin.tbot.handler.HandleMessages;
 import ru.mgubin.tbot.handler.HandleStateSelector;
 
-@Log4j
+@Slf4j
 @Component
 public class Bot extends TelegramLongPollingBot
 {
-    final private String BOT_TOKEN_TELEGRAM;
-    final private String BOT_NAME_TELEGRAM;
+    private final String BOT_TOKEN_TELEGRAM;
+    private final String BOT_NAME_TELEGRAM;
     private final UserDataCache userDataCache = new UserDataCache();
     @Autowired
     public Bot(String botToken, String botName)

@@ -22,9 +22,9 @@ public class AskNameCommand implements Command
     @Override
     public OutputParameters invoke(Message message)
     {
-        int chatId = message.getFrom().getId().intValue();
+        long userId = message.getFrom().getId();
         OutputParameters outputParameters = new OutputParameters();
-        User profileData = userDataCache.getUserProfileData(message.getFrom().getId().intValue());
+        User profileData = userDataCache.getUserProfileData(userId);
 
         profileData.setFullName(message.getText());
 
@@ -33,8 +33,8 @@ public class AskNameCommand implements Command
                 .chatId(message.getFrom().getId())
                 .build());
 
-        userDataCache.setUsersCurrentBotState(chatId, BotState.ASK_INFO);
-        userDataCache.saveUserProfileData(chatId, profileData);
+        userDataCache.setUsersCurrentBotState(userId, BotState.ASK_INFO);
+        userDataCache.saveUserProfileData(userId, profileData);
 
         return outputParameters;
     }

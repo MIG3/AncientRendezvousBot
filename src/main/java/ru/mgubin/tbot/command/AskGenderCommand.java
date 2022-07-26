@@ -25,7 +25,7 @@ public class AskGenderCommand implements Command
         InlineKeyboard gender = new InlineKeyboard();
         OutputParameters outputParameters = new OutputParameters();
         outputParameters.setSm(gender.keyboard(message.getChatId(), "Вы сударь иль сударыня?", GenderButtons.values()));
-        userDataCache.setUsersCurrentBotState(message.getFrom().getId().intValue(), BotState.ASK_NAME);
+        userDataCache.setUsersCurrentBotState(message.getFrom().getId(), BotState.ASK_NAME);
         return outputParameters;
     }
 }

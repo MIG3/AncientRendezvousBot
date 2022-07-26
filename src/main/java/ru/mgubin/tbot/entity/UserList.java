@@ -1,8 +1,7 @@
-package ru.mgubin.tbot.service;
+package ru.mgubin.tbot.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import ru.mgubin.tbot.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +10,5 @@ import java.util.List;
 @AllArgsConstructor
 public class UserList
 {
-    private List<User> users = new ArrayList<>();;
-
+    private List<User> users = new ArrayList<>();
 }

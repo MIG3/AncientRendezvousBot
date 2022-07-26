@@ -6,9 +6,8 @@ import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.db.UserDB;
 import ru.mgubin.tbot.entity.PersToPers;
 import ru.mgubin.tbot.entity.SearchProfile;
-import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.enums.BotState;
-import ru.mgubin.tbot.printer.PrintProfile;
+import ru.mgubin.tbot.service.PrintProfile;
 
 public class BackCommand implements Command
 {
@@ -22,7 +21,7 @@ public class BackCommand implements Command
     @Override
     public OutputParameters invoke(Message message)
     {
-        int userId = message.getFrom().getId().intValue();
+        long userId = message.getFrom().getId();
         SearchProfile searchProfile = new SearchProfile();
         OutputParameters outputParameters = new OutputParameters();
         PrintProfile profile = new PrintProfile();

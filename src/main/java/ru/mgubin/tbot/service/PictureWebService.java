@@ -1,18 +1,18 @@
-package ru.mgubin.tbot.printer;
+package ru.mgubin.tbot.service;
 
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import org.telegram.telegrambots.meta.api.objects.InputFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import static ru.mgubin.tbot.service.Constants.PICTURE_URL;
+import static ru.mgubin.tbot.Constant.Constants.PICTURE_URL;
 
+@Service
 public class PictureWebService
 {
 

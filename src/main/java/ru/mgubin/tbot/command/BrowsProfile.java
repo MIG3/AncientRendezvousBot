@@ -5,7 +5,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.db.UserDB;
 import ru.mgubin.tbot.entity.User;
-import ru.mgubin.tbot.printer.PrintProfile;
+import ru.mgubin.tbot.service.PrintProfile;
 
 public class BrowsProfile implements Command
 {
@@ -20,7 +20,7 @@ public class BrowsProfile implements Command
     @Override
     public OutputParameters invoke(Message message)
     {
-        int userId = message.getFrom().getId().intValue();
+        long userId = message.getFrom().getId();
         OutputParameters outputParameters = new OutputParameters();
         PrintProfile profile = new PrintProfile();
         UserDB userDB = new UserDB();

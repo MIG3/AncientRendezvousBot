@@ -24,7 +24,7 @@ public class AskCrushCommand implements Command
     public OutputParameters invoke(Message message)
     {
         OutputParameters outputParameters = new OutputParameters();
-        userDataCache.setUsersCurrentBotState(message.getFrom().getId().intValue(), BotState.ASK_BIRTHDAY);
+        userDataCache.setUsersCurrentBotState(message.getFrom().getId(), BotState.ASK_BIRTHDAY);
         return outputParameters;
     }
 }

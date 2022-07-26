@@ -6,9 +6,8 @@ import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.db.UserDB;
 import ru.mgubin.tbot.entity.PersToPers;
 import ru.mgubin.tbot.entity.SearchProfile;
-import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.enums.BotState;
-import ru.mgubin.tbot.printer.PrintProfile;
+import ru.mgubin.tbot.service.PrintProfile;
 
 public class NextCommand implements Command
 {
@@ -23,7 +22,7 @@ public class NextCommand implements Command
     @Override
     public OutputParameters invoke(Message message)
     {
-        int userId = message.getFrom().getId().intValue();
+        long userId = message.getFrom().getId();
         SearchProfile searchProfile = new SearchProfile();
         OutputParameters outputParameters = new OutputParameters();
         PrintProfile profile = new PrintProfile();
@@ -37,7 +36,7 @@ public class NextCommand implements Command
         if (lengthUserList <= pos + 1)
         {
             searchProfile.setNumberProfile(0);
-            lovers.setCrushId(searchProfile.getUserList().get(lengthUserList-1).getId()); // последний элемент списка
+            lovers.setCrushId(searchProfile.getUserList().get(lengthUserList - 1).getId()); // последний элемент списка
         } else
         {
             searchProfile.setNumberProfile(pos + 1);

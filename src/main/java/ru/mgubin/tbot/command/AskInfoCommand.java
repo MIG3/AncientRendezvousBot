@@ -22,15 +22,16 @@ public class AskInfoCommand implements Command
     @Override
     public OutputParameters invoke(Message message)
     {
+        long userId = message.getFrom().getId();
         InlineKeyboard gender = new InlineKeyboard();
         OutputParameters outputParameters = new OutputParameters();
-        User profileData = userDataCache.getUserProfileData(message.getFrom().getId().intValue());
+        User profileData = userDataCache.getUserProfileData(userId);
 
         profileData.setDescription(message.getText());
 
         outputParameters.setSm(gender.keyboard(message.getChatId(), "Кого Вы хотите искать в будущем?", SearchButtons.values()));
-        userDataCache.setUsersCurrentBotState(message.getFrom().getId().intValue(), BotState.ASK_CRUSH);
-        userDataCache.saveUserProfileData(message.getFrom().getId().intValue(), profileData);
+        userDataCache.setUsersCurrentBotState(userId, BotState.ASK_CRUSH);
+        userDataCache.saveUserProfileData(userId, profileData);
 
         return outputParameters;
     }

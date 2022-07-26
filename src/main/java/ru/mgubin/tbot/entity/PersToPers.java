@@ -15,8 +15,8 @@ import ru.mgubin.tbot.exception.ParseToJsonException;
 @Data
 public class PersToPers
 {
-    Integer userId;
-    Integer crushId;
+    Long userId;
+    Long crushId;
 
     public String toJson()
     {

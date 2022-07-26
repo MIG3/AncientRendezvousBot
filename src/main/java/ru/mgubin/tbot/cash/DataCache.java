@@ -12,45 +12,55 @@ public interface DataCache
      * @param userId идентификатор пользователя
      * @param botState - состояние
      */
-    void setUsersCurrentBotState(int userId, BotState botState);
+    void setUsersCurrentBotState(long userId, BotState botState);
 
-    void setUsersCurrentLikeState(int userId, LikeState likeState);
+    /**
+     * Метод записи текущего состояния лайков пользователю
+     * @param userId идентификатор пользователя
+     * @param likeState - состояние лайка
+     */
+    void setUsersCurrentLikeState(long userId, LikeState likeState);
 
     /**
      * Метод получения текущего состояния пользователя
      * @param userId идентификатор пользователя
      * @return - состояние
      */
-    BotState getUsersCurrentBotState(int userId);
+    BotState getUsersCurrentBotState(long userId);
 
-    LikeState getUsersCurrentLikeState(int userId);
+    /**
+     * Метод получения текущего состояния в отношении лайков
+     * @param userId идентификатор пользователя
+     * @return - состояние
+     */
+    LikeState getUsersCurrentLikeState(long userId);
 
     /**
      * Метод получения данных пользователя по его идентификатору
      * @param userId идентификатор пользователя
      * @return анкета пользователя
      */
-    User getUserProfileData(int userId);
+    User getUserProfileData(long userId);
 
     /**
      * Сохраниение в мап по ключу пользователя данных из объекта User
      * @param userId идентификатор пользователя
      * @param userProfileData данные пользователя
      */
-    void saveUserProfileData(int userId, User userProfileData);
+    void saveUserProfileData(long userId, User userProfileData);
 
     /**
      * Сохраниение в мап по ключу сущности списка анкет с позицией следующей анкеты
      * @param userId идентификатор пользователя
      * @param listProfileData сущность: id пользователя и список найденных анкет для него
      */
-    void saveUserListData(int userId, SearchProfile listProfileData);
+    void saveUserListData(long userId, SearchProfile listProfileData);
 
     /**
      * Метод получения списка анкет для пользователя по его идентификатору
      * @param userId идентификатор пользователя
      * @return анкета пользователя
      */
-    SearchProfile getUserListData(int userId);
+    SearchProfile getUserListData(long userId);
 
 }

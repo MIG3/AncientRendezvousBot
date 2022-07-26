@@ -1,4 +1,4 @@
-package ru.mgubin.tbot.service;
+package ru.mgubin.tbot.Constant;
 
 public class Constants
 {
