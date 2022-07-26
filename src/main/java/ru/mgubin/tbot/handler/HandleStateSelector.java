@@ -44,6 +44,8 @@ public class HandleStateSelector
                 return new BackCommand(userDataCache);
             case CORRECT_PROFILE:
                 return new CorrectProfileCommand(userDataCache);
+            case BROWSE_PROFILE:
+                return new BrowsProfile(userDataCache);
             case BROWSE_LOVERS:
                 return new LoversCommand(userDataCache);
             case START:

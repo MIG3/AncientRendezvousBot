@@ -7,18 +7,11 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import ru.mgubin.tbot.cash.UserDataCache;
-import ru.mgubin.tbot.command.BackCommand;
-import ru.mgubin.tbot.command.Command;
-import ru.mgubin.tbot.command.NextCommand;
-import ru.mgubin.tbot.command.OutputParameters;
-import ru.mgubin.tbot.db.UserDB;
-import ru.mgubin.tbot.entity.SearchProfile;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.enums.BotState;
 import ru.mgubin.tbot.enums.PrevNextButtons;
 import ru.mgubin.tbot.keyboard.InlineKeyboard;
 import ru.mgubin.tbot.keyboard.MainMenuKeyboard;
-import ru.mgubin.tbot.printer.PrintProfile;
 
 @Service
 public class CallBackAction
@@ -91,7 +84,12 @@ public class CallBackAction
 
         } else if (buttonQuery.getData().equals("ПОСМОТРЕТЬ"))
         {
-            callBackAnswer = sendAnswerCallbackQuery("Ожидается в будущих обновлениях", true, buttonQuery);
+            userDataCache.setUsersCurrentBotState(userId, BotState.BROWSE_PROFILE);
+            //callBackAnswer = sendAnswerCallbackQuery("Ожидается в будущих обновлениях", true, buttonQuery);
+            callBackAnswer = SendMessage.builder()
+                    .text("Для получения анкеты напишите любое слово")
+                    .chatId(chatId)
+                    .build();
         } else if (buttonQuery.getData().equals("СУДАРЯ"))
         {
             User user = userDataCache.getUserProfileData(userId);

@@ -35,7 +35,7 @@ public class SearchUserCommand implements Command
         User user = new User();
 
         searchProfile.fillUserList(userDB.getUsersByGender(userId)); // вызов метода, который ввозвращает список анкет (users)
-        searchProfile.setNumberProfile(0); // позиция 0 при первом запуске, когда нажал кнопку "ПОИСК"
+        searchProfile.setNumberProfile(0); // позиция 0 при первом запуске, когда нажал кнопку "ПОИСК" - проверить, что работает без этой строчки
 
         userDataCache.saveUserListData(userId, searchProfile); // и записывает в мапу по id пользователя
         System.out.println(searchProfile.getUserList().get(searchProfile.getNumberProfile()));
@@ -46,21 +46,7 @@ public class SearchUserCommand implements Command
                 user));   // 0 элемент списка анкет (пользователей)
 
         userDataCache.setUsersCurrentBotState(userId, BotState.CHOICE_PREVorNEXT_BUTTON); // меняю состояние, чтобы вызвать следующую команду выдачи кнопок перебора анкет
-        // увеличить позицию на 1?
-
-        //outputParameters.setSm(prevOrNext.keyboard(message.getChatId(), "Кого Вы хотите искать в будущем?", PrevNextButtons.values()));
-        /*outputParameters.setSm(SendMessage.builder()
-                .text("Ожидается в будущих обновлениях"
-                )
-                .chatId(message.getChatId())
-                .build());*/
 
         return outputParameters;
     }
-
-/*    @Override
-    public OutputParameters invoke(Message message, List<User> users)
-    {
-        return null;
-    }*/
 }

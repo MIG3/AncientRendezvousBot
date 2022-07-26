@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import ru.mgubin.tbot.entity.SearchProfile;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.enums.BotState;
+import ru.mgubin.tbot.enums.LikeState;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,8 +13,9 @@ import java.util.Map;
 public class UserDataCache implements DataCache
 {
     private Map<Integer, BotState> usersBotStates = new HashMap<>();
+    private Map<Integer, LikeState> usersLikeStates = new HashMap<>();
     private Map<Integer, User> usersProfileData = new HashMap<>();
-    private Map<Integer, SearchProfile> usersListData = new HashMap<>();
+    private Map<Integer, SearchProfile> usersSearchListData = new HashMap<>();
 
     @Override
     public void setUsersCurrentBotState(int userId, BotState botState)
@@ -21,6 +23,11 @@ public class UserDataCache implements DataCache
         usersBotStates.put(userId, botState);
     }
 
+    @Override
+    public void setUsersCurrentLikeState(int userId, LikeState likeState)
+    {
+        usersLikeStates.put(userId, likeState);
+    }
     @Override
     public BotState getUsersCurrentBotState(int userId)
     {
@@ -32,7 +39,17 @@ public class UserDataCache implements DataCache
 
         return botState;
     }
+    @Override
+    public LikeState getUsersCurrentLikeState(int userId)
+    {
+        LikeState likeState = usersLikeStates.get(userId);
+        if (likeState == null)
+        {
+            likeState = LikeState.LIKE;
+        }
 
+        return likeState;
+    }
     @Override
     public User getUserProfileData(int userId)
     {
@@ -53,13 +70,13 @@ public class UserDataCache implements DataCache
     @Override
     public void saveUserListData(int userId, SearchProfile listProfileData)
     {
-        usersListData.put(userId, listProfileData);
+        usersSearchListData.put(userId, listProfileData);
     }
 
     @Override
     public SearchProfile getUserListData(int userId)
     {
-        SearchProfile listUsers = usersListData.get(userId);
+        SearchProfile listUsers = usersSearchListData.get(userId);
         return listUsers;
     }
 

@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.mgubin.tbot.cash.UserDataCache;
-import ru.mgubin.tbot.entity.SearchProfile;
 import ru.mgubin.tbot.enums.BotState;
+import ru.mgubin.tbot.enums.LikeState;
 
 public class HandleMessages
 {
@@ -22,6 +22,7 @@ public class HandleMessages
         String inputMsg = message.getText();
         int userId = message.getFrom().getId().intValue();
         BotState botState = userDataCache.getUsersCurrentBotState(userId);
+        LikeState likeState = userDataCache.getUsersCurrentLikeState(userId);
 
         switch (inputMsg)
         {
@@ -36,9 +37,11 @@ public class HandleMessages
                 break;
             case "/like":
                 botState = BotState.NEXT_PROFILE;
+                likeState = LikeState.LIKE;
                 break;
             case "/dislike":
                 botState = BotState.PREV_PROFILE;
+                likeState = LikeState.DISLIKE;
                 break;
             case "АНКЕТА":
                 botState = BotState.CORRECT_PROFILE;
@@ -48,9 +51,11 @@ public class HandleMessages
                 break;
             default:
                 botState = userDataCache.getUsersCurrentBotState(userId);
+                likeState = userDataCache.getUsersCurrentLikeState(userId);
                 break;
         }
         userDataCache.setUsersCurrentBotState(userId, botState);
+        userDataCache.setUsersCurrentLikeState(userId, likeState);
 
         return botState;
     }

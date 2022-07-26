@@ -3,6 +3,7 @@ package ru.mgubin.tbot.cash;
 import ru.mgubin.tbot.entity.SearchProfile;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.enums.BotState;
+import ru.mgubin.tbot.enums.LikeState;
 
 public interface DataCache
 {
@@ -13,12 +14,16 @@ public interface DataCache
      */
     void setUsersCurrentBotState(int userId, BotState botState);
 
+    void setUsersCurrentLikeState(int userId, LikeState likeState);
+
     /**
      * Метод получения текущего состояния пользователя
      * @param userId идентификатор пользователя
      * @return - состояние
      */
     BotState getUsersCurrentBotState(int userId);
+
+    LikeState getUsersCurrentLikeState(int userId);
 
     /**
      * Метод получения данных пользователя по его идентификатору

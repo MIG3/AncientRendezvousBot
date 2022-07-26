@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.db.UserDB;
+import ru.mgubin.tbot.entity.PersToPers;
 import ru.mgubin.tbot.entity.SearchProfile;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.enums.BotState;
@@ -18,6 +19,7 @@ public class NextCommand implements Command
     {
         this.userDataCache = userDataCache;
     }
+
     @Override
     public OutputParameters invoke(Message message)
     {
@@ -26,16 +28,28 @@ public class NextCommand implements Command
         OutputParameters outputParameters = new OutputParameters();
         PrintProfile profile = new PrintProfile();
         UserDB userDB = new UserDB();
-        User user = new User();
+        PersToPers lovers = new PersToPers();
 
         searchProfile = userDataCache.getUserListData(userId);
+        int lengthUserList = searchProfile.getUserList().size();
         int pos = searchProfile.getNumberProfile();
-        searchProfile.setNumberProfile(pos + 1);
-        user = searchProfile.getUserList().get(searchProfile.getNumberProfile());
 
-        outputParameters.setSp(profile.sendPhoto(       // печатаем изображение, передавая параметрами
-                message.getChatId(),                    // id чата
-                user));
+        if (lengthUserList <= pos + 1)
+        {
+            searchProfile.setNumberProfile(0);
+            lovers.setCrushId(searchProfile.getUserList().get(lengthUserList-1).getId()); // последний элемент списка
+        } else
+        {
+            searchProfile.setNumberProfile(pos + 1);
+            lovers.setCrushId(searchProfile.getUserList().get(pos).getId()); // предыдущий элемент списка
+        }
+
+        lovers.setUserId(userId);
+        userDB.makeLikeToUser(lovers);
+
+        outputParameters.setSp(profile.sendPhoto(                                       // печатаем изображение, передавая параметрами
+                message.getChatId(),                                                    // id чата
+                searchProfile.getUserList().get(searchProfile.getNumberProfile())));    // анкета пользователя по её номеру
 
         userDataCache.setUsersCurrentBotState(userId, BotState.CHOICE_PREVorNEXT_BUTTON);
 

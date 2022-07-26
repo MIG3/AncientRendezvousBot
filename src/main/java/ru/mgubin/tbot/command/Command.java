@@ -8,5 +8,4 @@ import java.util.List;
 public interface Command
 {
     OutputParameters invoke(Message message);
-    //OutputParameters invoke(Message message, List<User> users);
 }
