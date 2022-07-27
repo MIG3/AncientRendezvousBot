@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.entity.User;
-import ru.mgubin.tbot.enums.BotState;
+import ru.mgubin.tbot.enums.BotStateEnum;
 
 @Service
 public class AskNameCommand implements Command
@@ -33,7 +33,7 @@ public class AskNameCommand implements Command
                 .chatId(message.getFrom().getId())
                 .build());
 
-        userDataCache.setUsersCurrentBotState(userId, BotState.ASK_INFO);
+        userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_INFO);
         userDataCache.saveUserProfileData(userId, profileData);
 
         return outputParameters;

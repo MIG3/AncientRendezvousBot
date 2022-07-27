@@ -3,7 +3,7 @@ package ru.mgubin.tbot.enums;
 /**
  * Возможные состояния бота
  */
-public enum BotState
+public enum BotStateEnum
 {
     ASK_INFO,
     ASK_NAME,

@@ -11,13 +11,22 @@
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <spring-boot-starter-web.version>2.7.2</spring-boot-starter-web.version>
+        <spring-boot.version>2.7.2</spring-boot.version>
+        <telegrambots.version>6.1.0</telegrambots.version>
+        <telegrambotsextensions.version>6.1.0</telegrambotsextensions.version>
+        <lombok.version>1.18.24</lombok.version>
+        <jackson-databind.version>2.13.3</jackson-databind.version>
+        <commons-csv.version>1.7</commons-csv.version>
+        <junit.version>4.13.2</junit.version>
+        <junit-jupiter.version>5.8.2</junit-jupiter.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.7.2</version>
+            <version>${spring-boot-starter-web.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
@@ -28,24 +37,23 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot</artifactId>
-            <version>2.7.0</version>
+            <version>${spring-boot.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
         <dependency>
             <groupId>org.telegram</groupId>
             <artifactId>telegrambots</artifactId>
-            <version>6.1.0</version>
+            <version>${telegrambots.version}</version>
         </dependency>
         <dependency>
             <groupId>org.telegram</groupId>
             <artifactId>telegrambotsextensions</artifactId>
-            <version>6.1.0</version>
+            <version>${telegrambotsextensions.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
+            <version>${lombok.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
@@ -54,47 +62,21 @@
             </exclusions>
             <scope>compile</scope>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.13.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-csv</artifactId>
-            <version>1.7</version>
+            <version>${jackson-databind.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>3.23.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>7.6.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.8.2</version>
+            <version>${junit-jupiter.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

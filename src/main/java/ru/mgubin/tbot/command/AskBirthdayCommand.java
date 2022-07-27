@@ -5,7 +5,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.db.UserDB;
 import ru.mgubin.tbot.entity.User;
-import ru.mgubin.tbot.enums.BotState;
+import ru.mgubin.tbot.enums.BotStateEnum;
 import ru.mgubin.tbot.service.PrintProfile;
 
 import java.time.LocalDate;
@@ -34,7 +34,7 @@ public class AskBirthdayCommand implements Command
         profileData.setBirthday(LocalDate.parse(message.getText(), DateTimeFormatter.ofPattern("dd.MM.yyyy")));
         profileData.setId(userId);
 
-        userDataCache.setUsersCurrentBotState(userId, BotState.SAVE_PROFILE);
+        userDataCache.setUsersCurrentBotState(userId, BotStateEnum.SAVE_PROFILE);
         userDataCache.saveUserProfileData(userId, profileData);
 
         userDB.createUser(profileData);

@@ -3,7 +3,7 @@ package ru.mgubin.tbot.command;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.mgubin.tbot.cash.UserDataCache;
-import ru.mgubin.tbot.enums.PrevNextButtons;
+import ru.mgubin.tbot.enums.PrevNextButtonEnum;
 import ru.mgubin.tbot.keyboard.InlineKeyboard;
 
 public class ChoiceProfileFromSearchCommand implements Command
@@ -23,7 +23,7 @@ public class ChoiceProfileFromSearchCommand implements Command
         OutputParameters outputParameters = new OutputParameters();
 
 
-        outputParameters.setSm(prevOrNext.keyboard(message.getChatId(), "Следующая или предыдущая анкеты", PrevNextButtons.values()));
+        outputParameters.setSm(prevOrNext.keyboard(message.getChatId(), "Следующая или предыдущая анкеты", PrevNextButtonEnum.valuesPrevNextButtons()));
 
         return outputParameters;
     }

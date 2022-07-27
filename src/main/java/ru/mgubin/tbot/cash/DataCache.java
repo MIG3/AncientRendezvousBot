@@ -1,11 +1,10 @@
 package ru.mgubin.tbot.cash;
 
 import ru.mgubin.tbot.entity.CrushProfile;
-import ru.mgubin.tbot.entity.PersonCrush;
 import ru.mgubin.tbot.entity.SearchProfile;
 import ru.mgubin.tbot.entity.User;
-import ru.mgubin.tbot.enums.BotState;
-import ru.mgubin.tbot.enums.LikeState;
+import ru.mgubin.tbot.enums.BotStateEnum;
+import ru.mgubin.tbot.enums.LikeStateEnum;
 
 public interface DataCache
 {
@@ -14,28 +13,28 @@ public interface DataCache
      * @param userId идентификатор пользователя
      * @param botState - состояние
      */
-    void setUsersCurrentBotState(long userId, BotState botState);
+    void setUsersCurrentBotState(long userId, BotStateEnum botState);
 
     /**
      * Метод записи текущего состояния лайков пользователю
      * @param userId идентификатор пользователя
      * @param likeState - состояние лайка
      */
-    void setUsersCurrentLikeState(long userId, LikeState likeState);
+    void setUsersCurrentLikeState(long userId, LikeStateEnum likeState);
 
     /**
      * Метод получения текущего состояния пользователя
      * @param userId идентификатор пользователя
      * @return - состояние
      */
-    BotState getUsersCurrentBotState(long userId);
+    BotStateEnum getUsersCurrentBotState(long userId);
 
     /**
      * Метод получения текущего состояния в отношении лайков
      * @param userId идентификатор пользователя
      * @return - состояние
      */
-    LikeState getUsersCurrentLikeState(long userId);
+    LikeStateEnum getUsersCurrentLikeState(long userId);
 
     /**
      * Метод получения данных пользователя по его идентификатору

@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.mgubin.tbot.cash.UserDataCache;
-import ru.mgubin.tbot.enums.BotState;
-import ru.mgubin.tbot.enums.LikeState;
+import ru.mgubin.tbot.enums.BotStateEnum;
+import ru.mgubin.tbot.enums.LikeStateEnum;
 
 public class HandleMessages
 {
@@ -17,43 +17,43 @@ public class HandleMessages
         this.userDataCache = userDataCache;
     }
 
-    public BotState handleInputMessage(Message message) throws TelegramApiException
+    public BotStateEnum handleInputMessage(Message message) throws TelegramApiException
     {
         String inputMsg = message.getText();
         int userId = message.getFrom().getId().intValue();
-        BotState botState = userDataCache.getUsersCurrentBotState(userId);
-        LikeState likeState = userDataCache.getUsersCurrentLikeState(userId);
+        BotStateEnum botState = userDataCache.getUsersCurrentBotState(userId);
+        LikeStateEnum likeState = userDataCache.getUsersCurrentLikeState(userId);
 
         switch (inputMsg)
         {
             case "/start":
-                botState = BotState.START;
+                botState = BotStateEnum.START;
                 break;
             case "ПОМОЩЬ":
-                botState = BotState.SHOW_HELP_MENU;
+                botState = BotStateEnum.SHOW_HELP_MENU;
                 break;
             case "ПОИСК":
-                botState = BotState.SEARCH;
+                botState = BotStateEnum.SEARCH;
                 break;
             case "/like":
-                botState = BotState.NEXT_PROFILE;
-                likeState = LikeState.LIKE;
+                botState = BotStateEnum.NEXT_PROFILE;
+                likeState = LikeStateEnum.LIKE;
                 break;
             case "/dislike":
-                botState = BotState.PREV_PROFILE;
-                likeState = LikeState.DISLIKE;
+                botState = BotStateEnum.PREV_PROFILE;
+                likeState = LikeStateEnum.DISLIKE;
                 break;
             case "/next":
-                botState = BotState.NEXT_CRUSH;
+                botState = BotStateEnum.NEXT_CRUSH;
                 break;
             case "/prev":
-                botState = BotState.PREV_CRUSH;
+                botState = BotStateEnum.PREV_CRUSH;
                 break;
             case "АНКЕТА":
-                botState = BotState.CORRECT_PROFILE;
+                botState = BotStateEnum.CORRECT_PROFILE;
                 break;
             case "ЛЮБИМЦЫ":
-                botState = BotState.BROWSE_LOVERS;
+                botState = BotStateEnum.BROWSE_LOVERS;
                 break;
             default:
                 botState = userDataCache.getUsersCurrentBotState(userId);

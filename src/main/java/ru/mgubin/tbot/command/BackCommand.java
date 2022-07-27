@@ -6,7 +6,7 @@ import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.db.UserDB;
 import ru.mgubin.tbot.entity.PersonCrush;
 import ru.mgubin.tbot.entity.SearchProfile;
-import ru.mgubin.tbot.enums.BotState;
+import ru.mgubin.tbot.enums.BotStateEnum;
 import ru.mgubin.tbot.service.PrintProfile;
 
 public class BackCommand implements Command
@@ -49,7 +49,7 @@ public class BackCommand implements Command
                 searchProfile.getUserList().get(searchProfile.getNumberProfile()),
                 ""));
 
-        userDataCache.setUsersCurrentBotState(userId, BotState.CHOICE_PREVorNEXT_BUTTON);
+        userDataCache.setUsersCurrentBotState(userId, BotStateEnum.CHOICE_PREVorNEXT_BUTTON);
 
         return outputParameters;
     }

@@ -6,8 +6,7 @@ import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.db.UserDB;
 import ru.mgubin.tbot.entity.SearchProfile;
 import ru.mgubin.tbot.entity.User;
-import ru.mgubin.tbot.enums.BotState;
-import ru.mgubin.tbot.keyboard.InlineKeyboard;
+import ru.mgubin.tbot.enums.BotStateEnum;
 import ru.mgubin.tbot.service.PrintProfile;
 
 public class SearchUserCommand implements Command
@@ -40,7 +39,7 @@ public class SearchUserCommand implements Command
                 user,                                   // 0 элемент списка анкет (пользователей)
                 ""));
 
-        userDataCache.setUsersCurrentBotState(userId, BotState.CHOICE_PREVorNEXT_BUTTON); // меняю состояние, чтобы вызвать следующую команду выдачи кнопок перебора анкет
+        userDataCache.setUsersCurrentBotState(userId, BotStateEnum.CHOICE_PREVorNEXT_BUTTON); // меняю состояние, чтобы вызвать следующую команду выдачи кнопок перебора анкет
 
         return outputParameters;
     }

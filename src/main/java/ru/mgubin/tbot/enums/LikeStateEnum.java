@@ -1,6 +1,6 @@
 package ru.mgubin.tbot.enums;
 
-public enum LikeState
+public enum LikeStateEnum
 {
     LIKE,
     DISLIKE;

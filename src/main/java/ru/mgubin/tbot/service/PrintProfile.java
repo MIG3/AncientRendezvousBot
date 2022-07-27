@@ -6,6 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.InputFile;
 import ru.mgubin.tbot.entity.User;
 
 import java.io.InputStream;
+import java.util.StringJoiner;
 
 import static ru.mgubin.tbot.constant.Constants.FILE_NAME;
 
@@ -14,13 +15,21 @@ public class PrintProfile
 {
     PictureWebService pictureWebService = new PictureWebService();
 
-    public SendPhoto sendPhoto(long chatId, User user, String label)
+    public SendPhoto sendPhoto(long chatId, User user, String love)
     {
         InputStream picture = pictureWebService.makePicture(user.getDescription());
 
+        StringJoiner label = new StringJoiner(", ");
+        label.add(user.getGender().getButtonName());
+        label.add(user.getFullName());
+        if (!love.equals(""))
+        {
+            label.add(love);
+        }
+
         return SendPhoto.builder()
                 .photo(new InputFile(picture, FILE_NAME))
-                .caption(user.getGender() + ", " + user.getFullName() + ", " + label)
+                .caption(label.toString())
                 .chatId(chatId)
                 .build();
     }

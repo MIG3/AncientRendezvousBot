@@ -1,6 +1,5 @@
 package ru.mgubin.tbot.bot;
 
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,7 +11,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.command.Command;
 import ru.mgubin.tbot.command.OutputParameters;
-import ru.mgubin.tbot.enums.BotState;
+import ru.mgubin.tbot.enums.BotStateEnum;
 import ru.mgubin.tbot.handler.CallBackAction;
 import ru.mgubin.tbot.handler.HandleMessages;
 import ru.mgubin.tbot.handler.HandleStateSelector;
@@ -49,7 +48,7 @@ public class Bot extends TelegramLongPollingBot
     {
         log.info("Получаем новое обновление. updateID: " + update.getUpdateId());
         Message message = update.getMessage();
-        BotState botState;
+        BotStateEnum botState;
 
         if (update.hasCallbackQuery())
         {

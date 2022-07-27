@@ -8,8 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.entity.User;
-import ru.mgubin.tbot.enums.BotState;
-import ru.mgubin.tbot.enums.PrevNextButtons;
+import ru.mgubin.tbot.enums.*;
 import ru.mgubin.tbot.keyboard.InlineKeyboard;
 import ru.mgubin.tbot.keyboard.MainMenuKeyboard;
 
@@ -38,85 +37,80 @@ public class CallBackAction
 
         BotApiMethod<?> callBackAnswer = menuService.getMainMenuMessage(chatId, "Воспользуйтесь главным меню");
 
-        if (buttonQuery.getData().equals("СУДАРЬ"))
+        if (buttonQuery.getData().equals(GenderButtonsEnum.MEN.getButtonName()))
         {
             User user = userDataCache.getUserProfileData(userId);
-            user.setGender("MEN");
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NAME);
+            user.setGender(GenderButtonsEnum.MEN);
+            userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_NAME);
             userDataCache.saveUserProfileData(buttonQuery.getMessage().getChatId().intValue(), user);
 
             callBackAnswer = SendMessage.builder()
                     .text("Как Вас величать?")
                     .chatId(chatId)
                     .build();
-        } else if (buttonQuery.getData().equals("СУДАРЫНЯ"))
+        } else if (buttonQuery.getData().equals(GenderButtonsEnum.WOMEN.getButtonName()))
         {
             User user = userDataCache.getUserProfileData(userId);
-            user.setGender("WOMEN");
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_NAME);
+            user.setGender(GenderButtonsEnum.WOMEN);
+            userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_NAME);
             userDataCache.saveUserProfileData(buttonQuery.getMessage().getChatId().intValue(), user);
 
             callBackAnswer = SendMessage.builder()
                     .text("Как Вас величать?")
                     .chatId(chatId)
                     .build();
-        } else if (buttonQuery.getData().equals("ЛЮБИМЦЫ"))
-        {
-            InlineKeyboard searchKeyboard = new InlineKeyboard();
-            callBackAnswer = searchKeyboard.keyboard(chatId, "Вперёд или назад", PrevNextButtons.values());
-
-        } else if (buttonQuery.getData().equals("ВПЕРЁД"))
+        } else if (buttonQuery.getData().equals(PrevNextButtonEnum.NEXT.getButtonName()))
         {
             callBackAnswer = sendAnswerCallbackQuery("Ожидается в будущих обновлениях", true, buttonQuery);
 
-        } else if (buttonQuery.getData().equals("НАЗАД"))
+        } else if (buttonQuery.getData().equals(PrevNextButtonEnum.PREV.getButtonName()))
         {
             callBackAnswer = sendAnswerCallbackQuery("Ожидается в будущих обновлениях", true, buttonQuery);
 
-        } else if (buttonQuery.getData().equals("ЗАПОЛНИТЬ") || buttonQuery.getData().equals("ИЗМЕНИТЬ"))
+        } else if (buttonQuery.getData().equals(ProfileButtonsEnum.WRITE.getButtonName()) || buttonQuery.getData().equals(ProfileButtonsEnum.UPDATE.getButtonName()))
         {
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_GENDER);
+            userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_GENDER);
             callBackAnswer = SendMessage.builder()
                     .text("Заполните анкету. Для продолжения напишите любое слово")
                     .chatId(chatId)
                     .build();
 
 
-        } else if (buttonQuery.getData().equals("ПОСМОТРЕТЬ"))
+        } else if (buttonQuery.getData().equals(ProfileButtonsEnum.BROWSE.getButtonName()))
         {
-            userDataCache.setUsersCurrentBotState(userId, BotState.BROWSE_PROFILE);
+            userDataCache.setUsersCurrentBotState(userId, BotStateEnum.BROWSE_PROFILE);
             //callBackAnswer = sendAnswerCallbackQuery("Ожидается в будущих обновлениях", true, buttonQuery);
             callBackAnswer = SendMessage.builder()
                     .text("Для получения анкеты напишите любое слово")
                     .chatId(chatId)
                     .build();
-        } else if (buttonQuery.getData().equals("СУДАРЯ"))
+        } else if (buttonQuery.getData().equals(SearchButtonsEnum.MEN.getButtonName()))
         {
             User user = userDataCache.getUserProfileData(userId);
-            user.setCrush("MEN");
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_BIRTHDAY);
+            user.setCrush(SearchButtonsEnum.MEN);
+            userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_BIRTHDAY);
             userDataCache.saveUserProfileData(buttonQuery.getMessage().getChatId().intValue(), user);
 
             callBackAnswer = SendMessage.builder()
                     .text("Когда Вы родились? Напишите в формате: dd.mm.yyyy")
                     .chatId(chatId)
                     .build();
-        } else if (buttonQuery.getData().equals("СУДАРЫНЮ"))
+        } else if (buttonQuery.getData().equals(SearchButtonsEnum.WOMEN.getButtonName()))
         {
             User user = userDataCache.getUserProfileData(userId);
-            user.setCrush("WOMEN");
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_BIRTHDAY);
+            user.setCrush(SearchButtonsEnum.WOMEN);
+            userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_BIRTHDAY);
             userDataCache.saveUserProfileData(buttonQuery.getMessage().getChatId().intValue(), user);
 
             callBackAnswer = SendMessage.builder()
                     .text("Когда Вы родились? Напишите в формате: dd.mm.yyyy")
                     .chatId(chatId)
                     .build();
-        } else if (buttonQuery.getData().equals("ВСЕХ"))
+        } else if (buttonQuery.getData().equals(SearchButtonsEnum.ALL.getButtonName()))
         {
             User user = userDataCache.getUserProfileData(userId);
-            user.setCrush("ALL");
-            userDataCache.setUsersCurrentBotState(userId, BotState.ASK_BIRTHDAY);
+            user.setCrush(SearchButtonsEnum.ALL);
+            userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_BIRTHDAY);
             userDataCache.saveUserProfileData(buttonQuery.getMessage().getChatId().intValue(), user);
 
             callBackAnswer = SendMessage.builder()
@@ -125,7 +119,7 @@ public class CallBackAction
                     .build();
         } else
         {
-            userDataCache.setUsersCurrentBotState(userId, BotState.SHOW_MAIN_MENU);
+            userDataCache.setUsersCurrentBotState(userId, BotStateEnum.SHOW_MAIN_MENU);
         }
         return callBackAnswer;
     }

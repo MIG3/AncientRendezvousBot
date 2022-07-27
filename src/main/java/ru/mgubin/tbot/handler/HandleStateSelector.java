@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.command.*;
-import ru.mgubin.tbot.enums.BotState;
+import ru.mgubin.tbot.enums.BotStateEnum;
 
 @Service
 public class HandleStateSelector
@@ -18,7 +18,7 @@ public class HandleStateSelector
         this.userDataCache = userDataCache;
     }
 
-    public Command handleStateSelector(BotState state) throws TelegramApiException
+    public Command handleStateSelector(BotStateEnum state) throws TelegramApiException
     {
         switch (state)
         {
@@ -42,10 +42,10 @@ public class HandleStateSelector
                 return new NextCommand(userDataCache);
             case PREV_PROFILE:
                 return new BackCommand(userDataCache);
-           /* case NEXT_CRUSH:
+            case NEXT_CRUSH:
                 return new NextCrushCommand(userDataCache);
-            case PREV_PROFILE:
-                return new BackCrushCommand(userDataCache);*/
+            case PREV_CRUSH:
+                return new BackCrushCommand(userDataCache);
             case CORRECT_PROFILE:
                 return new CorrectProfileCommand(userDataCache);
             case BROWSE_PROFILE:

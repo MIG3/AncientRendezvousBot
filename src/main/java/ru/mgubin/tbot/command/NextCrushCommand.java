@@ -10,12 +10,12 @@ import ru.mgubin.tbot.enums.BotStateEnum;
 import ru.mgubin.tbot.service.GenerateLabel;
 import ru.mgubin.tbot.service.PrintProfile;
 
-public class SearchCrushUserCommand implements Command
+public class NextCrushCommand implements Command
 {
     private final UserDataCache userDataCache;
 
     @Autowired
-    public SearchCrushUserCommand(UserDataCache userDataCache)
+    public NextCrushCommand(UserDataCache userDataCache)
     {
         this.userDataCache = userDataCache;
     }
@@ -23,26 +23,40 @@ public class SearchCrushUserCommand implements Command
     @Override
     public OutputParameters invoke(Message message)
     {
-        long userId = message.getFrom().getId().intValue();
+        long userId = message.getFrom().getId();
         OutputParameters outputParameters = new OutputParameters();
         UserDB userDB = new UserDB();
         PrintProfile profile = new PrintProfile();
         SearchProfile crushProfile = new SearchProfile();
         User user = new User();
 
-        crushProfile.fillUserList(userDB.getLovers(userId)); // вызов метода, который ввозвращает список всех любимцев (users)
-        userDataCache.saveUserListData(userId, crushProfile); // и записывает в мапу по id пользователя
-        user = crushProfile.getUserList().get(crushProfile.getNumberProfile());
+        crushProfile = userDataCache.getUserListData(userId); // вызов метода, который ввозвращает список всех любимцев (users)
 
+        int lengthUserList = crushProfile.getUserList().size();
+        int pos = crushProfile.getNumberProfile();
+        int index;
+
+        if (lengthUserList <= pos + 1)
+        {
+            index = 0;
+        } else
+        {
+            index = pos + 1;
+        }
+        crushProfile.setNumberProfile(index);
         GenerateLabel generateLabel = new GenerateLabel(userDataCache);
-        String label = generateLabel.labelFromPicture(userId, crushProfile.getUserList().get(0).getId());
+        String label = generateLabel.labelFromPicture(userId, crushProfile.getUserList().get(index).getId());
 
+        // печатаем изображение, передавая параметрами
+        // id чата
+        // 0 элемент списка анкет (пользователей)
         outputParameters.setSp(profile.sendPhoto(       // печатаем изображение, передавая параметрами
                 message.getChatId(),                    // id чата
-                user,                                   // 0 элемент списка анкет (пользователей)
+                crushProfile.getUserList().get(crushProfile.getNumberProfile()),
                 label));                                // статус любимок
 
-        userDataCache.setUsersCurrentBotState(userId, BotStateEnum.CHOICE_PREVorNEXT_BUTTON); // меняю состояние, чтобы вызвать следующую команду выдачи кнопок перебора анкет
+
+        userDataCache.setUsersCurrentBotState(userId, BotStateEnum.CHOICE_PREVorNEXT_BUTTON);
 
         return outputParameters;
     }

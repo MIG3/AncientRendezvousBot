@@ -2,11 +2,10 @@ package ru.mgubin.tbot.cash;
 
 import org.springframework.stereotype.Component;
 import ru.mgubin.tbot.entity.CrushProfile;
-import ru.mgubin.tbot.entity.PersonCrush;
 import ru.mgubin.tbot.entity.SearchProfile;
 import ru.mgubin.tbot.entity.User;
-import ru.mgubin.tbot.enums.BotState;
-import ru.mgubin.tbot.enums.LikeState;
+import ru.mgubin.tbot.enums.BotStateEnum;
+import ru.mgubin.tbot.enums.LikeStateEnum;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,41 +13,41 @@ import java.util.Map;
 @Component
 public class UserDataCache implements DataCache
 {
-    private Map<Long, BotState> usersBotStates = new HashMap<>();
-    private Map<Long, LikeState> usersLikeStates = new HashMap<>();
+    private Map<Long, BotStateEnum> usersBotStates = new HashMap<>();
+    private Map<Long, LikeStateEnum> usersLikeStates = new HashMap<>();
     private Map<Long, User> usersProfileData = new HashMap<>();
     private Map<Long, SearchProfile> usersSearchListData = new HashMap<>();
     private Map<Long, CrushProfile> usersCrushListData = new HashMap<>();
 
     @Override
-    public void setUsersCurrentBotState(long userId, BotState botState)
+    public void setUsersCurrentBotState(long userId, BotStateEnum botState)
     {
         usersBotStates.put(userId, botState);
     }
 
     @Override
-    public void setUsersCurrentLikeState(long userId, LikeState likeState)
+    public void setUsersCurrentLikeState(long userId, LikeStateEnum likeState)
     {
         usersLikeStates.put(userId, likeState);
     }
     @Override
-    public BotState getUsersCurrentBotState(long userId)
+    public BotStateEnum getUsersCurrentBotState(long userId)
     {
-        BotState botState = usersBotStates.get(userId);
+        BotStateEnum botState = usersBotStates.get(userId);
         if (botState == null)
         {
-            botState = BotState.SHOW_HELP_MENU;
+            botState = BotStateEnum.SHOW_HELP_MENU;
         }
 
         return botState;
     }
     @Override
-    public LikeState getUsersCurrentLikeState(long userId)
+    public LikeStateEnum getUsersCurrentLikeState(long userId)
     {
-        LikeState likeState = usersLikeStates.get(userId);
+        LikeStateEnum likeState = usersLikeStates.get(userId);
         if (likeState == null)
         {
-            likeState = LikeState.LIKE;
+            likeState = LikeStateEnum.LIKE;
         }
 
         return likeState;

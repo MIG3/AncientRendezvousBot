@@ -9,6 +9,8 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import ru.mgubin.tbot.enums.GenderButtonsEnum;
+import ru.mgubin.tbot.enums.SearchButtonsEnum;
 
 import java.time.LocalDate;
 
@@ -25,8 +27,8 @@ public class User
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     LocalDate birthday;
-    String crush;
-    String gender;
+    SearchButtonsEnum crush;
+    GenderButtonsEnum gender;
     String description;
 
     /**

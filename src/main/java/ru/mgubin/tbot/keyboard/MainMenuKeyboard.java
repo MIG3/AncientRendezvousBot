@@ -4,7 +4,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
-import ru.mgubin.tbot.enums.MenuButtons;
+import ru.mgubin.tbot.enums.MenuButtonsEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class MainMenuKeyboard
     public SendMessage getMainMenuMessage(final long chatId, final String textMessage)
     {
 
-        final ReplyKeyboardMarkup replyKeyboardMarkup = getMainMenuKeyboard(MenuButtons.values());
+        final ReplyKeyboardMarkup replyKeyboardMarkup = getMainMenuKeyboard(MenuButtonsEnum.valuesMenuButtons());
         final SendMessage mainMenuMessage =
                 createMessageWithKeyboard(chatId, textMessage, replyKeyboardMarkup);
         return mainMenuMessage;
@@ -54,7 +54,7 @@ public class MainMenuKeyboard
      * @param menuButtons массив enum названий кнопок для меню
      * @return клавиатура
      */
-    private ReplyKeyboardMarkup getMainMenuKeyboard(Enum[] menuButtons)
+    private ReplyKeyboardMarkup getMainMenuKeyboard(List<String> menuButtons)
     {
         final ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setSelective(true);
@@ -64,10 +64,10 @@ public class MainMenuKeyboard
 
         KeyboardRow row1 = new KeyboardRow();
 
-        for (Enum menuClick : menuButtons)
+        for (String menuClick : menuButtons)
         {
             row1.add(KeyboardButton.builder()
-                    .text(menuClick.name())
+                    .text(menuClick)
                     .build());
         }
 

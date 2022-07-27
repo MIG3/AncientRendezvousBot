@@ -3,8 +3,8 @@ package ru.mgubin.tbot.command;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.mgubin.tbot.cash.UserDataCache;
-import ru.mgubin.tbot.enums.BotState;
-import ru.mgubin.tbot.enums.ProfileButtons;
+import ru.mgubin.tbot.enums.BotStateEnum;
+import ru.mgubin.tbot.enums.ProfileButtonsEnum;
 import ru.mgubin.tbot.keyboard.InlineKeyboard;
 
 public class CorrectProfileCommand implements Command
@@ -24,9 +24,9 @@ public class CorrectProfileCommand implements Command
         InlineKeyboard correctKeyboard = new InlineKeyboard();
         OutputParameters outputParameters = new OutputParameters();
 
-        userDataCache.setUsersCurrentBotState(userId, BotState.CORRECT_PROFILE);
+        userDataCache.setUsersCurrentBotState(userId, BotStateEnum.CORRECT_PROFILE);
 
-        outputParameters.setSm(correctKeyboard.keyboard(message.getChatId(), "Что Вы хотите сделать с анкетой?", ProfileButtons.values()));
+        outputParameters.setSm(correctKeyboard.keyboard(message.getChatId(), "Что Вы хотите сделать с анкетой?", ProfileButtonsEnum.valuesProfileButtons()));
 
         return outputParameters;
     }

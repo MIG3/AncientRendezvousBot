@@ -1,12 +1,11 @@
 package ru.mgubin.tbot.command;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.entity.User;
-import ru.mgubin.tbot.enums.BotState;
-import ru.mgubin.tbot.enums.SearchButtons;
+import ru.mgubin.tbot.enums.BotStateEnum;
+import ru.mgubin.tbot.enums.SearchButtonsEnum;
 import ru.mgubin.tbot.keyboard.InlineKeyboard;
 
 public class AskInfoCommand implements Command
@@ -29,8 +28,8 @@ public class AskInfoCommand implements Command
 
         profileData.setDescription(message.getText());
 
-        outputParameters.setSm(gender.keyboard(message.getChatId(), "Кого Вы хотите искать в будущем?", SearchButtons.values()));
-        userDataCache.setUsersCurrentBotState(userId, BotState.ASK_CRUSH);
+        outputParameters.setSm(gender.keyboard(message.getChatId(), "Кого Вы хотите искать в будущем?", SearchButtonsEnum.valuesSearchButtons()));
+        userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_CRUSH);
         userDataCache.saveUserProfileData(userId, profileData);
 
         return outputParameters;
