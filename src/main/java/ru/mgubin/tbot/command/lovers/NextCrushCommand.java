@@ -17,12 +17,22 @@ public class NextCrushCommand implements Command {
     public NextCrushCommand(UserDataCache userDataCache) {
         this.userDataCache = userDataCache;
     }
-
+    /**
+     * Метод перебора анкет любимцев в прямом порядке - вперёд.
+     * В нём получаем список анкет любимцев из кеша,
+     * записываем в мапу по id пользователя номер текущего любимца.
+     * Вызывается метод генерации части подписи по статусу лайков,
+     * после него вызывается метод печати текущей анкеты из списка.
+     * Выводятся кнопки для перебора анкет.
+     * @param userId id пользователя
+     * @param message сообщение
+     * @return анкета-изображение и кнопки для перебора
+     */
     @Override
     public OutputParameters invoke(Long userId, String message) {
         OutputParameters outputParameters = new OutputParameters();
         PrintProfile profile = new PrintProfile();
-        SearchProfile crushProfile = userDataCache.getUserListData(userId); // вызов метода, который ввозвращает список всех любимцев (users)
+        SearchProfile crushProfile = userDataCache.getUserListData(userId);
         int lengthUserList = crushProfile.getUserList().size();
         int pos = crushProfile.getNumberProfile();
         int index;
@@ -34,10 +44,10 @@ public class NextCrushCommand implements Command {
         crushProfile.setNumberProfile(index);
         GenerateLabel generateLabel = new GenerateLabel(userDataCache);
         String label = generateLabel.labelFromPicture(userId, crushProfile.getUserList().get(index).getId());
-        outputParameters.setSp(profile.sendPhoto(       // печатаем изображение, передавая параметрами
-                userId,                    // id чата
+        outputParameters.setSp(profile.sendPhoto(
+                userId,
                 crushProfile.getUserList().get(crushProfile.getNumberProfile()),
-                label));                                // статус любимок
+                label));
         outputParameters.setSm(new InlineKeyboard().keyboard(userId, "Для перелистывания любимок нажмите вперед или назад", PrevNextButtonEnum.valuesPrevNextButtons()));
         return outputParameters;
     }

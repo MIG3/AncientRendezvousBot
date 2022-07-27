@@ -14,6 +14,15 @@ public class HandleMessages {
         this.userDataCache = userDataCache;
     }
 
+    /**
+     * Метод обработки начальной команды при запуске кода и нажатий на кнопки постоянного меню.
+     * В зависимости от команды присваивается нужное состояние боту,
+     * записываются данные в мапу кеша клиентов по ключу идентификатору
+     * @param userId id клиента
+     * @param inputMsg сообщение от кнопки или команды
+     * @return состояние бота
+     * @throws TelegramApiException ексепшен
+     */
     public BotStateEnum handleInputMessage(Long userId, String inputMsg) throws TelegramApiException {
         BotStateEnum botState = userDataCache.getUsersCurrentBotState(userId);
         LikeStateEnum likeState = userDataCache.getUsersCurrentLikeState(userId);

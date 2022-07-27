@@ -16,6 +16,13 @@ public class CorrectProfileCommand implements Command {
         this.userDataCache = userDataCache;
     }
 
+    /**
+     * Выводятся кнопки при нажатии кнопки "АНКЕТА" в меню
+     * Состояние бота меняется на CORRECT_PROFILE - изменение анкеты
+     * @param userId id клиента
+     * @param message сообщение
+     * @return кнопки для выбора взаимодействия с анкетой
+     */
     @Override
     public OutputParameters invoke(Long userId, String message) {
         InlineKeyboard correctKeyboard = new InlineKeyboard();

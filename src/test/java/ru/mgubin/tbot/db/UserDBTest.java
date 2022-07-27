@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.mgubin.tbot.entity.PersonCrush;
 import ru.mgubin.tbot.entity.User;
+import ru.mgubin.tbot.enums.GenderButtonsEnum;
+import ru.mgubin.tbot.enums.SearchButtonsEnum;
 
 import java.time.LocalDate;
 
@@ -23,7 +25,7 @@ class UserDBTest
     {
         UserDB userDB = new UserDB();
         LocalDate localDate = LocalDate.of(1990, 10, 10);
-        //userDB.createUser(new User(10L, "Gena", localDate, "MEN", "MEN", "kdfmbs dgdfd"));
+        //userDB.createUser(new User(10L, "Gena", localDate, SearchButtonsEnum.MEN, GenderButtonsEnum.MEN, "kdfmbs dgdfd"));
 
 
     }

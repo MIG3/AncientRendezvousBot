@@ -16,6 +16,14 @@ public class BrowsProfile implements Command {
         this.userDataCache = userDataCache;
     }
 
+    /**
+     * Просмотр анкеты текущего пользователя
+     * Получаем в сущность клиента данные о нём из БД,
+     * записываем их в мапу кеша пользователей с ключем - id
+     * @param userId id клиента
+     * @param message сообщение
+     * @return Изображение - анкета
+     */
     @Override
     public OutputParameters invoke(Long userId, String message) {
         OutputParameters outputParameters = new OutputParameters();

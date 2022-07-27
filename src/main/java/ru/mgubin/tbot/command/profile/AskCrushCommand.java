@@ -15,6 +15,12 @@ public class AskCrushCommand implements Command {
         this.userDataCache = userDataCache;
     }
 
+    /**
+     * Переводит состояние бота для обработки последнего шага заполнения анкеты
+     * @param userId id клиента
+     * @param message сообщение
+     * @return ответное сообщение
+     */
     @Override
     public OutputParameters invoke(Long userId, String message) {
         OutputParameters outputParameters = new OutputParameters();

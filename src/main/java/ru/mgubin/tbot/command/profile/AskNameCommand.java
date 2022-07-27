@@ -17,6 +17,14 @@ public class AskNameCommand implements Command {
         this.userDataCache = userDataCache;
     }
 
+    /**
+     * Сохраняет в сущность клиента его имя, полученное полученное на вопрос с предыдущего шага.
+     * Состояние бота меняется на ASK_INFO - описание себя
+     * Сущность пользователя записывается в мапу кеша пользователей с ключем - id
+     * @param userId id клиента
+     * @param message сообщение от пользователя боту
+     * @return вопрос, ответ на который запишется на следующем шаге
+     */
     @Override
     public OutputParameters invoke(Long userId, String message) {
         OutputParameters outputParameters = new OutputParameters();

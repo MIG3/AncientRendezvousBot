@@ -19,6 +19,17 @@ public class BackCrushCommand implements Command {
         this.userDataCache = userDataCache;
     }
 
+    /**
+     * Метод перебора анкет любимцев в обратном порядке - назад.
+     * В нём получаем список анкет любимцев из кеша,
+     * записываем в мапу по id пользователя номер текущего любимца.
+     * Вызывается метод генерации части подписи по статусу лайков,
+     * после него вызывается метод печати текущей анкеты из списка.
+     * Выводятся кнопки для перебора анкет.
+     * @param userId id пользователя
+     * @param message сообщение
+     * @return анкета-изображение и кнопки для перебора
+     */
     @Override
     public OutputParameters invoke(Long userId, String message) {
         OutputParameters outputParameters = new OutputParameters();
@@ -36,10 +47,10 @@ public class BackCrushCommand implements Command {
         crushProfile.setNumberProfile(index);
         GenerateLabel generateLabel = new GenerateLabel(userDataCache);
         String label = generateLabel.labelFromPicture(userId, crushProfile.getUserList().get(index).getId());
-        outputParameters.setSp(profile.sendPhoto(       // печатаем изображение, передавая параметрами
-                userId,                    // id чата
-                crushProfile.getUserList().get(crushProfile.getNumberProfile()), // 0 элемент списка анкет (пользователей)
-                label));                                // статус любимок
+        outputParameters.setSp(profile.sendPhoto(
+                userId,
+                crushProfile.getUserList().get(crushProfile.getNumberProfile()),
+                label));
         outputParameters.setSm(new InlineKeyboard().keyboard(userId, "Для перелистывания любимок нажмите вперед или назад", PrevNextButtonEnum.valuesPrevNextButtons()));
         userDataCache.setUsersCurrentBotState(userId, BotStateEnum.CHOICE_PREVorNEXT_BUTTON);
         return outputParameters;

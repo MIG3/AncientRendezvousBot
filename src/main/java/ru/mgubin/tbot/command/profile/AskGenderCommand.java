@@ -17,6 +17,13 @@ public class AskGenderCommand implements Command {
         this.userDataCache = userDataCache;
     }
 
+    /**
+     * Выводит вопрос о гендере клиента и переводит состояние бота для обработки следующего шага
+     * Состояние бота меняется на ASK_NAME - ввод своего имени
+     * @param userId id клиента
+     * @param message сообщение
+     * @return кнопки для выбора гендера
+     */
     @Override
     public OutputParameters invoke(Long userId, String message) {
         InlineKeyboard gender = new InlineKeyboard();

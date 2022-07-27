@@ -17,6 +17,14 @@ public class AskInfoCommand implements Command {
         this.userDataCache = userDataCache;
     }
 
+    /**
+     * Сохраняет в сущность клиента информацию о нём, полученное на вопрос с предыдущего шага.
+     * Состояние бота меняется на ASK_CRUSH - вопрос о поле знакомцев для поиска
+     * Сущность пользователя записывается в мапу кеша пользователей с ключем - id
+     * @param userId id клиента
+     * @param message сообщение от пользователя боту
+     * @return вопрос, ответ на который запишется на следующем шаге
+     */
     @Override
     public OutputParameters invoke(Long userId, String message) {
         InlineKeyboard gender = new InlineKeyboard();

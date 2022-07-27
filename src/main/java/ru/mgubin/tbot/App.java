@@ -9,11 +9,11 @@ import ru.mgubin.tbot.exception.TelegramException;
 
 @Slf4j
 public class App {
-    public static void main(String[] args) throws TelegramApiException {
+    public static void main(String[] args) {
         try {
             log.info("Запуск бота");
-            String botToken = System.getenv("BOT_TOKEN_TELEGA");
-            String botName = System.getenv("BOT_NAME_TELEGA");
+            String botToken = System.getenv("BOT_TOKEN_TELEGRAM");
+            String botName = System.getenv("BOT_NAME_TELEGRAM");
             TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
             telegramBotsApi.registerBot(new Bot(botToken, botName));
         } catch (TelegramApiException e) {

@@ -47,7 +47,7 @@ public class MainMenuKeyboard {
     /**
      * Метод формирования ReplyKeyboardMarkup кнопок (то есть постоянных, находящихся под полем ввода сообщения)
      *
-     * @param menuButtons массив enum названий кнопок для меню
+     * @param menuButtons список строк названий кнопок для меню
      * @return клавиатура
      */
     private ReplyKeyboardMarkup getMainMenuKeyboard(List<String> menuButtons) {

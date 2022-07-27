@@ -23,6 +23,12 @@ public class HandleStateSelector {
         this.userDataCache = userDataCache;
     }
 
+    /**
+     * Выбор команд в зависимости от текущего состояния бота
+     * @param state состояние бота
+     * @return инициализируется новая команда
+     * @throws TelegramApiException ексепшен
+     */
     public Command handleStateSelector(BotStateEnum state) throws TelegramApiException {
         switch (state) {
             case SHOW_HELP_MENU:

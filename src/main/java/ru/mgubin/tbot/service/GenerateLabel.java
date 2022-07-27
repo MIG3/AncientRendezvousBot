@@ -20,11 +20,12 @@ public class GenerateLabel {
     }
 
     /**
-     * Метод генерации сообщения о статусе любимки для подписи анкет найденных любимок
+     * Метод генерации сообщения о статусе любимки для подписи анкет найденных любимцев.
+     * Получаем список связей между клиентом и любимцем и формируется статус.
      *
      * @param userId  id пользователя
      * @param crushId id любимца
-     * @return сообщение о том, любим ты, любишь ты или взаимность
+     * @return сообщение о том, ты любим, любишь ты или взаимность
      */
     public String labelFromPicture(long userId, long crushId) {
         List<PersonCrush> personCrushList = userDB.getUserAndCrush(userId, crushId);

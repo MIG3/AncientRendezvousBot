@@ -41,6 +41,14 @@ public class Bot extends TelegramLongPollingBot {
         return BOT_TOKEN_TELEGRAM;
     }
 
+    /**
+     * Основной метод обработки полученных обновлений в боте.
+     * В нём вызываются методы назначения состояния боту и переход по ним к разным командам.
+     * Вызов метода обработки Callback'ов, если было нажатие на кнопки.
+     * Выводит сообщения в чат для пользователя
+     *
+     * @param update
+     */
     @Override
     public void onUpdateReceived(Update update) {
         log.info("Получаем новое обновление. updateID: " + update.getUpdateId());

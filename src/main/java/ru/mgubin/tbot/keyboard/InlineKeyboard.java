@@ -9,11 +9,11 @@ import java.util.List;
 
 public class InlineKeyboard {
     /**
-     * Метод формирования inline кнопок (то есть привязанных к сообщению в чате)
+     * Универсальный метод формирования inline кнопок (то есть привязанных к сообщению в чате)
      *
      * @param chatId         идентификатор чата
      * @param ask            вопрос пользователю от бота
-     * @param inlineKeyboard массив enum названий кнопок в зависимости от вопроса
+     * @param inlineKeyboard список строк названий кнопок в зависимости от вопроса
      * @return сообщение с кнопками
      */
     public SendMessage keyboard(long chatId, String ask, List<String> inlineKeyboard) {

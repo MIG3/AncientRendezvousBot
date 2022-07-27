@@ -19,7 +19,16 @@ public class BackCommand implements Command {
     public BackCommand(UserDataCache userDataCache) {
         this.userDataCache = userDataCache;
     }
-
+    /**
+     * Метод перебора анкет по писку в обратном порядке - назад.
+     * В нём получаем список анкет найденных анкет из кеша,
+     * записываем в мапу по id пользователя номер текущей анкеты.
+     * Вызывается метод печати текущей анкеты из списка.
+     * Выводятся кнопки для перебора анкет.
+     * @param userId id пользователя
+     * @param message сообщение
+     * @return анкета-изображение и кнопки для перебора
+     */
     @Override
     public OutputParameters invoke(Long userId, String message) {
         SearchProfile searchProfile = new SearchProfile();

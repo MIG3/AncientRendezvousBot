@@ -20,6 +20,17 @@ public class AskBirthdayCommand implements Command {
         this.userDataCache = userDataCache;
     }
 
+    /**
+     * Обработка последнего шага заполнения анкеты.
+     * В сущность клиента записывается его дата рождения и идентификатор.
+     * Состояние бота меняется на SAVE_PROFILE - анкета заполнена
+     * Сущность пользователя записывается в мапу кеша пользователей с ключем - id
+     * Сущность клиента записывается в БД
+     * Печатается анкета пользователя в чат бота
+     * @param userId id клиента
+     * @param message сообщение
+     * @return Изображение - анкета
+     */
     @Override
     public OutputParameters invoke(Long userId, String message) {
         OutputParameters outputParameters = new OutputParameters();

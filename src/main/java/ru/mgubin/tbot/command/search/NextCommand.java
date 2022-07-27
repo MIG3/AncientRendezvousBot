@@ -20,10 +20,14 @@ public class NextCommand implements Command {
     }
 
     /**
-     * Метод перебора анкет вперёд
-     * @param userId
-     * @param message
-     * @return
+     * Метод перебора анкет по писку в прямом порядке - вперёд.
+     * В нём получаем список анкет найденных анкет из кеша,
+     * записываем в мапу по id пользователя номер текущей анкеты.
+     * Вызывается метод печати текущей анкеты из списка.
+     * Выводятся кнопки для перебора анкет.
+     * @param userId id пользователя
+     * @param message сообщение
+     * @return анкета-изображение и кнопки для перебора
      */
     @Override
     public OutputParameters invoke(Long userId, String message) {
@@ -36,16 +40,16 @@ public class NextCommand implements Command {
         int pos = searchProfile.getNumberProfile();
         if (lengthUserList <= pos + 1) {
             searchProfile.setNumberProfile(0);
-            lovers.setCrushId(searchProfile.getUserList().get(lengthUserList - 1).getId()); // последний элемент списка
+            lovers.setCrushId(searchProfile.getUserList().get(lengthUserList - 1).getId());
         } else {
             searchProfile.setNumberProfile(pos + 1);
-            lovers.setCrushId(searchProfile.getUserList().get(pos).getId()); // предыдущий элемент списка
+            lovers.setCrushId(searchProfile.getUserList().get(pos).getId());
         }
         lovers.setUserId(userId);
         userDB.makeLikeToUser(lovers);
-        outputParameters.setSp(profile.sendPhoto(                                       // печатаем изображение, передавая параметрами
-                userId,                                                    // id чата
-                searchProfile.getUserList().get(searchProfile.getNumberProfile()), ""));    // анкета пользователя по её номеру
+        outputParameters.setSp(profile.sendPhoto(
+                userId,
+                searchProfile.getUserList().get(searchProfile.getNumberProfile()), ""));
         outputParameters.setSm(new InlineKeyboard().keyboard(userId, "Если нравится, нажми вперед, иначе назад", LikeDislikeButtonEnum.valuesPrevNextButtons()));
         return outputParameters;
     }

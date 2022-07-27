@@ -14,6 +14,13 @@ import static ru.mgubin.tbot.constant.Constants.FILE_NAME;
 public class PrintProfile {
     PictureWebService pictureWebService = new PictureWebService();
 
+    /**
+     * Метод печати анкеты пользователя
+     * @param chatId
+     * @param user
+     * @param love
+     * @return
+     */
     public SendPhoto sendPhoto(long chatId, User user, String love) {
         InputStream picture = pictureWebService.makePicture(user.getDescription());
         StringJoiner label = new StringJoiner(", ");
