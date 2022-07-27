@@ -12,6 +12,7 @@ import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.command.Command;
 import ru.mgubin.tbot.command.OutputParameters;
 import ru.mgubin.tbot.enums.BotStateEnum;
+import ru.mgubin.tbot.exception.TelegramException;
 import ru.mgubin.tbot.handler.CallBackAction;
 import ru.mgubin.tbot.handler.HandleMessages;
 import ru.mgubin.tbot.handler.HandleStateSelector;
@@ -59,7 +60,8 @@ public class Bot extends TelegramLongPollingBot
                 execute(callBackAction.processCallbackQuery(callbackQuery));
             } catch (TelegramApiException e)
             {
-                throw new RuntimeException(e);
+                log.error(e.getMessage(),e);
+                throw new TelegramException();
             }
         }
 
@@ -79,7 +81,8 @@ public class Bot extends TelegramLongPollingBot
 
             } catch (TelegramApiException e)
             {
-                throw new RuntimeException(e);
+                log.error(e.getMessage(),e);
+                throw new TelegramException();
             }
         }
     }

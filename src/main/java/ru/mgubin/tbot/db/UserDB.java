@@ -3,6 +3,7 @@ package ru.mgubin.tbot.db;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import static ru.mgubin.tbot.constant.Constants.DB_URL;
 
 @Service
 @ToString
+@Slf4j
 @NoArgsConstructor
 public class UserDB
 {
@@ -46,6 +48,7 @@ public class UserDB
 
         } catch (RuntimeException e)
         {
+            log.error(e.getMessage(),e);
             throw new ParseToJsonException();
         }
     }
@@ -74,6 +77,7 @@ public class UserDB
 
         } catch (RuntimeException e)
         {
+            log.error(e.getMessage(),e);
             throw new ParseToJsonException();
         }
     }
@@ -95,6 +99,7 @@ public class UserDB
                     Boolean.class);
         } catch (RuntimeException e)
         {
+            log.error(e.getMessage(),e);
             throw new ParseToJsonException();
         }
     }
@@ -114,6 +119,7 @@ public class UserDB
             restTemplate.postForObject(DB_URL + "/crushes", request, String.class);
         } catch (RuntimeException e)
         {
+            log.error(e.getMessage(),e);
             throw new ParseToJsonException();
         }
     }
@@ -131,6 +137,7 @@ public class UserDB
             restTemplate.delete(DB_URL + "/crushes/" + personCrush.getUserId() + "/" + personCrush.getCrushId());
         } catch (RuntimeException e)
         {
+            log.error(e.getMessage(),e);
             throw new ParseToJsonException();
         }
     }
@@ -152,6 +159,7 @@ public class UserDB
 
         } catch (RuntimeException e)
         {
+            log.error(e.getMessage(),e);
             throw new ParseToJsonException();
         }
     }
@@ -179,6 +187,7 @@ public class UserDB
             return userList;
         } catch (RuntimeException e)
         {
+            log.error(e.getMessage(),e);
             throw new ParseToJsonException();
         }
     }
@@ -206,6 +215,7 @@ public class UserDB
             return userList;
         } catch (RuntimeException e)
         {
+            log.error(e.getMessage(),e);
             throw new ParseToJsonException();
         }
     }

@@ -27,10 +27,7 @@ public class NextCrushCommand implements Command
         OutputParameters outputParameters = new OutputParameters();
         UserDB userDB = new UserDB();
         PrintProfile profile = new PrintProfile();
-        SearchProfile crushProfile = new SearchProfile();
-        User user = new User();
-
-        crushProfile = userDataCache.getUserListData(userId); // вызов метода, который ввозвращает список всех любимцев (users)
+        SearchProfile crushProfile = userDataCache.getUserListData(userId); // вызов метода, который ввозвращает список всех любимцев (users)
 
         int lengthUserList = crushProfile.getUserList().size();
         int pos = crushProfile.getNumberProfile();

@@ -79,7 +79,6 @@ public class CallBackAction
         } else if (buttonQuery.getData().equals(ProfileButtonsEnum.BROWSE.getButtonName()))
         {
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.BROWSE_PROFILE);
-            //callBackAnswer = sendAnswerCallbackQuery("Ожидается в будущих обновлениях", true, buttonQuery);
             callBackAnswer = SendMessage.builder()
                     .text("Для получения анкеты напишите любое слово")
                     .chatId(chatId)

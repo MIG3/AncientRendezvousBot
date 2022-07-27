@@ -1,17 +1,20 @@
 package ru.mgubin.tbot.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import ru.mgubin.tbot.exception.PrintPictureException;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import static ru.mgubin.tbot.constant.Constants.PICTURE_URL;
 
+@Slf4j
 @Service
 public class PictureWebService
 {
@@ -35,12 +38,13 @@ public class PictureWebService
                     restTemplate.postForObject(PICTURE_URL, request, byte[].class);
             if (picture == null)
             {
-                throw new RuntimeException();
+                throw new PrintPictureException();
             }
             return new ByteArrayInputStream(picture);
         } catch (RuntimeException e)
         {
-            throw new RuntimeException(e);
+            log.error(e.getMessage(),e);
+            throw new PrintPictureException();
         }
     }
 }
