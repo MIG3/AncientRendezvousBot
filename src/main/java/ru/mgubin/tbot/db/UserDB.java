@@ -6,7 +6,6 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.mgubin.tbot.entity.PersonCrush;
 import ru.mgubin.tbot.entity.User;
@@ -18,17 +17,14 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static ru.mgubin.tbot.constant.Constants.DB_URL;
 
-@Service
 @ToString
 @Slf4j
 @NoArgsConstructor
-public class UserDB
-{
+public class UserDB {
     private RestTemplate restTemplate = new RestTemplate();
     private HttpHeaders headers = new HttpHeaders();
 
-    public UserDB(RestTemplate restTemplate)
-    {
+    public UserDB(RestTemplate restTemplate) {
         headers.setContentType(APPLICATION_JSON);
     }
 
@@ -38,17 +34,13 @@ public class UserDB
      * @param user - сущность клиента
      * @throws ParseToJsonException если не смог распарсить сущность
      */
-    public void createUser(User user)
-    {
-        try
-        {
+    public void createUser(User user) {
+        try {
             headers.setContentType(APPLICATION_JSON);
             HttpEntity<String> request = new HttpEntity<>(user.toJson(), headers);
             restTemplate.postForObject(DB_URL + "/persons", request, String.class);
-
-        } catch (RuntimeException e)
-        {
-            log.error(e.getMessage(),e);
+        } catch (RuntimeException e) {
+            log.error(e.getMessage(), e);
             throw new ParseToJsonException();
         }
     }
@@ -60,24 +52,20 @@ public class UserDB
      * @return List<User> список клиентов
      * @throws ParseToJsonException если не смог распарсить сущность
      */
-    public List<User> getUsersByGender(long userId)
-    {
-        try
-        {
+    public List<User> getUsersByGender(long userId) {
+        try {
             List<User> response = restTemplate.getForObject(
                     DB_URL + "/persons_crush/" + userId,
                     List.class);
             List<User> userList = new ArrayList<>();
-            for (Object item : response)
-            {
+            for (Object item : response) {
                 ObjectMapper mapper = new ObjectMapper();
                 userList.add(mapper.convertValue(item, User.class));
             }
             return userList;
 
-        } catch (RuntimeException e)
-        {
-            log.error(e.getMessage(),e);
+        } catch (RuntimeException e) {
+            log.error(e.getMessage(), e);
             throw new ParseToJsonException();
         }
     }
@@ -90,16 +78,13 @@ public class UserDB
      * @return true - если клиент нравится, false - если не нравится
      * @throws ParseToJsonException если не смог распарсить сущность
      */
-    public Boolean isCrushLikeUser(long userId, long crushId)
-    {
-        try
-        {
+    public Boolean isCrushLikeUser(long userId, long crushId) {
+        try {
             return restTemplate.getForObject(
                     DB_URL + "/crushes/" + crushId + "/" + userId,
                     Boolean.class);
-        } catch (RuntimeException e)
-        {
-            log.error(e.getMessage(),e);
+        } catch (RuntimeException e) {
+            log.error(e.getMessage(), e);
             throw new ParseToJsonException();
         }
     }
@@ -110,16 +95,13 @@ public class UserDB
      * @param personCrush Сущность связей между клиентами
      * @throws ParseToJsonException если не смог распарсить сущность
      */
-    public void makeLikeToUser(PersonCrush personCrush)
-    {
-        try
-        {
+    public void makeLikeToUser(PersonCrush personCrush) {
+        try {
             headers.setContentType(APPLICATION_JSON);
             HttpEntity<String> request = new HttpEntity<>(personCrush.toJson(), headers);
             restTemplate.postForObject(DB_URL + "/crushes", request, String.class);
-        } catch (RuntimeException e)
-        {
-            log.error(e.getMessage(),e);
+        } catch (RuntimeException e) {
+            log.error(e.getMessage(), e);
             throw new ParseToJsonException();
         }
     }
@@ -130,14 +112,11 @@ public class UserDB
      * @param personCrush Сущность связей между клиентами
      * @throws ParseToJsonException если не смог распарсить сущность
      */
-    public void removeLikeToUser(PersonCrush personCrush)
-    {
-        try
-        {
+    public void removeLikeToUser(PersonCrush personCrush) {
+        try {
             restTemplate.delete(DB_URL + "/crushes/" + personCrush.getUserId() + "/" + personCrush.getCrushId());
-        } catch (RuntimeException e)
-        {
-            log.error(e.getMessage(),e);
+        } catch (RuntimeException e) {
+            log.error(e.getMessage(), e);
             throw new ParseToJsonException();
         }
     }
@@ -149,17 +128,14 @@ public class UserDB
      * @return User - клиент
      * @throws ParseToJsonException если не смог распарсить сущность
      */
-    public User getUser(long userId)
-    {
-        try
-        {
+    public User getUser(long userId) {
+        try {
             return restTemplate.getForObject(
                     DB_URL + "/persons/" + userId,
                     User.class);
 
-        } catch (RuntimeException e)
-        {
-            log.error(e.getMessage(),e);
+        } catch (RuntimeException e) {
+            log.error(e.getMessage(), e);
             throw new ParseToJsonException();
         }
     }
@@ -171,23 +147,19 @@ public class UserDB
      * @return List<User> список клиентов
      * @throws ParseToJsonException если не смог распарсить сущность
      */
-    public List<PersonCrush> getUserAndCrush(Long userId, Long crushId)
-    {
-        try
-        {
+    public List<PersonCrush> getUserAndCrush(Long userId, Long crushId) {
+        try {
             List<PersonCrush> personCrushList = restTemplate.getForObject(
                     DB_URL + "/lovers/" + userId + "/" + crushId,
                     List.class);
             List<PersonCrush> userList = new ArrayList<>();
-            for (Object item : personCrushList)
-            {
+            for (Object item : personCrushList) {
                 ObjectMapper mapper = new ObjectMapper();
                 userList.add(mapper.convertValue(item, PersonCrush.class));
             }
             return userList;
-        } catch (RuntimeException e)
-        {
-            log.error(e.getMessage(),e);
+        } catch (RuntimeException e) {
+            log.error(e.getMessage(), e);
             throw new ParseToJsonException();
         }
     }
@@ -199,23 +171,19 @@ public class UserDB
      * @return List<User> список клиентов
      * @throws ParseToJsonException если не смог распарсить сущность
      */
-    public List<User> getLovers(Long userId)
-    {
-        try
-        {
+    public List<User> getLovers(Long userId) {
+        try {
             List<User> response = restTemplate.getForObject(
                     DB_URL + "/lovers/" + userId,
                     List.class);
             List<User> userList = new ArrayList<>();
-            for (Object item : response)
-            {
+            for (Object item : response) {
                 ObjectMapper mapper = new ObjectMapper();
                 userList.add(mapper.convertValue(item, User.class));
             }
             return userList;
-        } catch (RuntimeException e)
-        {
-            log.error(e.getMessage(),e);
+        } catch (RuntimeException e) {
+            log.error(e.getMessage(), e);
             throw new ParseToJsonException();
         }
     }

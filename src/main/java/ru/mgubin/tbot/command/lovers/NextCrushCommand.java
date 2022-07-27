@@ -1,60 +1,44 @@
-package ru.mgubin.tbot.command;
+package ru.mgubin.tbot.command.lovers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.mgubin.tbot.cash.UserDataCache;
-import ru.mgubin.tbot.db.UserDB;
+import ru.mgubin.tbot.command.Command;
+import ru.mgubin.tbot.entity.OutputParameters;
 import ru.mgubin.tbot.entity.SearchProfile;
-import ru.mgubin.tbot.entity.User;
-import ru.mgubin.tbot.enums.BotStateEnum;
+import ru.mgubin.tbot.enums.PrevNextButtonEnum;
+import ru.mgubin.tbot.keyboard.InlineKeyboard;
 import ru.mgubin.tbot.service.GenerateLabel;
 import ru.mgubin.tbot.service.PrintProfile;
 
-public class NextCrushCommand implements Command
-{
+public class NextCrushCommand implements Command {
     private final UserDataCache userDataCache;
 
     @Autowired
-    public NextCrushCommand(UserDataCache userDataCache)
-    {
+    public NextCrushCommand(UserDataCache userDataCache) {
         this.userDataCache = userDataCache;
     }
 
     @Override
-    public OutputParameters invoke(Message message)
-    {
-        long userId = message.getFrom().getId();
+    public OutputParameters invoke(Long userId, String message) {
         OutputParameters outputParameters = new OutputParameters();
-        UserDB userDB = new UserDB();
         PrintProfile profile = new PrintProfile();
         SearchProfile crushProfile = userDataCache.getUserListData(userId); // вызов метода, который ввозвращает список всех любимцев (users)
-
         int lengthUserList = crushProfile.getUserList().size();
         int pos = crushProfile.getNumberProfile();
         int index;
-
-        if (lengthUserList <= pos + 1)
-        {
+        if (lengthUserList <= pos + 1) {
             index = 0;
-        } else
-        {
+        } else {
             index = pos + 1;
         }
         crushProfile.setNumberProfile(index);
         GenerateLabel generateLabel = new GenerateLabel(userDataCache);
         String label = generateLabel.labelFromPicture(userId, crushProfile.getUserList().get(index).getId());
-
-        // печатаем изображение, передавая параметрами
-        // id чата
-        // 0 элемент списка анкет (пользователей)
         outputParameters.setSp(profile.sendPhoto(       // печатаем изображение, передавая параметрами
-                message.getChatId(),                    // id чата
+                userId,                    // id чата
                 crushProfile.getUserList().get(crushProfile.getNumberProfile()),
                 label));                                // статус любимок
-
-
-        userDataCache.setUsersCurrentBotState(userId, BotStateEnum.CHOICE_PREVorNEXT_BUTTON);
-
+        outputParameters.setSm(new InlineKeyboard().keyboard(userId, "Для перелистывания любимок нажмите вперед или назад", PrevNextButtonEnum.valuesPrevNextButtons()));
         return outputParameters;
     }
 }

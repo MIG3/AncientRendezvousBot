@@ -8,7 +8,6 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class UserList
-{
+public class UserList {
     private List<User> users = new ArrayList<>();
 }

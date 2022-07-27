@@ -1,11 +1,7 @@
 package ru.mgubin.tbot.command;
 
-import org.telegram.telegrambots.meta.api.objects.Message;
-import ru.mgubin.tbot.entity.User;
+import ru.mgubin.tbot.entity.OutputParameters;
 
-import java.util.List;
-
-public interface Command
-{
-    OutputParameters invoke(Message message);
+public interface Command {
+    OutputParameters invoke(Long userId, String message);
 }

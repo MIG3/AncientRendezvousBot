@@ -3,8 +3,7 @@ package ru.mgubin.tbot.enums;
 /**
  * Возможные состояния бота
  */
-public enum BotStateEnum
-{
+public enum BotStateEnum {
     ASK_INFO,
     ASK_NAME,
     ASK_GENDER,
@@ -20,5 +19,7 @@ public enum BotStateEnum
     CHOICE_PREVorNEXT_BUTTON,
     BROWSE_LOVERS,
     START,
-    SHOW_MAIN_MENU, NEXT_CRUSH, PREV_CRUSH;
+    SHOW_MAIN_MENU,
+    NEXT_CRUSH,
+    PREV_CRUSH,
 }

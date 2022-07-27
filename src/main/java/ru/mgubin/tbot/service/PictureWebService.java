@@ -5,7 +5,6 @@ import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.mgubin.tbot.exception.PrintPictureException;
 
@@ -15,19 +14,16 @@ import java.io.InputStream;
 import static ru.mgubin.tbot.constant.Constants.PICTURE_URL;
 
 @Slf4j
-@Service
-public class PictureWebService
-{
+public class PictureWebService {
 
     /**
      * Формирование изображения для вывода его в боте.
+     *
      * @param text - описание пользователя самого себя
      * @return изображение в InputStream
      */
-    public InputStream makePicture(String text)
-    {
-        try
-        {
+    public InputStream makePicture(String text) {
+        try {
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -36,14 +32,12 @@ public class PictureWebService
             HttpEntity<String> request = new HttpEntity<>(pictureJsonObject.toString(), headers);
             byte[] picture =
                     restTemplate.postForObject(PICTURE_URL, request, byte[].class);
-            if (picture == null)
-            {
+            if (picture == null) {
                 throw new PrintPictureException();
             }
             return new ByteArrayInputStream(picture);
-        } catch (RuntimeException e)
-        {
-            log.error(e.getMessage(),e);
+        } catch (RuntimeException e) {
+            log.error(e.getMessage(), e);
             throw new PrintPictureException();
         }
     }

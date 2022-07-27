@@ -6,13 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class SearchProfile
-{
+public class SearchProfile {
     List<User> userList = new ArrayList<>();
     int numberProfile;
 
-    public void fillUserList(List<User> userList)
-    {
+    public void fillUserList(List<User> userList) {
         this.userList.addAll(userList);
     }
 }

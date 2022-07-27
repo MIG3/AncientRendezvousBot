@@ -13,25 +13,22 @@ import ru.mgubin.tbot.exception.ParseToJsonException;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class PersonCrush
-{
+public class PersonCrush {
     Long id;
     Long userId;
     Long crushId;
-    public PersonCrush(Long userId, Long crushId)
-    {
+
+    public PersonCrush(Long userId, Long crushId) {
         this.userId = userId;
         this.crushId = crushId;
     }
-    public String toJson()
-    {
-        try
-        {
+
+    public String toJson() {
+        try {
             ObjectMapper mapper = new ObjectMapper();
             return mapper.writeValueAsString(this);
 
-        } catch (JsonProcessingException e)
-        {
+        } catch (JsonProcessingException e) {
             throw new ParseToJsonException();
         }
     }

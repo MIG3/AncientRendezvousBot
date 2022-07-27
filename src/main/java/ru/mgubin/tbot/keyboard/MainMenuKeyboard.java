@@ -9,8 +9,7 @@ import ru.mgubin.tbot.enums.MenuButtonsEnum;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainMenuKeyboard
-{
+public class MainMenuKeyboard {
     /**
      * Получает созданное сообщение
      *
@@ -18,8 +17,7 @@ public class MainMenuKeyboard
      * @param textMessage сообщение
      * @return сообщение
      */
-    public SendMessage getMainMenuMessage(final long chatId, final String textMessage)
-    {
+    public SendMessage getMainMenuMessage(final long chatId, final String textMessage) {
 
         final ReplyKeyboardMarkup replyKeyboardMarkup = getMainMenuKeyboard(MenuButtonsEnum.valuesMenuButtons());
         final SendMessage mainMenuMessage =
@@ -35,14 +33,12 @@ public class MainMenuKeyboard
      * @param replyKeyboardMarkup клавиатура
      * @return сообщение
      */
-    private SendMessage createMessageWithKeyboard(long chatId, String textMessage, final ReplyKeyboardMarkup replyKeyboardMarkup)
-    {
+    private SendMessage createMessageWithKeyboard(long chatId, String textMessage, final ReplyKeyboardMarkup replyKeyboardMarkup) {
         final SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
         sendMessage.setText(textMessage);
-        if (replyKeyboardMarkup != null)
-        {
+        if (replyKeyboardMarkup != null) {
             sendMessage.setReplyMarkup(replyKeyboardMarkup);
         }
         return sendMessage;
@@ -54,23 +50,17 @@ public class MainMenuKeyboard
      * @param menuButtons массив enum названий кнопок для меню
      * @return клавиатура
      */
-    private ReplyKeyboardMarkup getMainMenuKeyboard(List<String> menuButtons)
-    {
+    private ReplyKeyboardMarkup getMainMenuKeyboard(List<String> menuButtons) {
         final ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setSelective(true);
         replyKeyboardMarkup.setResizeKeyboard(true);
         replyKeyboardMarkup.setOneTimeKeyboard(false);
-
-
         KeyboardRow row1 = new KeyboardRow();
-
-        for (String menuClick : menuButtons)
-        {
+        for (String menuClick : menuButtons) {
             row1.add(KeyboardButton.builder()
                     .text(menuClick)
                     .build());
         }
-
         List<KeyboardRow> keyboard = new ArrayList<>();
         keyboard.add(row1);
         replyKeyboardMarkup.setKeyboard(keyboard);

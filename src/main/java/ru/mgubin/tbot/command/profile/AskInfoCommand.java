@@ -1,37 +1,31 @@
-package ru.mgubin.tbot.command;
+package ru.mgubin.tbot.command.profile;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.mgubin.tbot.cash.UserDataCache;
+import ru.mgubin.tbot.command.Command;
+import ru.mgubin.tbot.entity.OutputParameters;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.enums.BotStateEnum;
 import ru.mgubin.tbot.enums.SearchButtonsEnum;
 import ru.mgubin.tbot.keyboard.InlineKeyboard;
 
-public class AskInfoCommand implements Command
-{
+public class AskInfoCommand implements Command {
     private final UserDataCache userDataCache;
 
     @Autowired
-    public AskInfoCommand(UserDataCache userDataCache)
-    {
+    public AskInfoCommand(UserDataCache userDataCache) {
         this.userDataCache = userDataCache;
     }
 
     @Override
-    public OutputParameters invoke(Message message)
-    {
-        long userId = message.getFrom().getId();
+    public OutputParameters invoke(Long userId, String message) {
         InlineKeyboard gender = new InlineKeyboard();
         OutputParameters outputParameters = new OutputParameters();
         User profileData = userDataCache.getUserProfileData(userId);
-
-        profileData.setDescription(message.getText());
-
-        outputParameters.setSm(gender.keyboard(message.getChatId(), "Кого Вы хотите искать в будущем?", SearchButtonsEnum.valuesSearchButtons()));
+        profileData.setDescription(message);
+        outputParameters.setSm(gender.keyboard(userId, "Кого Вы хотите искать в будущем?", SearchButtonsEnum.valuesSearchButtons()));
         userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_CRUSH);
         userDataCache.saveUserProfileData(userId, profileData);
-
         return outputParameters;
     }
 }

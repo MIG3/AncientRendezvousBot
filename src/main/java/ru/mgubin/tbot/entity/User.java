@@ -20,37 +20,33 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class User
-{
+public class User {
     Long id;
     String fullName;
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    LocalDate birthday;
+    LocalDate birthdate;
     SearchButtonsEnum crush;
     GenderButtonsEnum gender;
     String description;
 
     /**
      * Метод преобразования сущности User в json формат
+     *
      * @return json пользователя
      */
-    public String toJson()
-    {
-        try
-        {
+    public String toJson() {
+        try {
             ObjectMapper mapper = new ObjectMapper();
             return mapper.writeValueAsString(this);
 
-        } catch (JsonProcessingException e)
-        {
+        } catch (JsonProcessingException e) {
             throw new ParseToJsonException();
         }
     }
 
-    public User jsonToUser(String user)
-    {
+    public User jsonToUser(String user) {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.convertValue(user, this.getClass());
     }

@@ -5,8 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public enum ProfileButtonsEnum
-{
+public enum ProfileButtonsEnum {
     WRITE("ЗАПОЛНИТЬ"),
     UPDATE("ИЗМЕНИТЬ"),
     BROWSE("ПОСМОТРЕТЬ");
@@ -15,61 +14,50 @@ public enum ProfileButtonsEnum
 
     public final String profile;
 
-    static
-    {
-        for (ProfileButtonsEnum profile : values())
-        {
+    static {
+        for (ProfileButtonsEnum profile : values()) {
             PROFILE_BUTTONS.put(profile.profile, profile);
         }
     }
 
-    public String getButtonName()
-    {
+    public String getButtonName() {
         return profile;
     }
 
-    private ProfileButtonsEnum(String buttonName)
-    {
+    private ProfileButtonsEnum(String buttonName) {
         this.profile = buttonName;
     }
 
-    public static ProfileButtonsEnum valueOfProfileButtons(String profile)
-    {
-        for (ProfileButtonsEnum profile1 : values())
-        {
-            if (profile1.profile.equals(profile))
-            {
+    public static ProfileButtonsEnum valueOfProfileButtons(String profile) {
+        for (ProfileButtonsEnum profile1 : values()) {
+            if (profile1.profile.equals(profile)) {
                 return profile1;
             }
         }
         return null;
     }
 
-    public static List<ProfileButtonsEnum> valuesExceptProfileButtons(String profile)
-    {
+    public static List<ProfileButtonsEnum> valuesExceptProfileButtons(String profile) {
         List<ProfileButtonsEnum> genderList = new ArrayList<>();
-        for (ProfileButtonsEnum profile1 : values())
-        {
-            if (!profile1.profile.equals(profile))
-            {
+        for (ProfileButtonsEnum profile1 : values()) {
+            if (!profile1.profile.equals(profile)) {
                 genderList.add(profile1);
             }
         }
         return genderList;
     }
-    public static List<String> valuesProfileButtons()
-    {
+
+    public static List<String> valuesProfileButtons() {
         List<String> genderList = new ArrayList<>();
-        for (ProfileButtonsEnum profile1 : values())
-        {
+        for (ProfileButtonsEnum profile1 : values()) {
 
             genderList.add(profile1.profile);
 
         }
         return genderList;
     }
-    public static ProfileButtonsEnum valueOfLabel(String buttonName)
-    {
+
+    public static ProfileButtonsEnum valueOfLabel(String buttonName) {
         return PROFILE_BUTTONS.get(buttonName);
     }
 }

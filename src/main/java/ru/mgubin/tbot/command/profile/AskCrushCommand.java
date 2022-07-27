@@ -1,27 +1,24 @@
-package ru.mgubin.tbot.command;
+package ru.mgubin.tbot.command.profile;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.mgubin.tbot.cash.UserDataCache;
+import ru.mgubin.tbot.command.Command;
+import ru.mgubin.tbot.entity.OutputParameters;
 import ru.mgubin.tbot.enums.BotStateEnum;
 
-@Service
-public class AskCrushCommand implements Command
-{
+public class AskCrushCommand implements Command {
     private final UserDataCache userDataCache;
 
     @Autowired
-    public AskCrushCommand(UserDataCache userDataCache)
-    {
+    public AskCrushCommand(UserDataCache userDataCache) {
         this.userDataCache = userDataCache;
     }
 
     @Override
-    public OutputParameters invoke(Message message)
-    {
+    public OutputParameters invoke(Long userId, String message) {
         OutputParameters outputParameters = new OutputParameters();
-        userDataCache.setUsersCurrentBotState(message.getFrom().getId(), BotStateEnum.ASK_BIRTHDAY);
+        userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_BIRTHDAY);
         return outputParameters;
     }
 }

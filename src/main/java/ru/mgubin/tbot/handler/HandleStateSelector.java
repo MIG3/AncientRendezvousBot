@@ -1,27 +1,30 @@
 package ru.mgubin.tbot.handler;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.mgubin.tbot.cash.UserDataCache;
-import ru.mgubin.tbot.command.*;
+import ru.mgubin.tbot.command.Command;
+import ru.mgubin.tbot.command.StartBotCommand;
+import ru.mgubin.tbot.command.help.HelpShowCommand;
+import ru.mgubin.tbot.command.lovers.BackCrushCommand;
+import ru.mgubin.tbot.command.lovers.NextCrushCommand;
+import ru.mgubin.tbot.command.lovers.SearchCrushUserCommand;
+import ru.mgubin.tbot.command.profile.*;
+import ru.mgubin.tbot.command.search.BackCommand;
+import ru.mgubin.tbot.command.search.NextCommand;
+import ru.mgubin.tbot.command.search.SearchUserCommand;
 import ru.mgubin.tbot.enums.BotStateEnum;
 
-@Service
-public class HandleStateSelector
-{
+public class HandleStateSelector {
     private final UserDataCache userDataCache;
 
     @Autowired
-    public HandleStateSelector(UserDataCache userDataCache)
-    {
+    public HandleStateSelector(UserDataCache userDataCache) {
         this.userDataCache = userDataCache;
     }
 
-    public Command handleStateSelector(BotStateEnum state) throws TelegramApiException
-    {
-        switch (state)
-        {
+    public Command handleStateSelector(BotStateEnum state) throws TelegramApiException {
+        switch (state) {
             case SHOW_HELP_MENU:
                 return new HelpShowCommand();
             case ASK_GENDER:
@@ -36,8 +39,6 @@ public class HandleStateSelector
                 return new AskBirthdayCommand(userDataCache);
             case SEARCH:
                 return new SearchUserCommand(userDataCache);
-            case CHOICE_PREVorNEXT_BUTTON:
-                return new ChoiceProfileFromSearchCommand(userDataCache);
             case NEXT_PROFILE:
                 return new NextCommand(userDataCache);
             case PREV_PROFILE:

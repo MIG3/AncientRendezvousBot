@@ -7,8 +7,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import java.util.ArrayList;
 import java.util.List;
 
-public class InlineKeyboard
-{
+public class InlineKeyboard {
     /**
      * Метод формирования inline кнопок (то есть привязанных к сообщению в чате)
      *
@@ -17,14 +16,10 @@ public class InlineKeyboard
      * @param inlineKeyboard массив enum названий кнопок в зависимости от вопроса
      * @return сообщение с кнопками
      */
-    public SendMessage keyboard(long chatId, String ask, List<String> inlineKeyboard)
-    {
+    public SendMessage keyboard(long chatId, String ask, List<String> inlineKeyboard) {
         List<InlineKeyboardButton> buttons = new ArrayList<>();
         List<List<InlineKeyboardButton>> listButtons = new ArrayList<>();
-
-
-        for (String dd : inlineKeyboard)
-        {
+        for (String dd : inlineKeyboard) {
             buttons.add(InlineKeyboardButton.builder()
                     .text(dd)
                     .callbackData("" + dd)

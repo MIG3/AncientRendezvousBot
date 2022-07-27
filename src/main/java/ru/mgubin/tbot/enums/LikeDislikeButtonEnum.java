@@ -5,15 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public enum PrevNextButtonEnum {
-    PREV("НАЗАД"),
-    NEXT("ВПЕРЁД");
-    private static final Map<String, PrevNextButtonEnum> PREV_NEXT_BUTTONS = new HashMap<>();
+public enum LikeDislikeButtonEnum {
+    DISLIKES("ТРУПЪ"),
+    LIKES("ЛЮБО");
+    private static final Map<String, LikeDislikeButtonEnum> PREV_NEXT_BUTTONS = new HashMap<>();
 
     public final String prevNext;
 
     static {
-        for (PrevNextButtonEnum prevNext : values()) {
+        for (LikeDislikeButtonEnum prevNext : values()) {
             PREV_NEXT_BUTTONS.put(prevNext.prevNext, prevNext);
         }
     }
@@ -22,12 +22,12 @@ public enum PrevNextButtonEnum {
         return prevNext;
     }
 
-    private PrevNextButtonEnum(String buttonName) {
+    private LikeDislikeButtonEnum(String buttonName) {
         this.prevNext = buttonName;
     }
 
-    public static PrevNextButtonEnum valueOfPrevNextButtons(String prevNext) {
-        for (PrevNextButtonEnum prevNext1 : values()) {
+    public static LikeDislikeButtonEnum valueOfPrevNextButtons(String prevNext) {
+        for (LikeDislikeButtonEnum prevNext1 : values()) {
             if (prevNext1.prevNext.equals(prevNext)) {
                 return prevNext1;
             }
@@ -35,19 +35,19 @@ public enum PrevNextButtonEnum {
         return null;
     }
 
-    public static List<PrevNextButtonEnum> valuesExceptPrevNextButtons(String prevNext) {
-        List<PrevNextButtonEnum> genderList = new ArrayList<>();
-        for (PrevNextButtonEnum prevNext1 : values()) {
+    public static List<LikeDislikeButtonEnum> valuesExceptPrevNextButtons(String prevNext) {
+        List<LikeDislikeButtonEnum> likeList = new ArrayList<>();
+        for (LikeDislikeButtonEnum prevNext1 : values()) {
             if (!prevNext1.prevNext.equals(prevNext)) {
-                genderList.add(prevNext1);
+                likeList.add(prevNext1);
             }
         }
-        return genderList;
+        return likeList;
     }
 
     public static List<String> valuesPrevNextButtons() {
         List<String> genderList = new ArrayList<>();
-        for (PrevNextButtonEnum prevNext1 : values()) {
+        for (LikeDislikeButtonEnum prevNext1 : values()) {
 
             genderList.add(prevNext1.prevNext);
 
@@ -55,7 +55,7 @@ public enum PrevNextButtonEnum {
         return genderList;
     }
 
-    public static PrevNextButtonEnum valueOfLabel(String buttonName) {
+    public static LikeDislikeButtonEnum valueOfLabel(String buttonName) {
         return PREV_NEXT_BUTTONS.get(buttonName);
     }
 }

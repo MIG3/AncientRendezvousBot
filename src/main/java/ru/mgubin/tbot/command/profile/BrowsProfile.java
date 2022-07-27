@@ -1,35 +1,29 @@
-package ru.mgubin.tbot.command;
+package ru.mgubin.tbot.command.profile;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.mgubin.tbot.cash.UserDataCache;
+import ru.mgubin.tbot.command.Command;
 import ru.mgubin.tbot.db.UserDB;
+import ru.mgubin.tbot.entity.OutputParameters;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.service.PrintProfile;
 
-public class BrowsProfile implements Command
-{
+public class BrowsProfile implements Command {
     private final UserDataCache userDataCache;
 
     @Autowired
-    public BrowsProfile(UserDataCache userDataCache)
-    {
+    public BrowsProfile(UserDataCache userDataCache) {
         this.userDataCache = userDataCache;
     }
 
     @Override
-    public OutputParameters invoke(Message message)
-    {
-        long userId = message.getFrom().getId();
+    public OutputParameters invoke(Long userId, String message) {
         OutputParameters outputParameters = new OutputParameters();
         PrintProfile profile = new PrintProfile();
         UserDB userDB = new UserDB();
-
         User profileData = userDB.getUser(userId);
-
         userDataCache.saveUserProfileData(userId, profileData);
-        outputParameters.setSp(profile.sendPhoto(message.getChatId(), profileData, ""));
-
+        outputParameters.setSp(profile.sendPhoto(userId, profileData, ""));
         return outputParameters;
     }
 }

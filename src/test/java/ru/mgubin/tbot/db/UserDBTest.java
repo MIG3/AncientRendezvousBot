@@ -23,7 +23,7 @@ class UserDBTest
     {
         UserDB userDB = new UserDB();
         LocalDate localDate = LocalDate.of(1990, 10, 10);
-        userDB.createUser(new User(10L, "Gena", localDate, "MEN", "MEN", "kdfmbs dgdfd"));
+        //userDB.createUser(new User(10L, "Gena", localDate, "MEN", "MEN", "kdfmbs dgdfd"));
 
 
     }

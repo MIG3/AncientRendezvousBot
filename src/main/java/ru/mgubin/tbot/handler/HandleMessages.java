@@ -1,31 +1,23 @@
 package ru.mgubin.tbot.handler;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.enums.BotStateEnum;
 import ru.mgubin.tbot.enums.LikeStateEnum;
 
-public class HandleMessages
-{
+public class HandleMessages {
     private final UserDataCache userDataCache;
 
     @Autowired
-    public HandleMessages(UserDataCache userDataCache)
-    {
+    public HandleMessages(UserDataCache userDataCache) {
         this.userDataCache = userDataCache;
     }
 
-    public BotStateEnum handleInputMessage(Message message) throws TelegramApiException
-    {
-        String inputMsg = message.getText();
-        int userId = message.getFrom().getId().intValue();
+    public BotStateEnum handleInputMessage(Long userId, String inputMsg) throws TelegramApiException {
         BotStateEnum botState = userDataCache.getUsersCurrentBotState(userId);
         LikeStateEnum likeState = userDataCache.getUsersCurrentLikeState(userId);
-
-        switch (inputMsg)
-        {
+        switch (inputMsg) {
             case "/start":
                 botState = BotStateEnum.START;
                 break;
@@ -34,20 +26,6 @@ public class HandleMessages
                 break;
             case "ПОИСК":
                 botState = BotStateEnum.SEARCH;
-                break;
-            case "/like":
-                botState = BotStateEnum.NEXT_PROFILE;
-                likeState = LikeStateEnum.LIKE;
-                break;
-            case "/dislike":
-                botState = BotStateEnum.PREV_PROFILE;
-                likeState = LikeStateEnum.DISLIKE;
-                break;
-            case "/next":
-                botState = BotStateEnum.NEXT_CRUSH;
-                break;
-            case "/prev":
-                botState = BotStateEnum.PREV_CRUSH;
                 break;
             case "АНКЕТА":
                 botState = BotStateEnum.CORRECT_PROFILE;
@@ -62,7 +40,6 @@ public class HandleMessages
         }
         userDataCache.setUsersCurrentBotState(userId, botState);
         userDataCache.setUsersCurrentLikeState(userId, likeState);
-
         return botState;
     }
 }

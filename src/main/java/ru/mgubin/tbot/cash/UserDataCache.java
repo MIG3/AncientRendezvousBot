@@ -11,8 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class UserDataCache implements DataCache
-{
+public class UserDataCache implements DataCache {
     private Map<Long, BotStateEnum> usersBotStates = new HashMap<>();
     private Map<Long, LikeStateEnum> usersLikeStates = new HashMap<>();
     private Map<Long, User> usersProfileData = new HashMap<>();
@@ -20,77 +19,65 @@ public class UserDataCache implements DataCache
     private Map<Long, CrushProfile> usersCrushListData = new HashMap<>();
 
     @Override
-    public void setUsersCurrentBotState(long userId, BotStateEnum botState)
-    {
+    public void setUsersCurrentBotState(long userId, BotStateEnum botState) {
         usersBotStates.put(userId, botState);
     }
 
     @Override
-    public void setUsersCurrentLikeState(long userId, LikeStateEnum likeState)
-    {
+    public void setUsersCurrentLikeState(long userId, LikeStateEnum likeState) {
         usersLikeStates.put(userId, likeState);
     }
+
     @Override
-    public BotStateEnum getUsersCurrentBotState(long userId)
-    {
+    public BotStateEnum getUsersCurrentBotState(long userId) {
         BotStateEnum botState = usersBotStates.get(userId);
-        if (botState == null)
-        {
+        if (botState == null) {
             botState = BotStateEnum.SHOW_HELP_MENU;
         }
-
         return botState;
     }
+
     @Override
-    public LikeStateEnum getUsersCurrentLikeState(long userId)
-    {
+    public LikeStateEnum getUsersCurrentLikeState(long userId) {
         LikeStateEnum likeState = usersLikeStates.get(userId);
-        if (likeState == null)
-        {
+        if (likeState == null) {
             likeState = LikeStateEnum.LIKE;
         }
-
         return likeState;
     }
+
     @Override
-    public User getUserProfileData(long userId)
-    {
+    public User getUserProfileData(long userId) {
         User userProfileData = usersProfileData.get(userId);
-        if (userProfileData == null)
-        {
+        if (userProfileData == null) {
             userProfileData = new User();
         }
         return userProfileData;
     }
 
     @Override
-    public void saveUserProfileData(long userId, User userProfileData)
-    {
+    public void saveUserProfileData(long userId, User userProfileData) {
         usersProfileData.put(userId, userProfileData);
     }
 
     @Override
-    public void saveUserListData(long userId, SearchProfile listProfileData)
-    {
+    public void saveUserListData(long userId, SearchProfile listProfileData) {
         usersSearchListData.put(userId, listProfileData);
     }
 
     @Override
-    public SearchProfile getUserListData(long userId)
-    {
+    public SearchProfile getUserListData(long userId) {
         SearchProfile listUsers = usersSearchListData.get(userId);
         return listUsers;
     }
 
     @Override
-    public void saveCrushListData(long userId, CrushProfile listCrushData)
-    {
+    public void saveCrushListData(long userId, CrushProfile listCrushData) {
         usersCrushListData.put(userId, listCrushData);
     }
 
     @Override
-    public CrushProfile getUserCrushData(long userId)
-    {
+    public CrushProfile getUserCrushData(long userId) {
         CrushProfile listCrashes = usersCrushListData.get(userId);
         return listCrashes;
     }
