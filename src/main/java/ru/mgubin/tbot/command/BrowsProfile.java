@@ -28,7 +28,7 @@ public class BrowsProfile implements Command
         User profileData = userDB.getUser(userId);
 
         userDataCache.saveUserProfileData(userId, profileData);
-        outputParameters.setSp(profile.sendPhoto(message.getChatId(), profileData));
+        outputParameters.setSp(profile.sendPhoto(message.getChatId(), profileData, ""));
 
         return outputParameters;
     }

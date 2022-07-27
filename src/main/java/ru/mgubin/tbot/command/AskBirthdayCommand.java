@@ -38,7 +38,7 @@ public class AskBirthdayCommand implements Command
         userDataCache.saveUserProfileData(userId, profileData);
 
         userDB.createUser(profileData);
-        outputParameters.setSp(profile.sendPhoto(message.getChatId(), profileData));
+        outputParameters.setSp(profile.sendPhoto(message.getChatId(), profileData, ""));
         /*outputParameters.setSm(SendMessage.builder()
                 .text("Анкета заполнена\n" + profileData.getFullName()+ "\n" + profileData.getGender() + "\n" + profileData.getBirthday() + "\n" + profileData.getDescription() + "\n" +  profileData.getCrush())
                 .chatId(message.getChatId())

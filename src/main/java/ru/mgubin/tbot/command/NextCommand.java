@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.db.UserDB;
-import ru.mgubin.tbot.entity.PersToPers;
+import ru.mgubin.tbot.entity.PersonCrush;
 import ru.mgubin.tbot.entity.SearchProfile;
 import ru.mgubin.tbot.enums.BotState;
 import ru.mgubin.tbot.service.PrintProfile;
@@ -27,7 +27,7 @@ public class NextCommand implements Command
         OutputParameters outputParameters = new OutputParameters();
         PrintProfile profile = new PrintProfile();
         UserDB userDB = new UserDB();
-        PersToPers lovers = new PersToPers();
+        PersonCrush lovers = new PersonCrush();
 
         searchProfile = userDataCache.getUserListData(userId);
         int lengthUserList = searchProfile.getUserList().size();
@@ -48,7 +48,7 @@ public class NextCommand implements Command
 
         outputParameters.setSp(profile.sendPhoto(                                       // печатаем изображение, передавая параметрами
                 message.getChatId(),                                                    // id чата
-                searchProfile.getUserList().get(searchProfile.getNumberProfile())));    // анкета пользователя по её номеру
+                searchProfile.getUserList().get(searchProfile.getNumberProfile()), ""));    // анкета пользователя по её номеру
 
         userDataCache.setUsersCurrentBotState(userId, BotState.CHOICE_PREVorNEXT_BUTTON);
 

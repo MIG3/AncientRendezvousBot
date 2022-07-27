@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import static ru.mgubin.tbot.Constant.Constants.PICTURE_URL;
+import static ru.mgubin.tbot.constant.Constants.PICTURE_URL;
 
 @Service
 public class PictureWebService

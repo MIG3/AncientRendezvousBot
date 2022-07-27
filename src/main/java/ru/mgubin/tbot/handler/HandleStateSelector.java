@@ -42,12 +42,16 @@ public class HandleStateSelector
                 return new NextCommand(userDataCache);
             case PREV_PROFILE:
                 return new BackCommand(userDataCache);
+           /* case NEXT_CRUSH:
+                return new NextCrushCommand(userDataCache);
+            case PREV_PROFILE:
+                return new BackCrushCommand(userDataCache);*/
             case CORRECT_PROFILE:
                 return new CorrectProfileCommand(userDataCache);
             case BROWSE_PROFILE:
                 return new BrowsProfile(userDataCache);
             case BROWSE_LOVERS:
-                return new LoversCommand(userDataCache);
+                return new SearchCrushUserCommand(userDataCache);
             case START:
                 return new StartBotCommand();
         }

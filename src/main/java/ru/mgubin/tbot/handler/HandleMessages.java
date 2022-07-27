@@ -43,6 +43,12 @@ public class HandleMessages
                 botState = BotState.PREV_PROFILE;
                 likeState = LikeState.DISLIKE;
                 break;
+            case "/next":
+                botState = BotState.NEXT_CRUSH;
+                break;
+            case "/prev":
+                botState = BotState.PREV_CRUSH;
+                break;
             case "АНКЕТА":
                 botState = BotState.CORRECT_PROFILE;
                 break;

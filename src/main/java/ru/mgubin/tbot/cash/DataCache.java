@@ -1,5 +1,7 @@
 package ru.mgubin.tbot.cash;
 
+import ru.mgubin.tbot.entity.CrushProfile;
+import ru.mgubin.tbot.entity.PersonCrush;
 import ru.mgubin.tbot.entity.SearchProfile;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.enums.BotState;
@@ -62,5 +64,19 @@ public interface DataCache
      * @return анкета пользователя
      */
     SearchProfile getUserListData(long userId);
+
+    /**
+     * Сохраниение в мап по ключу сущности списка анкет с позицией следующей анкеты
+     * @param userId идентификатор пользователя
+     * @param listCrushData сущность: id пользователя и список найденных анкет для него
+     */
+    void saveCrushListData(long userId, CrushProfile listCrushData);
+
+    /**
+     * Метод получения списка анкет для пользователя по его идентификатору
+     * @param userId идентификатор пользователя
+     * @return анкета пользователя
+     */
+    CrushProfile getUserCrushData(long userId);
 
 }

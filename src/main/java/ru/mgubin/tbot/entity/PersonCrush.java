@@ -13,11 +13,16 @@ import ru.mgubin.tbot.exception.ParseToJsonException;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class PersToPers
+public class PersonCrush
 {
+    Long id;
     Long userId;
     Long crushId;
-
+    public PersonCrush(Long userId, Long crushId)
+    {
+        this.userId = userId;
+        this.crushId = crushId;
+    }
     public String toJson()
     {
         try
