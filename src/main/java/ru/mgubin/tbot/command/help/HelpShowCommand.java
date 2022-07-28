@@ -17,7 +17,7 @@ public class HelpShowCommand implements Command {
                 )
                 .chatId(userId)
                 .build();
-        outputParameters.setSm(sendMessage);
+        outputParameters.setSendMessage(sendMessage);
         return outputParameters;
     }
 }

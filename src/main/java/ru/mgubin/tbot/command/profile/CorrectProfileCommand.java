@@ -28,7 +28,7 @@ public class CorrectProfileCommand implements Command {
         InlineKeyboard correctKeyboard = new InlineKeyboard();
         OutputParameters outputParameters = new OutputParameters();
         userDataCache.setUsersCurrentBotState(userId, BotStateEnum.CORRECT_PROFILE);
-        outputParameters.setSm(correctKeyboard.keyboard(userId, "Что Вы хотите сделать с анкетой?", ProfileButtonsEnum.valuesProfileButtons()));
+        outputParameters.setSendMessage(correctKeyboard.keyboard(userId, "Что Вы хотите сделать с анкетой?", ProfileButtonsEnum.valuesProfileButtons()));
         return outputParameters;
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class SearchProfile {
     List<User> userList = new ArrayList<>();
-    int numberProfile;
+    private int numberProfile;
 
     public void fillUserList(List<User> userList) {
         this.userList.addAll(userList);

@@ -6,7 +6,7 @@ import ru.mgubin.tbot.command.Command;
 import ru.mgubin.tbot.db.UserDB;
 import ru.mgubin.tbot.entity.OutputParameters;
 import ru.mgubin.tbot.entity.User;
-import ru.mgubin.tbot.service.PrintProfile;
+import ru.mgubin.tbot.service.PrintProfileService;
 
 public class BrowsProfile implements Command {
     private final UserDataCache userDataCache;
@@ -27,11 +27,11 @@ public class BrowsProfile implements Command {
     @Override
     public OutputParameters invoke(Long userId, String message) {
         OutputParameters outputParameters = new OutputParameters();
-        PrintProfile profile = new PrintProfile();
+        PrintProfileService profile = new PrintProfileService();
         UserDB userDB = new UserDB();
         User profileData = userDB.getUser(userId);
         userDataCache.saveUserProfileData(userId, profileData);
-        outputParameters.setSp(profile.sendPhoto(userId, profileData, ""));
+        outputParameters.setSendPhoto(profile.sendPhoto(userId, profileData, ""));
         return outputParameters;
     }
 }

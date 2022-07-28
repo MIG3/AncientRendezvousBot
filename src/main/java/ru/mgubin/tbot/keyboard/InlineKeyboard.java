@@ -18,14 +18,13 @@ public class InlineKeyboard {
      */
     public SendMessage keyboard(long chatId, String ask, List<String> inlineKeyboard) {
         List<InlineKeyboardButton> buttons = new ArrayList<>();
-        List<List<InlineKeyboardButton>> listButtons = new ArrayList<>();
         for (String dd : inlineKeyboard) {
             buttons.add(InlineKeyboardButton.builder()
                     .text(dd)
                     .callbackData("" + dd)
                     .build());
         }
-        listButtons.add(buttons);
+        List<List<InlineKeyboardButton>> listButtons = List.of(buttons);
         return SendMessage.builder()
                 .text(ask)
                 .chatId(chatId)

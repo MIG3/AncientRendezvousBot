@@ -31,7 +31,7 @@ public class AskInfoCommand implements Command {
         OutputParameters outputParameters = new OutputParameters();
         User profileData = userDataCache.getUserProfileData(userId);
         profileData.setDescription(message);
-        outputParameters.setSm(gender.keyboard(userId, "Кого Вы хотите искать в будущем?", SearchButtonsEnum.valuesSearchButtons()));
+        outputParameters.setSendMessage(gender.keyboard(userId, "Кого Вы хотите искать в будущем?", SearchButtonsEnum.valuesSearchButtons()));
         userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_CRUSH);
         userDataCache.saveUserProfileData(userId, profileData);
         return outputParameters;

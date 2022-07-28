@@ -1,10 +1,14 @@
 package ru.mgubin.tbot.enums;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Getter
+@RequiredArgsConstructor
 public enum MenuButtonsEnum {
     PROFILE("АНКЕТА"),
     SEARCH("ПОИСК"),
@@ -18,14 +22,6 @@ public enum MenuButtonsEnum {
         for (MenuButtonsEnum menu : values()) {
             MENU_BUTTONS.put(menu.menu, menu);
         }
-    }
-
-    public String getButtonName() {
-        return menu;
-    }
-
-    private MenuButtonsEnum(String buttonName) {
-        this.menu = buttonName;
     }
 
     public static MenuButtonsEnum valueOfMenuButtons(String menu) {

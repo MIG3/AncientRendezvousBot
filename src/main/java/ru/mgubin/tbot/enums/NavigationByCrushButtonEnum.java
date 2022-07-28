@@ -1,33 +1,29 @@
 package ru.mgubin.tbot.enums;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-public enum PrevNextButtonEnum {
+@Getter
+@RequiredArgsConstructor
+public enum NavigationByCrushButtonEnum {
     PREV("НАЗАД"),
     NEXT("ВПЕРЁД");
-    private static final Map<String, PrevNextButtonEnum> PREV_NEXT_BUTTONS = new HashMap<>();
+    private static final Map<String, NavigationByCrushButtonEnum> PREV_NEXT_BUTTONS = new HashMap<>();
 
     public final String prevNext;
 
     static {
-        for (PrevNextButtonEnum prevNext : values()) {
+        for (NavigationByCrushButtonEnum prevNext : values()) {
             PREV_NEXT_BUTTONS.put(prevNext.prevNext, prevNext);
         }
     }
 
-    public String getButtonName() {
-        return prevNext;
-    }
-
-    private PrevNextButtonEnum(String buttonName) {
-        this.prevNext = buttonName;
-    }
-
-    public static PrevNextButtonEnum valueOfPrevNextButtons(String prevNext) {
-        for (PrevNextButtonEnum prevNext1 : values()) {
+    public static NavigationByCrushButtonEnum valueOfPrevNextButtons(String prevNext) {
+        for (NavigationByCrushButtonEnum prevNext1 : values()) {
             if (prevNext1.prevNext.equals(prevNext)) {
                 return prevNext1;
             }
@@ -35,9 +31,9 @@ public enum PrevNextButtonEnum {
         return null;
     }
 
-    public static List<PrevNextButtonEnum> valuesExceptPrevNextButtons(String prevNext) {
-        List<PrevNextButtonEnum> genderList = new ArrayList<>();
-        for (PrevNextButtonEnum prevNext1 : values()) {
+    public static List<NavigationByCrushButtonEnum> valuesExceptPrevNextButtons(String prevNext) {
+        List<NavigationByCrushButtonEnum> genderList = new ArrayList<>();
+        for (NavigationByCrushButtonEnum prevNext1 : values()) {
             if (!prevNext1.prevNext.equals(prevNext)) {
                 genderList.add(prevNext1);
             }
@@ -47,7 +43,7 @@ public enum PrevNextButtonEnum {
 
     public static List<String> valuesPrevNextButtons() {
         List<String> genderList = new ArrayList<>();
-        for (PrevNextButtonEnum prevNext1 : values()) {
+        for (NavigationByCrushButtonEnum prevNext1 : values()) {
 
             genderList.add(prevNext1.prevNext);
 
@@ -55,7 +51,7 @@ public enum PrevNextButtonEnum {
         return genderList;
     }
 
-    public static PrevNextButtonEnum valueOfLabel(String buttonName) {
+    public static NavigationByCrushButtonEnum valueOfLabel(String buttonName) {
         return PREV_NEXT_BUTTONS.get(buttonName);
     }
 }

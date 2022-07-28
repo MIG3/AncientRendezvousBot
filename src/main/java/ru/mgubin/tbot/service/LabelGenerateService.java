@@ -10,12 +10,12 @@ import java.util.List;
 import static ru.mgubin.tbot.constant.Constants.*;
 
 
-public class GenerateLabel {
+public class LabelGenerateService {
     private final UserDataCache userDataCache;
-    UserDB userDB = new UserDB();
-    CrushProfile crushes = new CrushProfile();
+    private UserDB userDB = new UserDB();
+    private CrushProfile crushes = new CrushProfile();
 
-    public GenerateLabel(UserDataCache userDataCache) {
+    public LabelGenerateService(UserDataCache userDataCache) {
         this.userDataCache = userDataCache;
     }
 
@@ -31,13 +31,13 @@ public class GenerateLabel {
         List<PersonCrush> personCrushList = userDB.getUserAndCrush(userId, crushId);
         crushes.fillUserList(personCrushList);
         userDataCache.saveCrushListData(userId, crushes);
-        String label = "";
-        if (personCrushList.size() == 2) {
+        String label = null;
+        if (personCrushList.isEmpty()) {
+            label = LOVE_YOU;
+        } else if (personCrushList.size() == 2) {
             label = LOVE_YOU_LOVE;
         } else if (personCrushList.get(0).getUserId().equals(userId)) {
             label = YOU_LOVE;
-        } else {
-            label = LOVE_YOU;
         }
         return label;
     }

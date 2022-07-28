@@ -1,10 +1,14 @@
 package ru.mgubin.tbot.enums;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Getter
+@RequiredArgsConstructor
 public enum ProfileButtonsEnum {
     WRITE("ЗАПОЛНИТЬ"),
     UPDATE("ИЗМЕНИТЬ"),
@@ -18,14 +22,6 @@ public enum ProfileButtonsEnum {
         for (ProfileButtonsEnum profile : values()) {
             PROFILE_BUTTONS.put(profile.profile, profile);
         }
-    }
-
-    public String getButtonName() {
-        return profile;
-    }
-
-    private ProfileButtonsEnum(String buttonName) {
-        this.profile = buttonName;
     }
 
     public static ProfileButtonsEnum valueOfProfileButtons(String profile) {

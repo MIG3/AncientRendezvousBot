@@ -7,8 +7,10 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.mgubin.tbot.enums.GenderButtonsEnum;
 import ru.mgubin.tbot.enums.SearchButtonsEnum;
 import ru.mgubin.tbot.exception.ParseToJsonException;
@@ -19,17 +21,16 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
-    Long id;
+    private Long id;
     String fullName;
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    LocalDate birthdate;
-    SearchButtonsEnum crush;
-    GenderButtonsEnum gender;
-    String description;
+    private LocalDate birthdate;
+    private SearchButtonsEnum crush;
+    private GenderButtonsEnum gender;
+    private String description;
 
     /**
      * Метод преобразования сущности User в json формат

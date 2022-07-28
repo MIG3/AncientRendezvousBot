@@ -6,7 +6,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
-import ru.mgubin.tbot.exception.PrintPictureException;
+import ru.mgubin.tbot.exception.PictureException;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -33,12 +33,12 @@ public class PictureWebService {
             byte[] picture =
                     restTemplate.postForObject(PICTURE_URL, request, byte[].class);
             if (picture == null) {
-                throw new PrintPictureException();
+                throw new PictureException();
             }
             return new ByteArrayInputStream(picture);
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
-            throw new PrintPictureException();
+            throw new PictureException();
         }
     }
 }

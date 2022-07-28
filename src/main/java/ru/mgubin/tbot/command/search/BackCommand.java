@@ -7,10 +7,9 @@ import ru.mgubin.tbot.db.UserDB;
 import ru.mgubin.tbot.entity.OutputParameters;
 import ru.mgubin.tbot.entity.PersonCrush;
 import ru.mgubin.tbot.entity.SearchProfile;
-import ru.mgubin.tbot.enums.BotStateEnum;
-import ru.mgubin.tbot.enums.LikeDislikeButtonEnum;
+import ru.mgubin.tbot.enums.NavigationBySearchButtonEnum;
 import ru.mgubin.tbot.keyboard.InlineKeyboard;
-import ru.mgubin.tbot.service.PrintProfile;
+import ru.mgubin.tbot.service.PrintProfileService;
 
 public class BackCommand implements Command {
     private final UserDataCache userDataCache;
@@ -33,7 +32,7 @@ public class BackCommand implements Command {
     public OutputParameters invoke(Long userId, String message) {
         SearchProfile searchProfile = new SearchProfile();
         OutputParameters outputParameters = new OutputParameters();
-        PrintProfile profile = new PrintProfile();
+        PrintProfileService profile = new PrintProfileService();
         UserDB userDB = new UserDB();
         PersonCrush lovers = new PersonCrush();
         searchProfile = userDataCache.getUserListData(userId);
@@ -48,11 +47,11 @@ public class BackCommand implements Command {
         }
         lovers.setUserId(userId);
         userDB.removeLikeToUser(lovers);
-        outputParameters.setSp(profile.sendPhoto(       // печатаем изображение, передавая параметрами
+        outputParameters.setSendPhoto(profile.sendPhoto(       // печатаем изображение, передавая параметрами
                 userId,                    // id чата
                 searchProfile.getUserList().get(searchProfile.getNumberProfile()),
                 ""));
-        outputParameters.setSm(new InlineKeyboard().keyboard(userId, "Если нравится, нажми вперед, иначе назад", LikeDislikeButtonEnum.valuesPrevNextButtons()));
+        outputParameters.setSendMessage(new InlineKeyboard().keyboard(userId, "Если нравится, нажми вперед, иначе назад", NavigationBySearchButtonEnum.valuesLikeDislikeButtons()));
         return outputParameters;
     }
 }

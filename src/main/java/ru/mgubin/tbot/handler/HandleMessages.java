@@ -6,6 +6,8 @@ import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.enums.BotStateEnum;
 import ru.mgubin.tbot.enums.LikeStateEnum;
 
+import static ru.mgubin.tbot.constant.Constants.*;
+
 public class HandleMessages {
     private final UserDataCache userDataCache;
 
@@ -27,19 +29,19 @@ public class HandleMessages {
         BotStateEnum botState = userDataCache.getUsersCurrentBotState(userId);
         LikeStateEnum likeState = userDataCache.getUsersCurrentLikeState(userId);
         switch (inputMsg) {
-            case "/start":
+            case START:
                 botState = BotStateEnum.START;
                 break;
-            case "ПОМОЩЬ":
+            case HELP:
                 botState = BotStateEnum.SHOW_HELP_MENU;
                 break;
-            case "ПОИСК":
+            case SEARCH:
                 botState = BotStateEnum.SEARCH;
                 break;
-            case "АНКЕТА":
+            case PROFILE:
                 botState = BotStateEnum.CORRECT_PROFILE;
                 break;
-            case "ЛЮБИМЦЫ":
+            case LOVERS:
                 botState = BotStateEnum.BROWSE_LOVERS;
                 break;
             default:

@@ -7,9 +7,9 @@ import ru.mgubin.tbot.db.UserDB;
 import ru.mgubin.tbot.entity.OutputParameters;
 import ru.mgubin.tbot.entity.PersonCrush;
 import ru.mgubin.tbot.entity.SearchProfile;
-import ru.mgubin.tbot.enums.LikeDislikeButtonEnum;
+import ru.mgubin.tbot.enums.NavigationBySearchButtonEnum;
 import ru.mgubin.tbot.keyboard.InlineKeyboard;
-import ru.mgubin.tbot.service.PrintProfile;
+import ru.mgubin.tbot.service.PrintProfileService;
 
 public class NextCommand implements Command {
     private final UserDataCache userDataCache;
@@ -25,14 +25,15 @@ public class NextCommand implements Command {
      * записываем в мапу по id пользователя номер текущей анкеты.
      * Вызывается метод печати текущей анкеты из списка.
      * Выводятся кнопки для перебора анкет.
-     * @param userId id пользователя
+     *
+     * @param userId  id пользователя
      * @param message сообщение
      * @return анкета-изображение и кнопки для перебора
      */
     @Override
     public OutputParameters invoke(Long userId, String message) {
         OutputParameters outputParameters = new OutputParameters();
-        PrintProfile profile = new PrintProfile();
+        PrintProfileService profile = new PrintProfileService();
         UserDB userDB = new UserDB();
         PersonCrush lovers = new PersonCrush();
         SearchProfile searchProfile = userDataCache.getUserListData(userId);
@@ -47,10 +48,10 @@ public class NextCommand implements Command {
         }
         lovers.setUserId(userId);
         userDB.makeLikeToUser(lovers);
-        outputParameters.setSp(profile.sendPhoto(
+        outputParameters.setSendPhoto(profile.sendPhoto(
                 userId,
                 searchProfile.getUserList().get(searchProfile.getNumberProfile()), ""));
-        outputParameters.setSm(new InlineKeyboard().keyboard(userId, "Если нравится, нажми вперед, иначе назад", LikeDislikeButtonEnum.valuesPrevNextButtons()));
+        outputParameters.setSendMessage(new InlineKeyboard().keyboard(userId, "Если нравится, нажми вперед, иначе назад", NavigationBySearchButtonEnum.valuesLikeDislikeButtons()));
         return outputParameters;
     }
 }

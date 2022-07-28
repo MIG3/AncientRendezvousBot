@@ -12,6 +12,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 @Builder
 @AllArgsConstructor
 public class OutputParameters {
-    private SendMessage sm;
-    private SendPhoto sp;
+    private SendMessage sendMessage;
+    private SendPhoto sendPhoto;
 }

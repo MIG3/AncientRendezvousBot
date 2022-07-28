@@ -7,9 +7,9 @@ import ru.mgubin.tbot.db.UserDB;
 import ru.mgubin.tbot.entity.OutputParameters;
 import ru.mgubin.tbot.entity.SearchProfile;
 import ru.mgubin.tbot.entity.User;
-import ru.mgubin.tbot.enums.LikeDislikeButtonEnum;
+import ru.mgubin.tbot.enums.NavigationBySearchButtonEnum;
 import ru.mgubin.tbot.keyboard.InlineKeyboard;
-import ru.mgubin.tbot.service.PrintProfile;
+import ru.mgubin.tbot.service.PrintProfileService;
 
 public class SearchUserCommand implements Command {
     private final UserDataCache userDataCache;
@@ -32,16 +32,16 @@ public class SearchUserCommand implements Command {
     public OutputParameters invoke(Long userId, String message) {
         OutputParameters outputParameters = new OutputParameters();
         UserDB userDB = new UserDB();
-        PrintProfile profile = new PrintProfile();
+        PrintProfileService profile = new PrintProfileService();
         SearchProfile searchProfile = new SearchProfile();
         searchProfile.fillUserList(userDB.getUsersByGender(userId));
         userDataCache.saveUserListData(userId, searchProfile);
         User user = searchProfile.getUserList().get(searchProfile.getNumberProfile());
-        outputParameters.setSp(profile.sendPhoto(
+        outputParameters.setSendPhoto(profile.sendPhoto(
                 userId,
                 user,
                 ""));
-        outputParameters.setSm(new InlineKeyboard().keyboard(userId, "Если нравится, нажми ЛЮБО, иначе ТРУПЪ", LikeDislikeButtonEnum.valuesPrevNextButtons()));
+        outputParameters.setSendMessage(new InlineKeyboard().keyboard(userId, "Если нравится, нажми ЛЮБО, иначе ТРУПЪ", NavigationBySearchButtonEnum.valuesLikeDislikeButtons()));
         return outputParameters;
     }
 }

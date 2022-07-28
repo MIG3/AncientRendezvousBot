@@ -7,4 +7,9 @@ public class Constants {
     public final static String YOU_LOVE = "любим(а) Вами";
     public final static String LOVE_YOU = "Вы любимы";
     public final static String LOVE_YOU_LOVE = "взаимность";
+    public final static String START = "/start";
+    public final static String HELP = "ПОМОЩЬ";
+    public final static String SEARCH = "ПОИСК";
+    public final static String PROFILE = "АНКЕТА";
+    public final static String LOVERS = "ЛЮБИМЦЫ";
 }

@@ -9,14 +9,15 @@ import ru.mgubin.tbot.enums.LikeStateEnum;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class UserDataCache implements DataCache {
-    private Map<Long, BotStateEnum> usersBotStates = new HashMap<>();
-    private Map<Long, LikeStateEnum> usersLikeStates = new HashMap<>();
-    private Map<Long, User> usersProfileData = new HashMap<>();
-    private Map<Long, SearchProfile> usersSearchListData = new HashMap<>();
-    private Map<Long, CrushProfile> usersCrushListData = new HashMap<>();
+    private Map<Long, BotStateEnum> usersBotStates = new ConcurrentHashMap<>();
+    private Map<Long, LikeStateEnum> usersLikeStates = new ConcurrentHashMap<>();
+    private Map<Long, User> usersProfileData = new ConcurrentHashMap<>();
+    private Map<Long, SearchProfile> usersSearchListData = new ConcurrentHashMap<>();
+    private Map<Long, CrushProfile> usersCrushListData = new ConcurrentHashMap<>();
 
     @Override
     public void setUsersCurrentBotState(long userId, BotStateEnum botState) {
@@ -67,8 +68,7 @@ public class UserDataCache implements DataCache {
 
     @Override
     public SearchProfile getUserListData(long userId) {
-        SearchProfile listUsers = usersSearchListData.get(userId);
-        return listUsers;
+        return usersSearchListData.get(userId);
     }
 
     @Override
@@ -78,8 +78,7 @@ public class UserDataCache implements DataCache {
 
     @Override
     public CrushProfile getUserCrushData(long userId) {
-        CrushProfile listCrashes = usersCrushListData.get(userId);
-        return listCrashes;
+       return usersCrushListData.get(userId);
     }
 
 }

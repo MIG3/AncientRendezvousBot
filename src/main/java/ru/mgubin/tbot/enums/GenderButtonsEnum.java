@@ -1,10 +1,15 @@
 package ru.mgubin.tbot.enums;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Getter
+@RequiredArgsConstructor
 public enum GenderButtonsEnum {
     MEN("Сударь"),
     WOMEN("Сударыня");
@@ -17,14 +22,6 @@ public enum GenderButtonsEnum {
         for (GenderButtonsEnum gender : values()) {
             GENDER_TYPE.put(gender.gender, gender);
         }
-    }
-
-    public String getButtonName() {
-        return gender;
-    }
-
-    private GenderButtonsEnum(String buttonName) {
-        this.gender = buttonName;
     }
 
     public static GenderButtonsEnum valueOfGenderButtons(String gender) {

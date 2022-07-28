@@ -26,7 +26,6 @@ public class Bot extends TelegramLongPollingBot {
 
     @Autowired
     public Bot(String botToken, String botName) {
-        super();
         this.BOT_TOKEN_TELEGRAM = botToken;
         this.BOT_NAME_TELEGRAM = botName;
     }
@@ -71,11 +70,11 @@ public class Bot extends TelegramLongPollingBot {
                 if (!(update.hasCallbackQuery() && botState.equals(BotStateEnum.ASK_NAME))) {
                     Command command = state.handleStateSelector(botState);
                     OutputParameters outputParameters = command.invoke(chatId, messageStr);
-                    if (outputParameters.getSp() != null) {
-                        execute(outputParameters.getSp());
+                    if (outputParameters.getSendPhoto() != null) {
+                        execute(outputParameters.getSendPhoto());
                     }
-                    if (outputParameters.getSm() != null) {
-                        execute(outputParameters.getSm());
+                    if (outputParameters.getSendMessage() != null) {
+                        execute(outputParameters.getSendMessage());
                     }
                 }
             } catch (TelegramApiException e) {

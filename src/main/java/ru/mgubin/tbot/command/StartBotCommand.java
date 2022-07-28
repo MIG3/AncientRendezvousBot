@@ -17,7 +17,7 @@ public class StartBotCommand implements Command {
         OutputParameters outputParameters = new OutputParameters();
         MainMenuKeyboard menuService = new MainMenuKeyboard();
         SendMessage sendMessage = menuService.getMainMenuMessage(userId, "Воспользуйтесь главным меню");
-        outputParameters.setSm(sendMessage);
+        outputParameters.setSendMessage(sendMessage);
         return outputParameters;
     }
 }

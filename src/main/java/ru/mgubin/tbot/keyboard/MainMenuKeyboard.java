@@ -6,7 +6,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import ru.mgubin.tbot.enums.MenuButtonsEnum;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainMenuKeyboard {
@@ -20,9 +19,7 @@ public class MainMenuKeyboard {
     public SendMessage getMainMenuMessage(final long chatId, final String textMessage) {
 
         final ReplyKeyboardMarkup replyKeyboardMarkup = getMainMenuKeyboard(MenuButtonsEnum.valuesMenuButtons());
-        final SendMessage mainMenuMessage =
-                createMessageWithKeyboard(chatId, textMessage, replyKeyboardMarkup);
-        return mainMenuMessage;
+        return createMessageWithKeyboard(chatId, textMessage, replyKeyboardMarkup);
     }
 
     /**
@@ -61,8 +58,7 @@ public class MainMenuKeyboard {
                     .text(menuClick)
                     .build());
         }
-        List<KeyboardRow> keyboard = new ArrayList<>();
-        keyboard.add(row1);
+        List<KeyboardRow> keyboard = List.of(row1);
         replyKeyboardMarkup.setKeyboard(keyboard);
         return replyKeyboardMarkup;
     }

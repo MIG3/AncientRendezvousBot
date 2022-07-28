@@ -14,9 +14,9 @@ import ru.mgubin.tbot.exception.ParseToJsonException;
 @NoArgsConstructor
 @Data
 public class PersonCrush {
-    Long id;
-    Long userId;
-    Long crushId;
+    private Long id;
+    private Long userId;
+    private Long crushId;
 
     public PersonCrush(Long userId, Long crushId) {
         this.userId = userId;

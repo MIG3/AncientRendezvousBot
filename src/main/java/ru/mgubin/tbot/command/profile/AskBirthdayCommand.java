@@ -7,7 +7,7 @@ import ru.mgubin.tbot.db.UserDB;
 import ru.mgubin.tbot.entity.OutputParameters;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.enums.BotStateEnum;
-import ru.mgubin.tbot.service.PrintProfile;
+import ru.mgubin.tbot.service.PrintProfileService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -34,7 +34,7 @@ public class AskBirthdayCommand implements Command {
     @Override
     public OutputParameters invoke(Long userId, String message) {
         OutputParameters outputParameters = new OutputParameters();
-        PrintProfile profile = new PrintProfile();
+        PrintProfileService profile = new PrintProfileService();
         UserDB userDB = new UserDB();
         User profileData = userDataCache.getUserProfileData(userId);
         profileData.setBirthdate(LocalDate.parse(message, DateTimeFormatter.ofPattern("dd.MM.yyyy")));
@@ -42,7 +42,7 @@ public class AskBirthdayCommand implements Command {
         userDataCache.setUsersCurrentBotState(userId, BotStateEnum.SAVE_PROFILE);
         userDataCache.saveUserProfileData(userId, profileData);
         userDB.createUser(profileData);
-        outputParameters.setSp(profile.sendPhoto(userId, profileData, ""));
+        outputParameters.setSendPhoto(profile.sendPhoto(userId, profileData, ""));
         return outputParameters;
     }
 }

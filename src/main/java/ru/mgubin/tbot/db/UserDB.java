@@ -55,7 +55,7 @@ public class UserDB {
     public List<User> getUsersByGender(long userId) {
         try {
             List<User> response = restTemplate.getForObject(
-                    DB_URL + "/persons_crush/" + userId,
+                    DB_URL + "/persons/crush/" + userId,
                     List.class);
             List<User> userList = new ArrayList<>();
             for (Object item : response) {

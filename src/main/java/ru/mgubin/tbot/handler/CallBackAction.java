@@ -34,7 +34,7 @@ public class CallBackAction {
         final int userId = buttonQuery.getFrom().getId().intValue();
         MainMenuKeyboard menuService = new MainMenuKeyboard();
         BotApiMethod<?> callBackAnswer = menuService.getMainMenuMessage(chatId, "Воспользуйтесь главным меню");
-        if (buttonQuery.getData().equals(GenderButtonsEnum.MEN.getButtonName())) {
+        if (buttonQuery.getData().equals(GenderButtonsEnum.MEN.getGender())) {
             User user = userDataCache.getUserProfileData(userId);
             user.setGender(GenderButtonsEnum.MEN);
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_NAME);
@@ -43,7 +43,7 @@ public class CallBackAction {
                     .text("Как Вас величать?")
                     .chatId(chatId)
                     .build();
-        } else if (buttonQuery.getData().equals(GenderButtonsEnum.WOMEN.getButtonName())) {
+        } else if (buttonQuery.getData().equals(GenderButtonsEnum.WOMEN.getGender())) {
             User user = userDataCache.getUserProfileData(userId);
             user.setGender(GenderButtonsEnum.WOMEN);
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_NAME);
@@ -52,19 +52,19 @@ public class CallBackAction {
                     .text("Как Вас величать?")
                     .chatId(chatId)
                     .build();
-        } else if (buttonQuery.getData().equals(PrevNextButtonEnum.NEXT.getButtonName())) {
+        } else if (buttonQuery.getData().equals(NavigationByCrushButtonEnum.NEXT.getPrevNext())) {
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.NEXT_CRUSH);
             callBackAnswer = null;
-        } else if (buttonQuery.getData().equals(PrevNextButtonEnum.PREV.getButtonName())) {
+        } else if (buttonQuery.getData().equals(NavigationByCrushButtonEnum.PREV.getPrevNext())) {
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.PREV_CRUSH);
             callBackAnswer = null;
-        } else if (buttonQuery.getData().equals(ProfileButtonsEnum.WRITE.getButtonName()) || buttonQuery.getData().equals(ProfileButtonsEnum.UPDATE.getButtonName())) {
+        } else if (buttonQuery.getData().equals(ProfileButtonsEnum.WRITE.getProfile()) || buttonQuery.getData().equals(ProfileButtonsEnum.UPDATE.getProfile())) {
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_GENDER);
             callBackAnswer = null;
-        } else if (buttonQuery.getData().equals(ProfileButtonsEnum.BROWSE.getButtonName())) {
+        } else if (buttonQuery.getData().equals(ProfileButtonsEnum.BROWSE.getProfile())) {
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.BROWSE_PROFILE);
             callBackAnswer = null;
-        } else if (buttonQuery.getData().equals(SearchButtonsEnum.MEN.getButtonName())) {
+        } else if (buttonQuery.getData().equals(SearchButtonsEnum.MEN.getSearchGender())) {
             User user = userDataCache.getUserProfileData(userId);
             user.setCrush(SearchButtonsEnum.MEN);
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_BIRTHDAY);
@@ -73,7 +73,7 @@ public class CallBackAction {
                     .text("Когда Вы родились? Напишите в формате: dd.mm.yyyy")
                     .chatId(chatId)
                     .build();
-        } else if (buttonQuery.getData().equals(SearchButtonsEnum.WOMEN.getButtonName())) {
+        } else if (buttonQuery.getData().equals(SearchButtonsEnum.WOMEN.getSearchGender())) {
             User user = userDataCache.getUserProfileData(userId);
             user.setCrush(SearchButtonsEnum.WOMEN);
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_BIRTHDAY);
@@ -82,7 +82,7 @@ public class CallBackAction {
                     .text("Когда Вы родились? Напишите в формате: dd.mm.yyyy")
                     .chatId(chatId)
                     .build();
-        } else if (buttonQuery.getData().equals(SearchButtonsEnum.ALL.getButtonName())) {
+        } else if (buttonQuery.getData().equals(SearchButtonsEnum.ALL.getSearchGender())) {
             User user = userDataCache.getUserProfileData(userId);
             user.setCrush(SearchButtonsEnum.ALL);
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_BIRTHDAY);
@@ -91,11 +91,11 @@ public class CallBackAction {
                     .text("Когда Вы родились? Напишите в формате: dd.mm.yyyy")
                     .chatId(chatId)
                     .build();
-        } else if (buttonQuery.getData().equals(LikeDislikeButtonEnum.LIKES.getButtonName())) {
+        } else if (buttonQuery.getData().equals(NavigationBySearchButtonEnum.LIKES.getLikeDislike())) {
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.NEXT_PROFILE);
             userDataCache.setUsersCurrentLikeState(userId, LikeStateEnum.LIKE);
             callBackAnswer = null;
-        } else if (buttonQuery.getData().equals(LikeDislikeButtonEnum.DISLIKES.getButtonName())) {
+        } else if (buttonQuery.getData().equals(NavigationBySearchButtonEnum.DISLIKES.getLikeDislike())) {
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.PREV_PROFILE);
             userDataCache.setUsersCurrentLikeState(userId, LikeStateEnum.DISLIKE);
             callBackAnswer = null;

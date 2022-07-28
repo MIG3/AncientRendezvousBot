@@ -1,10 +1,14 @@
 package ru.mgubin.tbot.enums;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Getter
+@RequiredArgsConstructor
 public enum SearchButtonsEnum {
     MEN("Сударя"),
     WOMEN("Сударыню"),
@@ -12,25 +16,17 @@ public enum SearchButtonsEnum {
 
     private static final Map<String, SearchButtonsEnum> GENDER_TYPE = new HashMap<>();
 
-    public final String gender;
+    public final String searchGender;
 
     static {
         for (SearchButtonsEnum gender : values()) {
-            GENDER_TYPE.put(gender.gender, gender);
+            GENDER_TYPE.put(gender.searchGender, gender);
         }
-    }
-
-    public String getButtonName() {
-        return gender;
-    }
-
-    private SearchButtonsEnum(String buttonName) {
-        this.gender = buttonName;
     }
 
     public static SearchButtonsEnum valueOfSearchButtons(String gender) {
         for (SearchButtonsEnum gender1 : values()) {
-            if (gender1.gender.equals(gender)) {
+            if (gender1.searchGender.equals(gender)) {
                 return gender1;
             }
         }
@@ -40,7 +36,7 @@ public enum SearchButtonsEnum {
     public static List<SearchButtonsEnum> valuesExceptSearchButtons(String gender) {
         List<SearchButtonsEnum> genderList = new ArrayList<>();
         for (SearchButtonsEnum gender1 : values()) {
-            if (!gender1.gender.equals(gender)) {
+            if (!gender1.searchGender.equals(gender)) {
                 genderList.add(gender1);
             }
         }
@@ -51,7 +47,7 @@ public enum SearchButtonsEnum {
         List<String> genderList = new ArrayList<>();
         for (SearchButtonsEnum gender1 : values()) {
 
-            genderList.add(gender1.gender);
+            genderList.add(gender1.searchGender);
 
         }
         return genderList;

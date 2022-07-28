@@ -1,7 +1,6 @@
 package ru.mgubin.tbot.command.profile;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.command.Command;
@@ -30,7 +29,7 @@ public class AskNameCommand implements Command {
         OutputParameters outputParameters = new OutputParameters();
         User profileData = userDataCache.getUserProfileData(userId);
         profileData.setFullName(message);
-        outputParameters.setSm(SendMessage.builder()
+        outputParameters.setSendMessage(SendMessage.builder()
                 .text("Напишите пару слов о себе")
                 .chatId(userId)
                 .build());
