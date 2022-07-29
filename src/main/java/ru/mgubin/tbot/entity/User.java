@@ -23,7 +23,7 @@ import java.time.LocalDate;
 @Builder
 public class User {
     private Long id;
-    String fullName;
+    private String fullName;
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)

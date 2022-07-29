@@ -18,17 +18,17 @@ public class InlineKeyboard {
      * @return сообщение с кнопками
      */
     public SendMessage keyboard(long chatId, String ask, List<String> inlineKeyboard) {
-        List<List<InlineKeyboardButton>> listButtons = List.of(inlineKeyboard
+       List<InlineKeyboardButton> listButtons = inlineKeyboard
                 .stream()
                 .map(s -> InlineKeyboardButton.builder()
                         .text(s)
                         .callbackData(s)
                         .build())
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
         return SendMessage.builder()
                 .text(ask)
                 .chatId(chatId)
-                .replyMarkup(InlineKeyboardMarkup.builder().keyboard(listButtons).build())
+                .replyMarkup(InlineKeyboardMarkup.builder().keyboard(List.of(listButtons)).build())
                 .build();
     }
 }

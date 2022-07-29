@@ -2,7 +2,7 @@ package ru.mgubin.tbot.command.profile;
 
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.command.Command;
-import ru.mgubin.tbot.db.UserDB;
+import ru.mgubin.tbot.service.UserService;
 import ru.mgubin.tbot.entity.OutputParameters;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.service.PrintProfileService;
@@ -23,8 +23,8 @@ public class BrowsProfile implements Command {
     public OutputParameters invoke(Long userId, String message, UserDataCache userDataCache) {
         OutputParameters outputParameters = new OutputParameters();
         PrintProfileService profile = new PrintProfileService();
-        UserDB userDB = new UserDB();
-        User profileData = userDB.getUser(userId);
+        UserService userService = new UserService();
+        User profileData = userService.getUser(userId);
         userDataCache.saveUserProfileData(userId, profileData);
         outputParameters.setSendPhoto(profile.sendPhoto(userId, profileData, ""));
         return outputParameters;

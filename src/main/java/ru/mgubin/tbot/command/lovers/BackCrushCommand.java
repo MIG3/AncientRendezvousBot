@@ -4,7 +4,7 @@ import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.command.Command;
 import ru.mgubin.tbot.entity.OutputParameters;
 import ru.mgubin.tbot.entity.SearchProfile;
-import ru.mgubin.tbot.enums.NavigationByCrushButtonEnum;
+import ru.mgubin.tbot.enums.CrushNavigationEnum;
 import ru.mgubin.tbot.keyboard.InlineKeyboard;
 import ru.mgubin.tbot.service.LabelGenerateService;
 import ru.mgubin.tbot.service.PrintProfileService;
@@ -44,7 +44,7 @@ public class BackCrushCommand implements Command {
                 userId,
                 crushProfile.getUserList().get(crushProfile.getNumberProfile()),
                 label));
-        outputParameters.setSendMessage(new InlineKeyboard().keyboard(userId, "Для перелистывания любимок нажмите вперед или назад", NavigationByCrushButtonEnum.valuesPrevNextButtons()));
+        outputParameters.setSendMessage(new InlineKeyboard().keyboard(userId, "Для перелистывания любимок нажмите вперед или назад", CrushNavigationEnum.valuesPrevNextButtons()));
         return outputParameters;
     }
 }

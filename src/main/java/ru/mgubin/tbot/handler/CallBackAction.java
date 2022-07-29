@@ -1,6 +1,5 @@
 package ru.mgubin.tbot.handler;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -10,10 +9,12 @@ import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.enums.*;
 import ru.mgubin.tbot.keyboard.MainMenuKeyboard;
 
+import static ru.mgubin.tbot.constant.Constants.CHOOSE_MAIN_MENU;
+
 public class CallBackAction {
+    private final MainMenuKeyboard menuService = new MainMenuKeyboard();
     private final UserDataCache userDataCache;
 
-    @Autowired
     public CallBackAction(UserDataCache userDataCache) {
         this.userDataCache = userDataCache;
     }
@@ -32,17 +33,15 @@ public class CallBackAction {
     public BotApiMethod<?> processCallbackQuery(CallbackQuery buttonQuery) {
         final long chatId = buttonQuery.getMessage().getChatId();
         final int userId = buttonQuery.getFrom().getId().intValue();
-        MainMenuKeyboard menuService = new MainMenuKeyboard();
-        BotApiMethod<?> callBackAnswer = menuService.getMainMenuMessage(chatId, "Воспользуйтесь главным меню");
-        if (GenderButtonsEnum.existValueOfGenderButtons(buttonQuery.getData()))
-        {
+        BotApiMethod<?> callBackAnswer = menuService.getMainMenuMessage(chatId, CHOOSE_MAIN_MENU);
+        if (GenderButtonsEnum.existValueOfGenderButtons(buttonQuery.getData())) {
             User user = userDataCache.getUserProfileData(userId);
             user.setGender(GenderButtonsEnum.valueOfGenderButtons(buttonQuery.getData()));
             callBackAnswer = questionAboutName(user, chatId, userId);
-        } else if (buttonQuery.getData().equals(NavigationByCrushButtonEnum.NEXT.getPrevNext())) {
+        } else if (buttonQuery.getData().equals(CrushNavigationEnum.NEXT.getPrevNext())) {
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.NEXT_CRUSH);
             callBackAnswer = null;
-        } else if (buttonQuery.getData().equals(NavigationByCrushButtonEnum.PREV.getPrevNext())) {
+        } else if (buttonQuery.getData().equals(CrushNavigationEnum.PREV.getPrevNext())) {
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.PREV_CRUSH);
             callBackAnswer = null;
         } else if (buttonQuery.getData().equals(ProfileButtonsEnum.WRITE.getProfile()) || buttonQuery.getData().equals(ProfileButtonsEnum.UPDATE.getProfile())) {
@@ -51,16 +50,15 @@ public class CallBackAction {
         } else if (buttonQuery.getData().equals(ProfileButtonsEnum.BROWSE.getProfile())) {
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.BROWSE_PROFILE);
             callBackAnswer = null;
-        }
-        else if (SearchButtonsEnum.existValueOfSearchButtons(buttonQuery.getData())){
+        } else if (SearchButtonsEnum.existValueOfSearchButtons(buttonQuery.getData())) {
             User user = userDataCache.getUserProfileData(userId);
             user.setCrush(SearchButtonsEnum.valueOfSearchButtons(buttonQuery.getData()));
             callBackAnswer = questionAboutBirthdate(user, chatId, userId);
-        } else if (buttonQuery.getData().equals(NavigationBySearchButtonEnum.LIKES.getLikeDislike())) {
+        } else if (buttonQuery.getData().equals(SearchNavigationEnum.LIKES.getLikeDislike())) {
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.NEXT_PROFILE);
             userDataCache.setUsersCurrentLikeState(userId, LikeStateEnum.LIKE);
             callBackAnswer = null;
-        } else if (buttonQuery.getData().equals(NavigationBySearchButtonEnum.DISLIKES.getLikeDislike())) {
+        } else if (buttonQuery.getData().equals(SearchNavigationEnum.DISLIKES.getLikeDislike())) {
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.PREV_PROFILE);
             userDataCache.setUsersCurrentLikeState(userId, LikeStateEnum.DISLIKE);
             callBackAnswer = null;

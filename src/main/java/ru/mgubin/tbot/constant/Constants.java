@@ -12,4 +12,5 @@ public class Constants {
     public final static String SEARCH = "ПОИСК";
     public final static String PROFILE = "АНКЕТА";
     public final static String LOVERS = "ЛЮБИМЦЫ";
+    public final static String CHOOSE_MAIN_MENU = "Воспользуйтесь главным меню";
 }

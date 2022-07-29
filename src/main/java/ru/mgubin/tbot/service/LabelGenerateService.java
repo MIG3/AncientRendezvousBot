@@ -1,7 +1,6 @@
 package ru.mgubin.tbot.service;
 
 import ru.mgubin.tbot.cash.UserDataCache;
-import ru.mgubin.tbot.db.UserDB;
 import ru.mgubin.tbot.entity.CrushProfile;
 import ru.mgubin.tbot.entity.PersonCrush;
 
@@ -12,7 +11,7 @@ import static ru.mgubin.tbot.constant.Constants.*;
 
 public class LabelGenerateService {
     private final UserDataCache userDataCache;
-    private UserDB userDB = new UserDB();
+    private UserService userService = new UserService();
     private CrushProfile crushes = new CrushProfile();
 
     public LabelGenerateService(UserDataCache userDataCache) {
@@ -28,7 +27,7 @@ public class LabelGenerateService {
      * @return сообщение о том, ты любим, любишь ты или взаимность
      */
     public String labelFromPicture(long userId, long crushId) {
-        List<PersonCrush> personCrushList = userDB.getUserAndCrush(userId, crushId);
+        List<PersonCrush> personCrushList = userService.getUserAndCrush(userId, crushId);
         crushes.fillUserList(personCrushList);
         userDataCache.saveCrushListData(userId, crushes);
         String label = null;

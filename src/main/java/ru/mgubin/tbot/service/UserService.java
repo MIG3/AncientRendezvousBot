@@ -1,4 +1,4 @@
-package ru.mgubin.tbot.db;
+package ru.mgubin.tbot.service;
 
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +19,11 @@ import static ru.mgubin.tbot.constant.Constants.DB_URL;
 
 @ToString
 @Slf4j
-public class UserDB {
+public class UserService {
     final private RestTemplate restTemplate = new RestTemplate();
     final private HttpHeaders headers = new HttpHeaders();
 
-    public UserDB() {
+    public UserService() {
         headers.setContentType(APPLICATION_JSON);
     }
 
@@ -75,7 +75,6 @@ public class UserDB {
      */
     public void makeLikeToUser(PersonCrush personCrush) {
         try {
-            headers.setContentType(APPLICATION_JSON);
             HttpEntity<String> request = new HttpEntity<>(personCrush.toJson(), headers);
             restTemplate.postForObject(DB_URL + "/crushes", request, String.class);
         } catch (RuntimeException e) {

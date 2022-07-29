@@ -10,21 +10,21 @@ import java.util.Map;
 
 @Getter
 @RequiredArgsConstructor
-public enum NavigationByCrushButtonEnum {
+public enum CrushNavigationEnum {
     PREV("НАЗАД"),
     NEXT("ВПЕРЁД");
-    private static final Map<String, NavigationByCrushButtonEnum> PREV_NEXT_BUTTONS = new HashMap<>();
+    private static final Map<String, CrushNavigationEnum> PREV_NEXT_BUTTONS = new HashMap<>();
 
     public final String prevNext;
 
     static {
-        for (NavigationByCrushButtonEnum prevNext : values()) {
+        for (CrushNavigationEnum prevNext : values()) {
             PREV_NEXT_BUTTONS.put(prevNext.prevNext, prevNext);
         }
     }
 
-    public static NavigationByCrushButtonEnum valueOfPrevNextButtons(String prevNext) {
-        for (NavigationByCrushButtonEnum prevNext1 : values()) {
+    public static CrushNavigationEnum valueOfPrevNextButtons(String prevNext) {
+        for (CrushNavigationEnum prevNext1 : values()) {
             if (prevNext1.prevNext.equals(prevNext)) {
                 return prevNext1;
             }
@@ -32,9 +32,9 @@ public enum NavigationByCrushButtonEnum {
         return null;
     }
 
-    public static List<NavigationByCrushButtonEnum> valuesExceptPrevNextButtons(String prevNext) {
-        List<NavigationByCrushButtonEnum> genderList = new ArrayList<>();
-        for (NavigationByCrushButtonEnum prevNext1 : values()) {
+    public static List<CrushNavigationEnum> valuesExceptPrevNextButtons(String prevNext) {
+        List<CrushNavigationEnum> genderList = new ArrayList<>();
+        for (CrushNavigationEnum prevNext1 : values()) {
             if (!prevNext1.prevNext.equals(prevNext)) {
                 genderList.add(prevNext1);
             }
@@ -44,7 +44,7 @@ public enum NavigationByCrushButtonEnum {
 
     public static List<String> valuesPrevNextButtons() {
         List<String> genderList = new ArrayList<>();
-        for (NavigationByCrushButtonEnum prevNext1 : values()) {
+        for (CrushNavigationEnum prevNext1 : values()) {
 
             genderList.add(prevNext1.prevNext);
 
@@ -52,7 +52,7 @@ public enum NavigationByCrushButtonEnum {
         return genderList;
     }
 
-    public static NavigationByCrushButtonEnum valueOfLabel(String buttonName) {
+    public static CrushNavigationEnum valueOfLabel(String buttonName) {
         return PREV_NEXT_BUTTONS.get(buttonName);
     }
 }

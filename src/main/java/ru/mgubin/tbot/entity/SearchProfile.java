@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 public class SearchProfile {
-    List<User> userList = new ArrayList<>();
+    private List<User> userList = new ArrayList<>();
     private int numberProfile;
 
     public void fillUserList(List<User> userList) {

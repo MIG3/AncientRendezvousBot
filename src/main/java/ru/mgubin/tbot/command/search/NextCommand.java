@@ -2,11 +2,11 @@ package ru.mgubin.tbot.command.search;
 
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.command.Command;
-import ru.mgubin.tbot.db.UserDB;
+import ru.mgubin.tbot.service.UserService;
 import ru.mgubin.tbot.entity.OutputParameters;
 import ru.mgubin.tbot.entity.PersonCrush;
 import ru.mgubin.tbot.entity.SearchProfile;
-import ru.mgubin.tbot.enums.NavigationBySearchButtonEnum;
+import ru.mgubin.tbot.enums.SearchNavigationEnum;
 import ru.mgubin.tbot.keyboard.InlineKeyboard;
 import ru.mgubin.tbot.service.PrintProfileService;
 
@@ -28,7 +28,7 @@ public class NextCommand implements Command {
     public OutputParameters invoke(Long userId, String message, UserDataCache userDataCache) {
         OutputParameters outputParameters = new OutputParameters();
         PrintProfileService profile = new PrintProfileService();
-        UserDB userDB = new UserDB();
+        UserService userService = new UserService();
         PersonCrush lovers = new PersonCrush();
         SearchProfile searchProfile = userDataCache.getUserListData(userId);
         int lengthUserList = searchProfile.getUserList().size();
@@ -41,11 +41,11 @@ public class NextCommand implements Command {
             lovers.setCrushId(searchProfile.getUserList().get(pos).getId());
         }
         lovers.setUserId(userId);
-        userDB.makeLikeToUser(lovers);
+        userService.makeLikeToUser(lovers);
         outputParameters.setSendPhoto(profile.sendPhoto(
                 userId,
                 searchProfile.getUserList().get(searchProfile.getNumberProfile()), ""));
-        outputParameters.setSendMessage(new InlineKeyboard().keyboard(userId, "Если нравится, нажми вперед, иначе назад", NavigationBySearchButtonEnum.valuesLikeDislikeButtons()));
+        outputParameters.setSendMessage(new InlineKeyboard().keyboard(userId, "Если нравится, нажми вперед, иначе назад", SearchNavigationEnum.valuesLikeDislikeButtons()));
         return outputParameters;
     }
 }

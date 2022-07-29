@@ -1,7 +1,6 @@
 package ru.mgubin.tbot.bot;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
@@ -17,23 +16,23 @@ import ru.mgubin.tbot.handler.HandleMessages;
 
 @Slf4j
 public class Bot extends TelegramLongPollingBot {
-    private final String BOT_TOKEN_TELEGRAM;
-    private final String BOT_NAME_TELEGRAM;
+    private final String botTokenTelegram;
+    private final String botNameTelegram;
     private final UserDataCache userDataCache = new UserDataCache();
 
     public Bot(String botToken, String botName) {
-        this.BOT_TOKEN_TELEGRAM = botToken;
-        this.BOT_NAME_TELEGRAM = botName;
+        this.botTokenTelegram = botToken;
+        this.botNameTelegram = botName;
     }
 
     @Override
     public String getBotUsername() {
-        return BOT_NAME_TELEGRAM;
+        return botNameTelegram;
     }
 
     @Override
     public String getBotToken() {
-        return BOT_TOKEN_TELEGRAM;
+        return botTokenTelegram;
     }
 
     /**
@@ -50,33 +49,32 @@ public class Bot extends TelegramLongPollingBot {
         String messageStr = update.hasCallbackQuery() ? update.getCallbackQuery().getData() : update.getMessage().getText();
         Long chatId = update.hasCallbackQuery() ? update.getCallbackQuery().getFrom().getId() : update.getMessage().getFrom().getId().longValue();
         BotStateEnum botState;
-        if (update.hasMessage() || update.hasCallbackQuery()) {
-            try {
-                if (update.hasCallbackQuery()) {
-                    CallBackAction callBackAction = new CallBackAction(userDataCache);
-                    CallbackQuery callbackQuery = update.getCallbackQuery();
-                    BotApiMethod<?> botApiMethod = callBackAction.processCallbackQuery(callbackQuery);
-                    if (botApiMethod != null) {
-                        execute(botApiMethod);
-                    }
+        try {
+            if (update.hasCallbackQuery()) {
+                CallBackAction callBackAction = new CallBackAction(userDataCache);
+                CallbackQuery callbackQuery = update.getCallbackQuery();
+                BotApiMethod<?> botApiMethod = callBackAction.processCallbackQuery(callbackQuery);
+                if (botApiMethod != null) {
+                    execute(botApiMethod);
                 }
-                HandleMessages handleMessages = new HandleMessages(userDataCache);
-                botState = handleMessages.handleInputMessage(chatId, messageStr);
-                if (!(update.hasCallbackQuery() && botState.equals(BotStateEnum.ASK_NAME))) {
-                    BotStateEnum stateEnum = userDataCache.getUsersCurrentBotState(chatId);
-                    Command command = stateEnum.getCommand();
-                    OutputParameters outputParameters = command.invoke(chatId, messageStr, userDataCache);
-                    if (outputParameters.getSendPhoto() != null) {
-                        execute(outputParameters.getSendPhoto());
-                    }
-                    if (outputParameters.getSendMessage() != null) {
-                        execute(outputParameters.getSendMessage());
-                    }
-                }
-            } catch (TelegramApiException e) {
-                throw new TelegramException();
             }
+            HandleMessages handleMessages = new HandleMessages(userDataCache);
+            botState = handleMessages.handleInputMessage(chatId, messageStr);
+            if (!(update.hasCallbackQuery() && botState.equals(BotStateEnum.ASK_NAME))) {
+                BotStateEnum stateEnum = userDataCache.getUsersCurrentBotState(chatId);
+                Command command = stateEnum.getCommand();
+                OutputParameters outputParameters = command.invoke(chatId, messageStr, userDataCache);
+                if (outputParameters.getSendPhoto() != null) {
+                    execute(outputParameters.getSendPhoto());
+                }
+                if (outputParameters.getSendMessage() != null) {
+                    execute(outputParameters.getSendMessage());
+                }
+            }
+        } catch (TelegramApiException e) {
+            throw new TelegramException();
         }
+
     }
 }
 

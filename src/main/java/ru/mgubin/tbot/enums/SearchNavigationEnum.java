@@ -10,21 +10,21 @@ import java.util.Map;
 
 @Getter
 @RequiredArgsConstructor
-public enum NavigationBySearchButtonEnum {
+public enum SearchNavigationEnum {
     DISLIKES("ТРУПЪ"),
     LIKES("ЛЮБО");
-    private static final Map<String, NavigationBySearchButtonEnum> LIKE_DISLIKE_BUTTONS = new HashMap<>();
+    private static final Map<String, SearchNavigationEnum> LIKE_DISLIKE_BUTTONS = new HashMap<>();
 
     public final String likeDislike;
 
     static {
-        for (NavigationBySearchButtonEnum likeDislike : values()) {
+        for (SearchNavigationEnum likeDislike : values()) {
             LIKE_DISLIKE_BUTTONS.put(likeDislike.likeDislike, likeDislike);
         }
     }
 
-    public static NavigationBySearchButtonEnum valueOfLikeDislikeButtons(String prevNext) {
-        for (NavigationBySearchButtonEnum likeDislike : values()) {
+    public static SearchNavigationEnum valueOfLikeDislikeButtons(String prevNext) {
+        for (SearchNavigationEnum likeDislike : values()) {
             if (likeDislike.likeDislike.equals(prevNext)) {
                 return likeDislike;
             }
@@ -32,9 +32,9 @@ public enum NavigationBySearchButtonEnum {
         return null;
     }
 
-    public static List<NavigationBySearchButtonEnum> valuesExceptLikeDislikeButtons(String prevNext) {
-        List<NavigationBySearchButtonEnum> likeList = new ArrayList<>();
-        for (NavigationBySearchButtonEnum like : values()) {
+    public static List<SearchNavigationEnum> valuesExceptLikeDislikeButtons(String prevNext) {
+        List<SearchNavigationEnum> likeList = new ArrayList<>();
+        for (SearchNavigationEnum like : values()) {
             if (!like.likeDislike.equals(prevNext)) {
                 likeList.add(like);
             }
@@ -44,7 +44,7 @@ public enum NavigationBySearchButtonEnum {
 
     public static List<String> valuesLikeDislikeButtons() {
         List<String> navigateCrushList = new ArrayList<>();
-        for (NavigationBySearchButtonEnum prevNext1 : values()) {
+        for (SearchNavigationEnum prevNext1 : values()) {
 
             navigateCrushList.add(prevNext1.likeDislike);
 
@@ -52,7 +52,7 @@ public enum NavigationBySearchButtonEnum {
         return navigateCrushList;
     }
 
-    public static NavigationBySearchButtonEnum valueOfLabel(String buttonName) {
+    public static SearchNavigationEnum valueOfLabel(String buttonName) {
         return LIKE_DISLIKE_BUTTONS.get(buttonName);
     }
 }

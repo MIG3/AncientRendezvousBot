@@ -1,6 +1,5 @@
 package ru.mgubin.tbot.handler;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.enums.BotStateEnum;
@@ -11,7 +10,6 @@ import static ru.mgubin.tbot.constant.Constants.*;
 public class HandleMessages {
     private final UserDataCache userDataCache;
 
-    @Autowired
     public HandleMessages(UserDataCache userDataCache) {
         this.userDataCache = userDataCache;
     }
@@ -44,10 +42,6 @@ public class HandleMessages {
                 break;
             case LOVERS:
                 botState = BotStateEnum.BROWSE_CRUSHES;
-                break;
-            default:
-                botState = userDataCache.getUsersCurrentBotState(userId);
-                likeState = userDataCache.getUsersCurrentLikeState(userId);
                 break;
         }
         userDataCache.setUsersCurrentBotState(userId, botState);

@@ -52,14 +52,13 @@ public class MainMenuKeyboard {
         replyKeyboardMarkup.setSelective(true);
         replyKeyboardMarkup.setResizeKeyboard(true);
         replyKeyboardMarkup.setOneTimeKeyboard(false);
-        KeyboardRow row1 = new KeyboardRow();
+        KeyboardRow row = new KeyboardRow();
         for (String menuClick : menuButtons) {
-            row1.add(KeyboardButton.builder()
+            row.add(KeyboardButton.builder()
                     .text(menuClick)
                     .build());
         }
-        List<KeyboardRow> keyboard = List.of(row1);
-        replyKeyboardMarkup.setKeyboard(keyboard);
+        replyKeyboardMarkup.setKeyboard(List.of(row));
         return replyKeyboardMarkup;
     }
 }

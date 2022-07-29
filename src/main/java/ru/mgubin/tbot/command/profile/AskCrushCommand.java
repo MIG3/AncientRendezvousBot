@@ -6,8 +6,6 @@ import ru.mgubin.tbot.entity.OutputParameters;
 import ru.mgubin.tbot.enums.BotStateEnum;
 
 public class AskCrushCommand implements Command {
-
-
     /**
      * Переводит состояние бота для обработки последнего шага заполнения анкеты
      *
@@ -18,8 +16,7 @@ public class AskCrushCommand implements Command {
      */
     @Override
     public OutputParameters invoke(Long userId, String message, UserDataCache userDataCache) {
-        OutputParameters outputParameters = new OutputParameters();
         userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_BIRTHDAY);
-        return outputParameters;
+        return new OutputParameters();
     }
 }

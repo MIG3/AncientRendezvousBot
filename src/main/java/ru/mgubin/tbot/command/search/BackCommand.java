@@ -2,11 +2,11 @@ package ru.mgubin.tbot.command.search;
 
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.command.Command;
-import ru.mgubin.tbot.db.UserDB;
+import ru.mgubin.tbot.service.UserService;
 import ru.mgubin.tbot.entity.OutputParameters;
 import ru.mgubin.tbot.entity.PersonCrush;
 import ru.mgubin.tbot.entity.SearchProfile;
-import ru.mgubin.tbot.enums.NavigationBySearchButtonEnum;
+import ru.mgubin.tbot.enums.SearchNavigationEnum;
 import ru.mgubin.tbot.keyboard.InlineKeyboard;
 import ru.mgubin.tbot.service.PrintProfileService;
 
@@ -29,7 +29,7 @@ public class BackCommand implements Command {
         SearchProfile searchProfile = new SearchProfile();
         OutputParameters outputParameters = new OutputParameters();
         PrintProfileService profile = new PrintProfileService();
-        UserDB userDB = new UserDB();
+        UserService userService = new UserService();
         PersonCrush lovers = new PersonCrush();
         searchProfile = userDataCache.getUserListData(userId);
         int pos = searchProfile.getNumberProfile();
@@ -42,12 +42,12 @@ public class BackCommand implements Command {
             lovers.setCrushId(searchProfile.getUserList().get(pos).getId()); // предыдущий элемент списка
         }
         lovers.setUserId(userId);
-        userDB.removeLikeToUser(lovers);
+        userService.removeLikeToUser(lovers);
         outputParameters.setSendPhoto(profile.sendPhoto(       // печатаем изображение, передавая параметрами
                 userId,                    // id чата
                 searchProfile.getUserList().get(searchProfile.getNumberProfile()),
                 ""));
-        outputParameters.setSendMessage(new InlineKeyboard().keyboard(userId, "Если нравится, нажми вперед, иначе назад", NavigationBySearchButtonEnum.valuesLikeDislikeButtons()));
+        outputParameters.setSendMessage(new InlineKeyboard().keyboard(userId, "Если нравится, нажми вперед, иначе назад", SearchNavigationEnum.valuesLikeDislikeButtons()));
         return outputParameters;
     }
 }
