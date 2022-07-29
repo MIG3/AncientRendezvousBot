@@ -25,6 +25,7 @@ public class HandleStateSelector {
 
     /**
      * Выбор команд в зависимости от текущего состояния бота
+     *
      * @param state состояние бота
      * @return инициализируется новая команда
      * @throws TelegramApiException ексепшен

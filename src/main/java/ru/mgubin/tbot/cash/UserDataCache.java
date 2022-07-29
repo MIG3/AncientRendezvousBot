@@ -1,17 +1,14 @@
 package ru.mgubin.tbot.cash;
 
-import org.springframework.stereotype.Component;
 import ru.mgubin.tbot.entity.CrushProfile;
 import ru.mgubin.tbot.entity.SearchProfile;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.enums.BotStateEnum;
 import ru.mgubin.tbot.enums.LikeStateEnum;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Component
 public class UserDataCache implements DataCache {
     private Map<Long, BotStateEnum> usersBotStates = new ConcurrentHashMap<>();
     private Map<Long, LikeStateEnum> usersLikeStates = new ConcurrentHashMap<>();
@@ -78,7 +75,7 @@ public class UserDataCache implements DataCache {
 
     @Override
     public CrushProfile getUserCrushData(long userId) {
-       return usersCrushListData.get(userId);
+        return usersCrushListData.get(userId);
     }
 
 }

@@ -6,6 +6,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
+import ru.mgubin.tbot.exception.DataBaseException;
 import ru.mgubin.tbot.exception.PictureException;
 
 import java.io.ByteArrayInputStream;
@@ -38,7 +39,7 @@ public class PictureWebService {
             return new ByteArrayInputStream(picture);
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
-            throw new PictureException();
+            throw new DataBaseException();
         }
     }
 }

@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 public class CrushProfile {
     List<PersonCrush> crushList = new ArrayList<>();
+
     public void fillUserList(List<PersonCrush> crushList) {
         this.crushList.addAll(crushList);
     }

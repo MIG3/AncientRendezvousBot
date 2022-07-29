@@ -1,17 +1,17 @@
 package ru.mgubin.tbot.db;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import ru.mgubin.tbot.entity.PersonCrush;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.exception.ParseToJsonException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -19,12 +19,11 @@ import static ru.mgubin.tbot.constant.Constants.DB_URL;
 
 @ToString
 @Slf4j
-@NoArgsConstructor
 public class UserDB {
     private RestTemplate restTemplate = new RestTemplate();
     private HttpHeaders headers = new HttpHeaders();
 
-    public UserDB(RestTemplate restTemplate) {
+    public UserDB() {
         headers.setContentType(APPLICATION_JSON);
     }
 
@@ -36,7 +35,6 @@ public class UserDB {
      */
     public void createUser(User user) {
         try {
-            headers.setContentType(APPLICATION_JSON);
             HttpEntity<String> request = new HttpEntity<>(user.toJson(), headers);
             restTemplate.postForObject(DB_URL + "/persons", request, String.class);
         } catch (RuntimeException e) {
@@ -54,16 +52,15 @@ public class UserDB {
      */
     public List<User> getUsersByGender(long userId) {
         try {
-            List<User> response = restTemplate.getForObject(
-                    DB_URL + "/persons/crush/" + userId,
-                    List.class);
-            List<User> userList = new ArrayList<>();
-            for (Object item : response) {
-                ObjectMapper mapper = new ObjectMapper();
-                userList.add(mapper.convertValue(item, User.class));
-            }
-            return userList;
-
+            ResponseEntity<List<User>> responseEntity =
+                    restTemplate.exchange(
+                            DB_URL + "/persons/crush/" + userId,
+                            HttpMethod.GET,
+                            null,
+                            new ParameterizedTypeReference<List<User>>() {
+                            }
+                    );
+            return responseEntity.getBody();
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
             throw new ParseToJsonException();
@@ -149,15 +146,15 @@ public class UserDB {
      */
     public List<PersonCrush> getUserAndCrush(Long userId, Long crushId) {
         try {
-            List<PersonCrush> personCrushList = restTemplate.getForObject(
-                    DB_URL + "/lovers/" + userId + "/" + crushId,
-                    List.class);
-            List<PersonCrush> userList = new ArrayList<>();
-            for (Object item : personCrushList) {
-                ObjectMapper mapper = new ObjectMapper();
-                userList.add(mapper.convertValue(item, PersonCrush.class));
-            }
-            return userList;
+            ResponseEntity<List<PersonCrush>> personCrushList =
+                    restTemplate.exchange(
+                            DB_URL + "/lovers/" + userId + "/" + crushId,
+                            HttpMethod.GET,
+                            null,
+                            new ParameterizedTypeReference<List<PersonCrush>>() {
+                            }
+                    );
+            return personCrushList.getBody();
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
             throw new ParseToJsonException();
@@ -173,15 +170,15 @@ public class UserDB {
      */
     public List<User> getLovers(Long userId) {
         try {
-            List<User> response = restTemplate.getForObject(
-                    DB_URL + "/lovers/" + userId,
-                    List.class);
-            List<User> userList = new ArrayList<>();
-            for (Object item : response) {
-                ObjectMapper mapper = new ObjectMapper();
-                userList.add(mapper.convertValue(item, User.class));
-            }
-            return userList;
+            ResponseEntity<List<User>> responseEntity =
+                    restTemplate.exchange(
+                            DB_URL + "/lovers/" + userId,
+                            HttpMethod.GET,
+                            null,
+                            new ParameterizedTypeReference<List<User>>() {
+                            }
+                    );
+            return responseEntity.getBody();
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
             throw new ParseToJsonException();

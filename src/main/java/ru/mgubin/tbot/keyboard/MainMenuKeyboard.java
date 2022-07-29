@@ -16,9 +16,9 @@ public class MainMenuKeyboard {
      * @param textMessage сообщение
      * @return сообщение
      */
-    public SendMessage getMainMenuMessage(final long chatId, final String textMessage) {
+    public SendMessage getMainMenuMessage(long chatId, String textMessage) {
 
-        final ReplyKeyboardMarkup replyKeyboardMarkup = getMainMenuKeyboard(MenuButtonsEnum.valuesMenuButtons());
+        ReplyKeyboardMarkup replyKeyboardMarkup = getMainMenuKeyboard(MenuButtonsEnum.valuesMenuButtons());
         return createMessageWithKeyboard(chatId, textMessage, replyKeyboardMarkup);
     }
 
@@ -30,8 +30,8 @@ public class MainMenuKeyboard {
      * @param replyKeyboardMarkup клавиатура
      * @return сообщение
      */
-    private SendMessage createMessageWithKeyboard(long chatId, String textMessage, final ReplyKeyboardMarkup replyKeyboardMarkup) {
-        final SendMessage sendMessage = new SendMessage();
+    private SendMessage createMessageWithKeyboard(long chatId, String textMessage, ReplyKeyboardMarkup replyKeyboardMarkup) {
+        SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
         sendMessage.setText(textMessage);
@@ -48,7 +48,7 @@ public class MainMenuKeyboard {
      * @return клавиатура
      */
     private ReplyKeyboardMarkup getMainMenuKeyboard(List<String> menuButtons) {
-        final ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setSelective(true);
         replyKeyboardMarkup.setResizeKeyboard(true);
         replyKeyboardMarkup.setOneTimeKeyboard(false);

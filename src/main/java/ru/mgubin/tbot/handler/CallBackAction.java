@@ -37,21 +37,11 @@ public class CallBackAction {
         if (buttonQuery.getData().equals(GenderButtonsEnum.MEN.getGender())) {
             User user = userDataCache.getUserProfileData(userId);
             user.setGender(GenderButtonsEnum.MEN);
-            userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_NAME);
-            userDataCache.saveUserProfileData(buttonQuery.getMessage().getChatId().intValue(), user);
-            callBackAnswer = SendMessage.builder()
-                    .text("Как Вас величать?")
-                    .chatId(chatId)
-                    .build();
+            callBackAnswer = questionAboutName(user, chatId, userId);
         } else if (buttonQuery.getData().equals(GenderButtonsEnum.WOMEN.getGender())) {
             User user = userDataCache.getUserProfileData(userId);
             user.setGender(GenderButtonsEnum.WOMEN);
-            userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_NAME);
-            userDataCache.saveUserProfileData(buttonQuery.getMessage().getChatId().intValue(), user);
-            callBackAnswer = SendMessage.builder()
-                    .text("Как Вас величать?")
-                    .chatId(chatId)
-                    .build();
+            callBackAnswer = questionAboutName(user, chatId, userId);
         } else if (buttonQuery.getData().equals(NavigationByCrushButtonEnum.NEXT.getPrevNext())) {
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.NEXT_CRUSH);
             callBackAnswer = null;
@@ -67,30 +57,15 @@ public class CallBackAction {
         } else if (buttonQuery.getData().equals(SearchButtonsEnum.MEN.getSearchGender())) {
             User user = userDataCache.getUserProfileData(userId);
             user.setCrush(SearchButtonsEnum.MEN);
-            userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_BIRTHDAY);
-            userDataCache.saveUserProfileData(buttonQuery.getMessage().getChatId().intValue(), user);
-            callBackAnswer = SendMessage.builder()
-                    .text("Когда Вы родились? Напишите в формате: dd.mm.yyyy")
-                    .chatId(chatId)
-                    .build();
+            callBackAnswer = questionAboutBirthdate(user, chatId, userId);
         } else if (buttonQuery.getData().equals(SearchButtonsEnum.WOMEN.getSearchGender())) {
             User user = userDataCache.getUserProfileData(userId);
             user.setCrush(SearchButtonsEnum.WOMEN);
-            userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_BIRTHDAY);
-            userDataCache.saveUserProfileData(buttonQuery.getMessage().getChatId().intValue(), user);
-            callBackAnswer = SendMessage.builder()
-                    .text("Когда Вы родились? Напишите в формате: dd.mm.yyyy")
-                    .chatId(chatId)
-                    .build();
+            callBackAnswer = questionAboutBirthdate(user, chatId, userId);
         } else if (buttonQuery.getData().equals(SearchButtonsEnum.ALL.getSearchGender())) {
             User user = userDataCache.getUserProfileData(userId);
             user.setCrush(SearchButtonsEnum.ALL);
-            userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_BIRTHDAY);
-            userDataCache.saveUserProfileData(buttonQuery.getMessage().getChatId().intValue(), user);
-            callBackAnswer = SendMessage.builder()
-                    .text("Когда Вы родились? Напишите в формате: dd.mm.yyyy")
-                    .chatId(chatId)
-                    .build();
+            callBackAnswer = questionAboutBirthdate(user, chatId, userId);
         } else if (buttonQuery.getData().equals(NavigationBySearchButtonEnum.LIKES.getLikeDislike())) {
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.NEXT_PROFILE);
             userDataCache.setUsersCurrentLikeState(userId, LikeStateEnum.LIKE);
@@ -111,5 +86,23 @@ public class CallBackAction {
         answerCallbackQuery.setShowAlert(alert);
         answerCallbackQuery.setText(text);
         return answerCallbackQuery;
+    }
+
+    private SendMessage questionAboutName(User user, long chatId, long userId) {
+        userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_NAME);
+        userDataCache.saveUserProfileData(userId, user);
+        return SendMessage.builder()
+                .text("Как Вас величать?")
+                .chatId(chatId)
+                .build();
+    }
+
+    private SendMessage questionAboutBirthdate(User user, long chatId, long userId) {
+        userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_BIRTHDAY);
+        userDataCache.saveUserProfileData(userId, user);
+        return SendMessage.builder()
+                .text("Когда Вы родились? Напишите в формате: dd.mm.yyyy")
+                .chatId(chatId)
+                .build();
     }
 }

@@ -17,10 +17,11 @@ public class PrintProfileService {
 
     /**
      * Метод печати анкеты пользователя
-     * @param chatId
-     * @param user
-     * @param love
-     * @return
+     *
+     * @param chatId - id чата
+     * @param user   сущность пользователя
+     * @param love   - любим или не любим
+     * @return анкета-изображение
      */
     public SendPhoto sendPhoto(long chatId, User user, String love) {
         InputStream picture = pictureWebService.makePicture(user.getDescription());

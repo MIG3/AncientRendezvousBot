@@ -2,7 +2,6 @@ package ru.mgubin.tbot.bot;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
@@ -18,7 +17,6 @@ import ru.mgubin.tbot.handler.HandleMessages;
 import ru.mgubin.tbot.handler.HandleStateSelector;
 
 @Slf4j
-@Component
 public class Bot extends TelegramLongPollingBot {
     private final String BOT_TOKEN_TELEGRAM;
     private final String BOT_NAME_TELEGRAM;
