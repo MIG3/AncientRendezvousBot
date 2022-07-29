@@ -1,11 +1,9 @@
 package ru.mgubin.tbot.db;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import ru.mgubin.tbot.command.Command;
 import ru.mgubin.tbot.entity.PersonCrush;
-import ru.mgubin.tbot.entity.User;
-import ru.mgubin.tbot.enums.GenderButtonsEnum;
-import ru.mgubin.tbot.enums.SearchButtonsEnum;
+import ru.mgubin.tbot.enums.BotStateEnum;
 
 import java.time.LocalDate;
 
@@ -34,5 +32,13 @@ class UserDBTest
     void makeLikeTest() {
         UserDB userDB = new UserDB();
         userDB.makeLikeToUser(new PersonCrush(74L, 8L));
+    }
+
+    @Test
+    void helpShowCommand()
+    {
+        BotStateEnum stateEnum;
+        stateEnum = BotStateEnum.SHOW_HELP_MENU;
+        Command command = stateEnum.getCommand();
     }
 }

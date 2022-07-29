@@ -14,7 +14,6 @@ import ru.mgubin.tbot.enums.BotStateEnum;
 import ru.mgubin.tbot.exception.TelegramException;
 import ru.mgubin.tbot.handler.CallBackAction;
 import ru.mgubin.tbot.handler.HandleMessages;
-import ru.mgubin.tbot.handler.HandleStateSelector;
 
 @Slf4j
 public class Bot extends TelegramLongPollingBot {
@@ -22,7 +21,6 @@ public class Bot extends TelegramLongPollingBot {
     private final String BOT_NAME_TELEGRAM;
     private final UserDataCache userDataCache = new UserDataCache();
 
-    @Autowired
     public Bot(String botToken, String botName) {
         this.BOT_TOKEN_TELEGRAM = botToken;
         this.BOT_NAME_TELEGRAM = botName;
@@ -44,30 +42,30 @@ public class Bot extends TelegramLongPollingBot {
      * Вызов метода обработки Callback'ов, если было нажатие на кнопки.
      * Выводит сообщения в чат для пользователя
      *
-     * @param update
+     * @param update - обновление телеграма
      */
     @Override
     public void onUpdateReceived(Update update) {
         log.info("Получаем новое обновление. updateID: " + update.getUpdateId());
         String messageStr = update.hasCallbackQuery() ? update.getCallbackQuery().getData() : update.getMessage().getText();
-        Long chatId = update.hasCallbackQuery() ? update.getCallbackQuery().getFrom().getId().longValue() : update.getMessage().getFrom().getId().longValue();
+        Long chatId = update.hasCallbackQuery() ? update.getCallbackQuery().getFrom().getId() : update.getMessage().getFrom().getId().longValue();
         BotStateEnum botState;
         if (update.hasMessage() || update.hasCallbackQuery()) {
             try {
                 if (update.hasCallbackQuery()) {
                     CallBackAction callBackAction = new CallBackAction(userDataCache);
                     CallbackQuery callbackQuery = update.getCallbackQuery();
-                    BotApiMethod botApiMethod = callBackAction.processCallbackQuery(callbackQuery);
+                    BotApiMethod<?> botApiMethod = callBackAction.processCallbackQuery(callbackQuery);
                     if (botApiMethod != null) {
                         execute(botApiMethod);
                     }
                 }
                 HandleMessages handleMessages = new HandleMessages(userDataCache);
-                HandleStateSelector state = new HandleStateSelector(userDataCache);
                 botState = handleMessages.handleInputMessage(chatId, messageStr);
                 if (!(update.hasCallbackQuery() && botState.equals(BotStateEnum.ASK_NAME))) {
-                    Command command = state.handleStateSelector(botState);
-                    OutputParameters outputParameters = command.invoke(chatId, messageStr);
+                    BotStateEnum stateEnum = userDataCache.getUsersCurrentBotState(chatId);
+                    Command command = stateEnum.getCommand();
+                    OutputParameters outputParameters = command.invoke(chatId, messageStr, userDataCache);
                     if (outputParameters.getSendPhoto() != null) {
                         execute(outputParameters.getSendPhoto());
                     }

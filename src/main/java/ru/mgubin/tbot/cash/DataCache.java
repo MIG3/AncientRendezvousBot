@@ -79,12 +79,4 @@ public interface DataCache {
      */
     void saveCrushListData(long userId, CrushProfile listCrushData);
 
-    /**
-     * Метод получения списка анкет для пользователя по его идентификатору
-     *
-     * @param userId идентификатор пользователя
-     * @return анкета пользователя
-     */
-    CrushProfile getUserCrushData(long userId);
-
 }

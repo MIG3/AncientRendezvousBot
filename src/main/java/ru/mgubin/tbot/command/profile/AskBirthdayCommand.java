@@ -1,6 +1,5 @@
 package ru.mgubin.tbot.command.profile;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.command.Command;
 import ru.mgubin.tbot.db.UserDB;
@@ -13,13 +12,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class AskBirthdayCommand implements Command {
-    private final UserDataCache userDataCache;
-
-    @Autowired
-    public AskBirthdayCommand(UserDataCache userDataCache) {
-        this.userDataCache = userDataCache;
-    }
-
     /**
      * Обработка последнего шага заполнения анкеты.
      * В сущность клиента записывается его дата рождения и идентификатор.
@@ -27,12 +19,14 @@ public class AskBirthdayCommand implements Command {
      * Сущность пользователя записывается в мапу кеша пользователей с ключем - id
      * Сущность клиента записывается в БД
      * Печатается анкета пользователя в чат бота
-     * @param userId id клиента
-     * @param message сообщение
+     *
+     * @param userId        id клиента
+     * @param message       сообщение
+     * @param userDataCache кэш данных пользователя
      * @return Изображение - анкета
      */
     @Override
-    public OutputParameters invoke(Long userId, String message) {
+    public OutputParameters invoke(Long userId, String message, UserDataCache userDataCache) {
         OutputParameters outputParameters = new OutputParameters();
         PrintProfileService profile = new PrintProfileService();
         UserDB userDB = new UserDB();

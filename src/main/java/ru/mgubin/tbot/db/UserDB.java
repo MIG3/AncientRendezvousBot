@@ -20,8 +20,8 @@ import static ru.mgubin.tbot.constant.Constants.DB_URL;
 @ToString
 @Slf4j
 public class UserDB {
-    private RestTemplate restTemplate = new RestTemplate();
-    private HttpHeaders headers = new HttpHeaders();
+    final private RestTemplate restTemplate = new RestTemplate();
+    final private HttpHeaders headers = new HttpHeaders();
 
     public UserDB() {
         headers.setContentType(APPLICATION_JSON);
@@ -54,32 +54,13 @@ public class UserDB {
         try {
             ResponseEntity<List<User>> responseEntity =
                     restTemplate.exchange(
-                            DB_URL + "/persons/crush/" + userId,
+                            DB_URL + "/persons/search/" + userId,
                             HttpMethod.GET,
                             null,
-                            new ParameterizedTypeReference<List<User>>() {
+                            new ParameterizedTypeReference<>() {
                             }
                     );
             return responseEntity.getBody();
-        } catch (RuntimeException e) {
-            log.error(e.getMessage(), e);
-            throw new ParseToJsonException();
-        }
-    }
-
-    /**
-     * Поиск. Узнать, нравится ли любимец клиенту
-     *
-     * @param userId  id клиента
-     * @param crushId id любимца
-     * @return true - если клиент нравится, false - если не нравится
-     * @throws ParseToJsonException если не смог распарсить сущность
-     */
-    public Boolean isCrushLikeUser(long userId, long crushId) {
-        try {
-            return restTemplate.getForObject(
-                    DB_URL + "/crushes/" + crushId + "/" + userId,
-                    Boolean.class);
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
             throw new ParseToJsonException();
@@ -151,7 +132,7 @@ public class UserDB {
                             DB_URL + "/lovers/" + userId + "/" + crushId,
                             HttpMethod.GET,
                             null,
-                            new ParameterizedTypeReference<List<PersonCrush>>() {
+                            new ParameterizedTypeReference<>() {
                             }
                     );
             return personCrushList.getBody();
@@ -175,7 +156,7 @@ public class UserDB {
                             DB_URL + "/lovers/" + userId,
                             HttpMethod.GET,
                             null,
-                            new ParameterizedTypeReference<List<User>>() {
+                            new ParameterizedTypeReference<>() {
                             }
                     );
             return responseEntity.getBody();

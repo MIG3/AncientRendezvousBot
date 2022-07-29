@@ -72,10 +72,4 @@ public class UserDataCache implements DataCache {
     public void saveCrushListData(long userId, CrushProfile listCrushData) {
         usersCrushListData.put(userId, listCrushData);
     }
-
-    @Override
-    public CrushProfile getUserCrushData(long userId) {
-        return usersCrushListData.get(userId);
-    }
-
 }

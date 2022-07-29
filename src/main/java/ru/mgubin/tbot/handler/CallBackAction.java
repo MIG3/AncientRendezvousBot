@@ -34,13 +34,10 @@ public class CallBackAction {
         final int userId = buttonQuery.getFrom().getId().intValue();
         MainMenuKeyboard menuService = new MainMenuKeyboard();
         BotApiMethod<?> callBackAnswer = menuService.getMainMenuMessage(chatId, "Воспользуйтесь главным меню");
-        if (buttonQuery.getData().equals(GenderButtonsEnum.MEN.getGender())) {
+        if (GenderButtonsEnum.existValueOfGenderButtons(buttonQuery.getData()))
+        {
             User user = userDataCache.getUserProfileData(userId);
-            user.setGender(GenderButtonsEnum.MEN);
-            callBackAnswer = questionAboutName(user, chatId, userId);
-        } else if (buttonQuery.getData().equals(GenderButtonsEnum.WOMEN.getGender())) {
-            User user = userDataCache.getUserProfileData(userId);
-            user.setGender(GenderButtonsEnum.WOMEN);
+            user.setGender(GenderButtonsEnum.valueOfGenderButtons(buttonQuery.getData()));
             callBackAnswer = questionAboutName(user, chatId, userId);
         } else if (buttonQuery.getData().equals(NavigationByCrushButtonEnum.NEXT.getPrevNext())) {
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.NEXT_CRUSH);
@@ -54,17 +51,10 @@ public class CallBackAction {
         } else if (buttonQuery.getData().equals(ProfileButtonsEnum.BROWSE.getProfile())) {
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.BROWSE_PROFILE);
             callBackAnswer = null;
-        } else if (buttonQuery.getData().equals(SearchButtonsEnum.MEN.getSearchGender())) {
+        }
+        else if (SearchButtonsEnum.existValueOfSearchButtons(buttonQuery.getData())){
             User user = userDataCache.getUserProfileData(userId);
-            user.setCrush(SearchButtonsEnum.MEN);
-            callBackAnswer = questionAboutBirthdate(user, chatId, userId);
-        } else if (buttonQuery.getData().equals(SearchButtonsEnum.WOMEN.getSearchGender())) {
-            User user = userDataCache.getUserProfileData(userId);
-            user.setCrush(SearchButtonsEnum.WOMEN);
-            callBackAnswer = questionAboutBirthdate(user, chatId, userId);
-        } else if (buttonQuery.getData().equals(SearchButtonsEnum.ALL.getSearchGender())) {
-            User user = userDataCache.getUserProfileData(userId);
-            user.setCrush(SearchButtonsEnum.ALL);
+            user.setCrush(SearchButtonsEnum.valueOfSearchButtons(buttonQuery.getData()));
             callBackAnswer = questionAboutBirthdate(user, chatId, userId);
         } else if (buttonQuery.getData().equals(NavigationBySearchButtonEnum.LIKES.getLikeDislike())) {
             userDataCache.setUsersCurrentBotState(userId, BotStateEnum.NEXT_PROFILE);

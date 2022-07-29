@@ -32,6 +32,10 @@ public enum GenderButtonsEnum {
         }
         return null;
     }
+    public static boolean existValueOfGenderButtons(String gender) {
+        GenderButtonsEnum genderButtonsEnum = valueOfGenderButtons(gender);
+        return genderButtonsEnum != null;
+    }
 
     public static List<GenderButtonsEnum> valuesExceptGenderButtons(String gender) {
         List<GenderButtonsEnum> genderList = new ArrayList<>();

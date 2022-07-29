@@ -53,6 +53,10 @@ public enum SearchButtonsEnum {
         }
         return genderList;
     }
+    public static boolean existValueOfSearchButtons(String gender) {
+        SearchButtonsEnum searchButtonsEnum = valueOfSearchButtons(gender);
+        return searchButtonsEnum != null;
+    }
 
     public static SearchButtonsEnum valueOfLabel(String buttonName) {
         return GENDER_TYPE.get(buttonName);

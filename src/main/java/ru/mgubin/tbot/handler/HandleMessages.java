@@ -43,7 +43,7 @@ public class HandleMessages {
                 botState = BotStateEnum.CORRECT_PROFILE;
                 break;
             case LOVERS:
-                botState = BotStateEnum.BROWSE_LOVERS;
+                botState = BotStateEnum.BROWSE_CRUSHES;
                 break;
             default:
                 botState = userDataCache.getUsersCurrentBotState(userId);

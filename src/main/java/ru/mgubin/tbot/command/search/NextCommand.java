@@ -1,6 +1,5 @@
 package ru.mgubin.tbot.command.search;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.command.Command;
 import ru.mgubin.tbot.db.UserDB;
@@ -12,12 +11,6 @@ import ru.mgubin.tbot.keyboard.InlineKeyboard;
 import ru.mgubin.tbot.service.PrintProfileService;
 
 public class NextCommand implements Command {
-    private final UserDataCache userDataCache;
-
-    @Autowired
-    public NextCommand(UserDataCache userDataCache) {
-        this.userDataCache = userDataCache;
-    }
 
     /**
      * Метод перебора анкет по писку в прямом порядке - вперёд.
@@ -26,12 +19,13 @@ public class NextCommand implements Command {
      * Вызывается метод печати текущей анкеты из списка.
      * Выводятся кнопки для перебора анкет.
      *
-     * @param userId  id пользователя
-     * @param message сообщение
+     * @param userId        id пользователя
+     * @param message       сообщение
+     * @param userDataCache
      * @return анкета-изображение и кнопки для перебора
      */
     @Override
-    public OutputParameters invoke(Long userId, String message) {
+    public OutputParameters invoke(Long userId, String message, UserDataCache userDataCache) {
         OutputParameters outputParameters = new OutputParameters();
         PrintProfileService profile = new PrintProfileService();
         UserDB userDB = new UserDB();
