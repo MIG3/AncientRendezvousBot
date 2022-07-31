@@ -4,12 +4,9 @@ import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.command.Command;
 import ru.mgubin.tbot.entity.OutputParameters;
 import ru.mgubin.tbot.entity.SearchProfile;
-import ru.mgubin.tbot.enums.CrushNavigationEnum;
-import ru.mgubin.tbot.keyboard.InlineKeyboard;
-import ru.mgubin.tbot.service.LabelGenerateService;
 import ru.mgubin.tbot.service.PrintProfileService;
 
-public class NextCrushCommand implements Command {
+public class NextCrushCommand extends NavigationCrushCommand implements Command {
     /**
      * Метод перебора анкет любимцев в прямом порядке - вперёд.
      * В нём получаем список анкет любимцев из кеша,
@@ -25,7 +22,6 @@ public class NextCrushCommand implements Command {
      */
     @Override
     public OutputParameters invoke(Long userId, String message, UserDataCache userDataCache) {
-        OutputParameters outputParameters = new OutputParameters();
         PrintProfileService profile = new PrintProfileService();
         SearchProfile crushProfile = userDataCache.getUserListData(userId);
         int lengthUserList = crushProfile.getUserList().size();
@@ -36,14 +32,6 @@ public class NextCrushCommand implements Command {
         } else {
             index = pos + 1;
         }
-        crushProfile.setNumberProfile(index);
-        LabelGenerateService labelGenerateService = new LabelGenerateService(userDataCache);
-        String label = labelGenerateService.labelFromPicture(userId, crushProfile.getUserList().get(index).getId());
-        outputParameters.setSendPhoto(profile.sendPhoto(
-                userId,
-                crushProfile.getUserList().get(crushProfile.getNumberProfile()),
-                label));
-        outputParameters.setSendMessage(new InlineKeyboard().keyboard(userId, "Для перелистывания любимок нажмите вперед или назад", CrushNavigationEnum.valuesPrevNextButtons()));
-        return outputParameters;
+        return getAnswer(userId, profile, crushProfile, userDataCache, index);
     }
 }
