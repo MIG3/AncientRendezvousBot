@@ -19,7 +19,6 @@ import ru.mgubin.tbot.command.search.SearchUserCommand;
 @Getter
 @RequiredArgsConstructor
 public enum BotStateEnum {
-    SHOW_MAIN_MENU,
     START {
         @Override
         public Command getCommand() {
