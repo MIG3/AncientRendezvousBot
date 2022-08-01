@@ -5,13 +5,13 @@ import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.web.client.RestTemplate;
-import ru.mgubin.tbot.exception.ServicePictureException;
 import ru.mgubin.tbot.exception.PictureException;
+import ru.mgubin.tbot.exception.ServicePictureException;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+import static ru.mgubin.tbot.bot.Bot.REST_TEMPLATE;
 import static ru.mgubin.tbot.constant.Constants.PICTURE_URL;
 
 @Slf4j
@@ -25,14 +25,13 @@ public class PictureWebService {
      */
     public InputStream makePicture(String text) {
         try {
-            RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             JSONObject pictureJsonObject = new JSONObject();
             pictureJsonObject.put("text", text);
             HttpEntity<String> request = new HttpEntity<>(pictureJsonObject.toString(), headers);
             byte[] picture =
-                    restTemplate.postForObject(PICTURE_URL, request, byte[].class);
+                    REST_TEMPLATE.postForObject(PICTURE_URL, request, byte[].class);
             if (picture == null) {
                 throw new PictureException();
             }

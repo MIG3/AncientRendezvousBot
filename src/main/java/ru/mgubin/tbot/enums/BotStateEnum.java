@@ -91,7 +91,6 @@ public enum BotStateEnum {
             return new BrowsProfile();
         }
     },
-    SAVE_PROFILE,
     BROWSE_CRUSHES {
         @Override
         public Command getCommand() {
@@ -111,7 +110,5 @@ public enum BotStateEnum {
         }
     };
 
-    public Command getCommand() {
-        return null;
-    }
+    public abstract Command getCommand();
 }

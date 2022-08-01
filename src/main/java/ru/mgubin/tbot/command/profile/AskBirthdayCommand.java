@@ -2,11 +2,10 @@ package ru.mgubin.tbot.command.profile;
 
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.command.Command;
-import ru.mgubin.tbot.service.UserService;
 import ru.mgubin.tbot.entity.OutputParameters;
 import ru.mgubin.tbot.entity.User;
-import ru.mgubin.tbot.enums.BotStateEnum;
 import ru.mgubin.tbot.service.PrintProfileService;
+import ru.mgubin.tbot.service.UserService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -33,7 +32,6 @@ public class AskBirthdayCommand implements Command {
         User profileData = userDataCache.getUserProfileData(userId);
         profileData.setBirthdate(LocalDate.parse(message, DateTimeFormatter.ofPattern("dd.MM.yyyy")));
         profileData.setId(userId);
-        userDataCache.setUsersCurrentBotState(userId, BotStateEnum.SAVE_PROFILE);
         userDataCache.saveUserProfileData(userId, profileData);
         userService.createUser(profileData);
         outputParameters.setSendPhoto(profile.sendPhoto(userId, profileData, ""));

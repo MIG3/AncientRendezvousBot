@@ -1,6 +1,7 @@
 package ru.mgubin.tbot.bot;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.client.RestTemplate;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
@@ -19,6 +20,7 @@ public class Bot extends TelegramLongPollingBot {
     private final String botTokenTelegram;
     private final String botNameTelegram;
     private final UserDataCache userDataCache = new UserDataCache();
+    public final static RestTemplate REST_TEMPLATE = new RestTemplate();
 
     public Bot(String botToken, String botName) {
         this.botTokenTelegram = botToken;

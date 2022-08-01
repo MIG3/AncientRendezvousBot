@@ -6,8 +6,6 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 import ru.mgubin.tbot.entity.PersonCrush;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.exception.ParseToJsonException;
@@ -15,12 +13,12 @@ import ru.mgubin.tbot.exception.ParseToJsonException;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static ru.mgubin.tbot.bot.Bot.REST_TEMPLATE;
 import static ru.mgubin.tbot.constant.Constants.DB_URL;
 
 @ToString
 @Slf4j
 public class UserService {
-    final private RestTemplate restTemplate = new RestTemplate();
     final private HttpHeaders headers = new HttpHeaders();
 
     public UserService() {
@@ -36,7 +34,7 @@ public class UserService {
     public void createUser(User user) {
         try {
             HttpEntity<String> request = new HttpEntity<>(user.toJson(), headers);
-            restTemplate.postForObject(DB_URL + "/persons", request, String.class);
+            REST_TEMPLATE.postForObject(DB_URL + "/persons", request, String.class);
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
             throw new ParseToJsonException();
@@ -52,15 +50,13 @@ public class UserService {
      */
     public List<User> getUsersByGender(long userId) {
         try {
-            ResponseEntity<List<User>> responseEntity =
-                    restTemplate.exchange(
-                            DB_URL + "/persons/search/" + userId,
-                            HttpMethod.GET,
-                            null,
-                            new ParameterizedTypeReference<>() {
-                            }
-                    );
-            return responseEntity.getBody();
+            return REST_TEMPLATE.exchange(
+                    DB_URL + "/persons/search/" + userId,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<List<User>>() {
+                    }
+            ).getBody();
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
             throw new ParseToJsonException();
@@ -76,7 +72,7 @@ public class UserService {
     public void makeLikeToUser(PersonCrush personCrush) {
         try {
             HttpEntity<String> request = new HttpEntity<>(personCrush.toJson(), headers);
-            restTemplate.postForObject(DB_URL + "/crushes", request, String.class);
+            REST_TEMPLATE.postForObject(DB_URL + "/crushes", request, String.class);
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
             throw new ParseToJsonException();
@@ -91,7 +87,7 @@ public class UserService {
      */
     public void removeLikeToUser(PersonCrush personCrush) {
         try {
-            restTemplate.delete(DB_URL + "/crushes/" + personCrush.getUserId() + "/" + personCrush.getCrushId());
+            REST_TEMPLATE.delete(DB_URL + "/crushes/" + personCrush.getUserId() + "/" + personCrush.getCrushId());
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
             throw new ParseToJsonException();
@@ -107,7 +103,7 @@ public class UserService {
      */
     public User getUser(long userId) {
         try {
-            return restTemplate.getForObject(
+            return REST_TEMPLATE.getForObject(
                     DB_URL + "/persons/" + userId,
                     User.class);
 
@@ -126,15 +122,13 @@ public class UserService {
      */
     public List<PersonCrush> getUserAndCrush(Long userId, Long crushId) {
         try {
-            ResponseEntity<List<PersonCrush>> personCrushList =
-                    restTemplate.exchange(
-                            DB_URL + "/lovers/" + userId + "/" + crushId,
-                            HttpMethod.GET,
-                            null,
-                            new ParameterizedTypeReference<>() {
-                            }
-                    );
-            return personCrushList.getBody();
+            return REST_TEMPLATE.exchange(
+                    DB_URL + "/lovers/" + userId + "/" + crushId,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<List<PersonCrush>>() {
+                    }
+            ).getBody();
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
             throw new ParseToJsonException();
@@ -150,15 +144,13 @@ public class UserService {
      */
     public List<User> getLovers(Long userId) {
         try {
-            ResponseEntity<List<User>> responseEntity =
-                    restTemplate.exchange(
-                            DB_URL + "/lovers/" + userId,
-                            HttpMethod.GET,
-                            null,
-                            new ParameterizedTypeReference<>() {
-                            }
-                    );
-            return responseEntity.getBody();
+            return REST_TEMPLATE.exchange(
+                    DB_URL + "/lovers/" + userId,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<List<User>>() {
+                    }
+            ).getBody();
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
             throw new ParseToJsonException();
