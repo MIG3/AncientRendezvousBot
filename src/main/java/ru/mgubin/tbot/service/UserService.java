@@ -13,12 +13,11 @@ import ru.mgubin.tbot.exception.ParseToJsonException;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static ru.mgubin.tbot.bot.Bot.REST_TEMPLATE;
 import static ru.mgubin.tbot.constant.Constants.DB_URL;
 
 @ToString
 @Slf4j
-public class UserService {
+public class UserService implements AbstractService {
     final private HttpHeaders headers = new HttpHeaders();
 
     public UserService() {
@@ -34,7 +33,7 @@ public class UserService {
     public void createUser(User user) {
         try {
             HttpEntity<String> request = new HttpEntity<>(user.toJson(), headers);
-            REST_TEMPLATE.postForObject(DB_URL + "/persons", request, String.class);
+            restTemplate.postForObject(DB_URL + "/persons", request, String.class);
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
             throw new ParseToJsonException();
@@ -50,7 +49,7 @@ public class UserService {
      */
     public List<User> getUsersByGender(long userId) {
         try {
-            return REST_TEMPLATE.exchange(
+            return restTemplate.exchange(
                     DB_URL + "/persons/search/" + userId,
                     HttpMethod.GET,
                     null,
@@ -72,7 +71,7 @@ public class UserService {
     public void makeLikeToUser(PersonCrush personCrush) {
         try {
             HttpEntity<String> request = new HttpEntity<>(personCrush.toJson(), headers);
-            REST_TEMPLATE.postForObject(DB_URL + "/crushes", request, String.class);
+            restTemplate.postForObject(DB_URL + "/crushes", request, String.class);
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
             throw new ParseToJsonException();
@@ -87,7 +86,7 @@ public class UserService {
      */
     public void removeLikeToUser(PersonCrush personCrush) {
         try {
-            REST_TEMPLATE.delete(DB_URL + "/crushes/" + personCrush.getUserId() + "/" + personCrush.getCrushId());
+            restTemplate.delete(DB_URL + "/crushes/" + personCrush.getUserId() + "/" + personCrush.getCrushId());
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
             throw new ParseToJsonException();
@@ -103,7 +102,7 @@ public class UserService {
      */
     public User getUser(long userId) {
         try {
-            return REST_TEMPLATE.getForObject(
+            return restTemplate.getForObject(
                     DB_URL + "/persons/" + userId,
                     User.class);
 
@@ -122,7 +121,7 @@ public class UserService {
      */
     public List<PersonCrush> getUserAndCrush(Long userId, Long crushId) {
         try {
-            return REST_TEMPLATE.exchange(
+            return restTemplate.exchange(
                     DB_URL + "/lovers/" + userId + "/" + crushId,
                     HttpMethod.GET,
                     null,
@@ -144,7 +143,7 @@ public class UserService {
      */
     public List<User> getLovers(Long userId) {
         try {
-            return REST_TEMPLATE.exchange(
+            return restTemplate.exchange(
                     DB_URL + "/lovers/" + userId,
                     HttpMethod.GET,
                     null,

@@ -5,22 +5,22 @@ import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.web.client.RestTemplate;
 import ru.mgubin.tbot.exception.PictureException;
 import ru.mgubin.tbot.exception.ServicePictureException;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import static ru.mgubin.tbot.bot.Bot.REST_TEMPLATE;
 import static ru.mgubin.tbot.constant.Constants.PICTURE_URL;
 
 @Slf4j
-public class PictureWebService {
+public class PictureWebService implements AbstractService{
 
     /**
      * Формирование изображения для вывода его в боте.
      *
-     * @param text - описание пользователя самого себя
+     * @param text         - описание пользователя самого себя
      * @return изображение в InputStream
      */
     public InputStream makePicture(String text) {
@@ -31,7 +31,7 @@ public class PictureWebService {
             pictureJsonObject.put("text", text);
             HttpEntity<String> request = new HttpEntity<>(pictureJsonObject.toString(), headers);
             byte[] picture =
-                    REST_TEMPLATE.postForObject(PICTURE_URL, request, byte[].class);
+                    restTemplate.postForObject(PICTURE_URL, request, byte[].class);
             if (picture == null) {
                 throw new PictureException();
             }

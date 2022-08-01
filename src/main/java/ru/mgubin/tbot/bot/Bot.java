@@ -20,7 +20,6 @@ public class Bot extends TelegramLongPollingBot {
     private final String botTokenTelegram;
     private final String botNameTelegram;
     private final UserDataCache userDataCache = new UserDataCache();
-    public final static RestTemplate REST_TEMPLATE = new RestTemplate();
 
     public Bot(String botToken, String botName) {
         this.botTokenTelegram = botToken;

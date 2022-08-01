@@ -12,7 +12,7 @@ import java.util.StringJoiner;
 import static ru.mgubin.tbot.constant.Constants.FILE_NAME;
 
 @Slf4j
-public class PrintProfileService {
+public class PrintProfileService{
     PictureWebService pictureWebService = new PictureWebService();
 
     /**
