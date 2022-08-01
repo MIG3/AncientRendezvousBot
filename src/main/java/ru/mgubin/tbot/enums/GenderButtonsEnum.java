@@ -2,6 +2,8 @@ package ru.mgubin.tbot.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import ru.mgubin.tbot.handler.CallBackButton;
+import ru.mgubin.tbot.handler.CallBackGenderButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,9 +12,17 @@ import java.util.Map;
 
 @Getter
 @RequiredArgsConstructor
-public enum GenderButtonsEnum {
-    MEN("Сударь"),
-    WOMEN("Сударыня");
+public enum GenderButtonsEnum /*implements ButtonStateEnum*/ {
+    MEN("Сударь") /*{
+        public CallBackButton getCallBackStateAndAnswer() {
+            return new CallBackGenderButton();
+        }
+    }*/,
+    WOMEN("Сударыня") /*{
+        public CallBackButton getCallBackStateAndAnswer() {
+            return new CallBackGenderButton();
+        }
+    }*/;
 
     private static final Map<String, GenderButtonsEnum> GENDER_TYPE = new HashMap<>();
 
@@ -32,6 +42,7 @@ public enum GenderButtonsEnum {
         }
         return null;
     }
+
     public static boolean existValueOfGenderButtons(String gender) {
         GenderButtonsEnum genderButtonsEnum = valueOfGenderButtons(gender);
         return genderButtonsEnum != null;
@@ -60,4 +71,6 @@ public enum GenderButtonsEnum {
     public static GenderButtonsEnum valueOfLabel(String buttonName) {
         return GENDER_TYPE.get(buttonName);
     }
+
+/*    public abstract CallBackButton getCallBackStateAndAnswer();*/
 }
