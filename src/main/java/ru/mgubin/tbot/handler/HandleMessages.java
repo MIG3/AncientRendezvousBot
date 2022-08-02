@@ -3,7 +3,6 @@ package ru.mgubin.tbot.handler;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.enums.BotStateEnum;
-import ru.mgubin.tbot.enums.LikeStateEnum;
 
 import static ru.mgubin.tbot.constant.Constants.*;
 
@@ -26,7 +25,6 @@ public class HandleMessages {
      */
     public BotStateEnum handleInputMessage(Long userId, String inputMsg) throws TelegramApiException {
         BotStateEnum botState = userDataCache.getUsersCurrentBotState(userId);
-        LikeStateEnum likeState = userDataCache.getUsersCurrentLikeState(userId);
         switch (inputMsg) {
             case START:
                 botState = BotStateEnum.START;
@@ -45,7 +43,6 @@ public class HandleMessages {
                 break;
         }
         userDataCache.setUsersCurrentBotState(userId, botState);
-        userDataCache.setUsersCurrentLikeState(userId, likeState);
         return botState;
     }
 }

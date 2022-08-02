@@ -6,30 +6,30 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.enums.BotStateEnum;
-import ru.mgubin.tbot.enums.GenderEnum;
+import ru.mgubin.tbot.enums.SearchEnum;
 
-public class CallBackGenderButton implements CallBackButton {
+public class CallBackSearchButton implements CallBackButton {
 
     private final UserDataCache userDataCache;
 
-    public CallBackGenderButton(UserDataCache userDataCache) {
+    public CallBackSearchButton(UserDataCache userDataCache) {
 
         this.userDataCache = userDataCache;
     }
 
-    public BotApiMethod<?> genderButton(CallbackQuery buttonQuery, UserDataCache userDataCache) {
+    public BotApiMethod<?> searchButton(CallbackQuery buttonQuery, UserDataCache userDataCache) {
         final long chatId = buttonQuery.getMessage().getChatId();
         final int userId = buttonQuery.getFrom().getId().intValue();
         User user = userDataCache.getUserProfileData(userId);
-        user.setGender(GenderEnum.valueOfGenderButtons(buttonQuery.getData()));
-        return questionAboutName(user, chatId, userId);
+        user.setCrush(SearchEnum.valueOfSearchButtons(buttonQuery.getData()));
+        return questionAboutBirthdate(user, chatId, userId);
     }
 
-    private SendMessage questionAboutName(User user, long chatId, long userId) {
-        userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_NAME);
+    private SendMessage questionAboutBirthdate(User user, long chatId, long userId) {
+        userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_BIRTHDAY);
         userDataCache.saveUserProfileData(userId, user);
         return SendMessage.builder()
-                .text("Как Вас величать?")
+                .text("Когда Вы родились? Напишите в формате: dd.mm.yyyy")
                 .chatId(chatId)
                 .build();
     }

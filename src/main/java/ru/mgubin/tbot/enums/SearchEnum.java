@@ -10,23 +10,23 @@ import java.util.Map;
 
 @Getter
 @RequiredArgsConstructor
-public enum SearchButtonsEnum {
+public enum SearchEnum {
     MEN("Сударя"),
     WOMEN("Сударыню"),
     ALL("Всех");
 
-    private static final Map<String, SearchButtonsEnum> GENDER_TYPE = new HashMap<>();
+    private static final Map<String, SearchEnum> GENDER_TYPE = new HashMap<>();
 
     public final String searchGender;
 
     static {
-        for (SearchButtonsEnum gender : values()) {
+        for (SearchEnum gender : values()) {
             GENDER_TYPE.put(gender.searchGender, gender);
         }
     }
 
-    public static SearchButtonsEnum valueOfSearchButtons(String gender) {
-        for (SearchButtonsEnum gender1 : values()) {
+    public static SearchEnum valueOfSearchButtons(String gender) {
+        for (SearchEnum gender1 : values()) {
             if (gender1.searchGender.equals(gender)) {
                 return gender1;
             }
@@ -34,9 +34,9 @@ public enum SearchButtonsEnum {
         return null;
     }
 
-    public static List<SearchButtonsEnum> valuesExceptSearchButtons(String gender) {
-        List<SearchButtonsEnum> genderList = new ArrayList<>();
-        for (SearchButtonsEnum gender1 : values()) {
+    public static List<SearchEnum> valuesExceptSearchButtons(String gender) {
+        List<SearchEnum> genderList = new ArrayList<>();
+        for (SearchEnum gender1 : values()) {
             if (!gender1.searchGender.equals(gender)) {
                 genderList.add(gender1);
             }
@@ -46,7 +46,7 @@ public enum SearchButtonsEnum {
 
     public static List<String> valuesSearchButtons() {
         List<String> genderList = new ArrayList<>();
-        for (SearchButtonsEnum gender1 : values()) {
+        for (SearchEnum gender1 : values()) {
 
             genderList.add(gender1.searchGender);
 
@@ -54,11 +54,11 @@ public enum SearchButtonsEnum {
         return genderList;
     }
     public static boolean existValueOfSearchButtons(String gender) {
-        SearchButtonsEnum searchButtonsEnum = valueOfSearchButtons(gender);
-        return searchButtonsEnum != null;
+        SearchEnum searchEnum = valueOfSearchButtons(gender);
+        return searchEnum != null;
     }
 
-    public static SearchButtonsEnum valueOfLabel(String buttonName) {
+    public static SearchEnum valueOfLabel(String buttonName) {
         return GENDER_TYPE.get(buttonName);
     }
 }

@@ -4,7 +4,7 @@ import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.command.Command;
 import ru.mgubin.tbot.entity.OutputParameters;
 import ru.mgubin.tbot.enums.BotStateEnum;
-import ru.mgubin.tbot.enums.GenderButtonsEnum;
+import ru.mgubin.tbot.enums.GenderEnum;
 import ru.mgubin.tbot.keyboard.InlineKeyboard;
 
 public class AskGenderCommand implements Command {
@@ -22,7 +22,7 @@ public class AskGenderCommand implements Command {
     public OutputParameters invoke(Long userId, String message, UserDataCache userDataCache) {
         InlineKeyboard gender = new InlineKeyboard();
         OutputParameters outputParameters = new OutputParameters();
-        outputParameters.setSendMessage(gender.keyboard(userId, "Вы сударь иль сударыня?", GenderButtonsEnum.valuesGenderButtons()));
+        outputParameters.setSendMessage(gender.keyboard(userId, "Вы сударь иль сударыня?", GenderEnum.valuesGenderButtons()));
         userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_NAME);
         return outputParameters;
     }

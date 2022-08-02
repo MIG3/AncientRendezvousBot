@@ -11,8 +11,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.mgubin.tbot.enums.GenderButtonsEnum;
-import ru.mgubin.tbot.enums.SearchButtonsEnum;
+import ru.mgubin.tbot.enums.GenderEnum;
+import ru.mgubin.tbot.enums.SearchEnum;
 import ru.mgubin.tbot.exception.ParseToJsonException;
 
 import java.time.LocalDate;
@@ -28,8 +28,8 @@ public class User {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate birthdate;
-    private SearchButtonsEnum crush;
-    private GenderButtonsEnum gender;
+    private SearchEnum crush;
+    private GenderEnum gender;
     private String description;
 
     /**
