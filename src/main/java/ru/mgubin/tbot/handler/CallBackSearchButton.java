@@ -17,6 +17,13 @@ public class CallBackSearchButton implements CallBackButton {
         this.userDataCache = userDataCache;
     }
 
+    /**
+     * Метод обработки Callback от кнопок выбора пола для поиска партнёра
+     *
+     * @param buttonQuery   результат нажатия на кнопки
+     * @param userDataCache кэш данных пользователя
+     * @return ответное сообщение
+     */
     public BotApiMethod<?> searchButton(CallbackQuery buttonQuery, UserDataCache userDataCache) {
         final long chatId = buttonQuery.getMessage().getChatId();
         final int userId = buttonQuery.getFrom().getId().intValue();

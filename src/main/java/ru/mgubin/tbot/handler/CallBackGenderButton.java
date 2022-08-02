@@ -17,6 +17,13 @@ public class CallBackGenderButton implements CallBackButton {
         this.userDataCache = userDataCache;
     }
 
+    /**
+     * Метод обработки Callback от кнопок выбора пола
+     *
+     * @param buttonQuery   результат нажатия на кнопки
+     * @param userDataCache кэш данных пользователя
+     * @return ответное сообщение
+     */
     public BotApiMethod<?> genderButton(CallbackQuery buttonQuery, UserDataCache userDataCache) {
         final long chatId = buttonQuery.getMessage().getChatId();
         final int userId = buttonQuery.getFrom().getId().intValue();
