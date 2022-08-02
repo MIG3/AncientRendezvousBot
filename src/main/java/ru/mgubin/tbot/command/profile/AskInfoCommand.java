@@ -5,7 +5,7 @@ import ru.mgubin.tbot.command.Command;
 import ru.mgubin.tbot.entity.OutputParameters;
 import ru.mgubin.tbot.entity.User;
 import ru.mgubin.tbot.enums.BotStateEnum;
-import ru.mgubin.tbot.enums.SearchButtonsEnum;
+import ru.mgubin.tbot.enums.SearchEnum;
 import ru.mgubin.tbot.keyboard.InlineKeyboard;
 
 public class AskInfoCommand implements Command {
@@ -25,7 +25,7 @@ public class AskInfoCommand implements Command {
         OutputParameters outputParameters = new OutputParameters();
         User profileData = userDataCache.getUserProfileData(userId);
         profileData.setDescription(message);
-        outputParameters.setSendMessage(gender.keyboard(userId, "Кого Вы хотите искать в будущем?", SearchButtonsEnum.valuesSearchButtons()));
+        outputParameters.setSendMessage(gender.keyboard(userId, "Кого Вы хотите искать в будущем?", SearchEnum.valuesSearchButtons()));
         userDataCache.setUsersCurrentBotState(userId, BotStateEnum.ASK_CRUSH);
         userDataCache.saveUserProfileData(userId, profileData);
         return outputParameters;

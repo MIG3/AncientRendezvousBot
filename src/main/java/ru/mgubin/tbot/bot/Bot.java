@@ -10,8 +10,8 @@ import ru.mgubin.tbot.cash.UserDataCache;
 import ru.mgubin.tbot.command.Command;
 import ru.mgubin.tbot.entity.OutputParameters;
 import ru.mgubin.tbot.enums.BotStateEnum;
+import ru.mgubin.tbot.enums.GeneralButtonStateEnum;
 import ru.mgubin.tbot.exception.TelegramException;
-import ru.mgubin.tbot.handler.CallBackAction;
 import ru.mgubin.tbot.handler.HandleMessages;
 
 @Slf4j
@@ -38,7 +38,6 @@ public class Bot extends TelegramLongPollingBot {
     /**
      * Основной метод обработки полученных обновлений в боте.
      * В нём вызываются методы назначения состояния боту и переход по ним к разным командам.
-     * Вызов метода обработки Callback'ов, если было нажатие на кнопки.
      * Выводит сообщения в чат для пользователя
      *
      * @param update - обновление телеграма
@@ -51,9 +50,9 @@ public class Bot extends TelegramLongPollingBot {
         BotStateEnum botState;
         try {
             if (update.hasCallbackQuery()) {
-                CallBackAction callBackAction = new CallBackAction(userDataCache);
                 CallbackQuery callbackQuery = update.getCallbackQuery();
-                BotApiMethod<?> botApiMethod = callBackAction.processCallbackQuery(callbackQuery);
+                BotApiMethod<?> botApiMethod = GeneralButtonStateEnum.valueOfButtons(callbackQuery.getData()).getCallBackStateAndAnswer(callbackQuery, userDataCache);
+
                 if (botApiMethod != null) {
                     execute(botApiMethod);
                 }
